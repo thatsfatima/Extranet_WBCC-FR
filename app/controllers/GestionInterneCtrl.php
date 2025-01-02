@@ -62,7 +62,6 @@ class GestionInterneCtrl extends Controller
         $this->view('gestionInterne/subvention/indexSubvention', $data);
     }
 
-
     public function subvention($id = '')
     {
         $subvention = false;

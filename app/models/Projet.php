@@ -1,5 +1,4 @@
 <?php
-
 class Projet extends Model
 {
     public function getProjets()
@@ -137,6 +136,24 @@ class Projet extends Model
     public function getDocumentsRequis()
     {
         $this->db->query("SELECT * FROM wbcc_document_requis ");
+        $res = $this->db->resultSet();
+        return $res;
+    }
+
+    public function findSommaireByIdProjet($idProjet) {
+        $this->db->query("SELECT * FROM wbcc_sommaire WHERE idProjetF = $idProjet LIMIT 1");
+        $res = $this->db->resultSet();
+        return $res;
+    }
+
+    public function findSectionByIdSommaire($idSommaire) {
+        $this->db->query("SELECT * FROM wbcc_section WHERE idSommaireF = $idSommaire AND idSection_ParentF IS NULL ORDER BY numeroSection ASC");
+        $res = $this->db->resultSet();
+        return $res;
+    }
+
+    public function findSectionByIdSection($idSection) {
+        $this->db->query("SELECT * FROM wbcc_section WHERE idSection_ParentF = $idSection ORDER BY numeroSection ASC");
         $res = $this->db->resultSet();
         return $res;
     }

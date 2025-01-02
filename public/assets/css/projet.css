@@ -3,6 +3,11 @@
     height: 500px;
 }
 
+.width-auto {
+  width: auto;
+  overflow: auto;
+}
+
 .width-3 {
     width: 65%;
 }
