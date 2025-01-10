@@ -4,6 +4,7 @@
      * Connexion à la BD
      * Execution des requêtes
      */
+    
     class Database{
         private $host = DB_HOST;
         private $user = DB_USER;

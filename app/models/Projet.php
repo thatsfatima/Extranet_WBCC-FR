@@ -1,4 +1,5 @@
 <?php
+
 class Projet extends Model
 {
     public function getProjets()
@@ -15,7 +16,7 @@ class Projet extends Model
         $res = $this->db->single();
         return $res;
     }
-    
+
     /**
      * Supprime un projet par son ID
      * @param int $id l'ID du projet à supprimer
@@ -28,7 +29,7 @@ class Projet extends Model
         $this->db->bind("idProjet", $id);
         return $this->db->execute();
     }
-    
+
     /**
      * Enregistre un projet dans la base de données
      *
@@ -62,17 +63,17 @@ class Projet extends Model
 
         // Mise à jour ou insertion du projet dans la base de données
         if ($idProjet != null && $idProjet != "" && $idProjet != "0") {
-            $this->db->query("UPDATE wbcc_projet SET nomProjet=:nomProjet, descriptionProjet=:descriptionProjet, idImmeuble=:idImmeuble, numeroProjet=:numeroProjet WHERE idProjet=:idProjet");
+            $this->db->query("UPDATE wbcc_projet SET nomProjet=:nomProjet, descriptionProjet=:descriptionProjet, idImmeubleCB=:idImmeubleCB, numeroProjet=:numeroProjet WHERE idProjet=:idProjet");
             $this->db->bind("idProjet", $idProjet);
         } else {
-            $this->db->query("INSERT INTO wbcc_projet(nomProjet, descriptionProjet, idImmeuble, createDate, numeroProjet) VALUES (:nomProjet, :descriptionProjet, :idImmeuble, :createDate, :numeroProjet)");
+            $this->db->query("INSERT INTO wbcc_projet(nomProjet, descriptionProjet, idImmeubleCB, createDate, numeroProjet) VALUES (:nomProjet, :descriptionProjet, :idImmeubleCB, :createDate, :numeroProjet)");
             $this->db->bind("createDate", date("Y-m-d H:i:s"));
         }
 
         // Ajout des bindings communs
         $this->db->bind("nomProjet", $nomProjet);
         $this->db->bind("descriptionProjet", $descriptionProjet);
-        $this->db->bind("idImmeuble", $idImmeuble);
+        $this->db->bind("idImmeubleCB", $idImmeuble);
         $this->db->bind("numeroProjet", $numeroProjet);
 
         // Exécute la requête et retourne le projet enregistré ou false en cas d'échec
@@ -85,76 +86,5 @@ class Projet extends Model
         } else {
             return false;
         }
-    }
-
-    public function saveSubvention($idSubvention, $titreSubvention, $natureTravaux, $natureAide,  $montantSubvention, $taux, $idOrganisme, $idUser)
-    {
-        $numero = "SUB" . date("dmYHis") . $idUser;
-        if ($idSubvention != null && $idSubvention != "" && $idSubvention != "0") {
-            $this->db->query("UPDATE wbcc_subvention SET titreSubvention=:titreSubvention, montantSubvention=:montantSubvention, taux=:taux, natureTravaux=:natureTravaux, natureAide=:natureAide, editDate=:editDate, idAuteur=:idAuteur, idOrganisme=:idOrganisme WHERE idSubvention=:idSubvention ");
-            $this->db->bind("idSubvention", $idSubvention);
-        } else {
-            $this->db->query("INSERT INTO wbcc_subvention(numeroSubvention, titreSubvention, montantSubvention, taux, natureTravaux, natureAide,createDate, editDate, idAuteur, idOrganisme) VALUES (:numeroSubvention, :titreSubvention, :montantSubvention, :taux, :natureTravaux, :natureAide, :createDate, :editDate, :idAuteur, :idOrganisme)");
-            $this->db->bind("createDate", date("Y-m-d H:i:s"));
-            $this->db->bind("numeroSubvention", $numero);
-        }
-        $this->db->bind("titreSubvention", $titreSubvention);
-        $this->db->bind("montantSubvention", $montantSubvention);
-        $this->db->bind("taux", $taux);
-        $this->db->bind("natureTravaux", $natureTravaux);
-        $this->db->bind("natureAide", $natureAide);
-        $this->db->bind("editDate",  date("Y-m-d H:i:s"));
-        $this->db->bind("idAuteur",  $idUser);
-        $this->db->bind("idOrganisme",  $idOrganisme);
-        if ($this->db->execute()) {
-            $artisan = false;
-            if ($idSubvention != null && $idSubvention != "" && $idSubvention != "0") {
-                $artisan =  $this->findSubventionByColumnValue("idSubvention", $idSubvention);
-            } else {
-                $artisan =  $this->findSubventionByColumnValue("numeroSubvention", $numero);
-            }
-            return $artisan;
-        } else {
-            return false;
-        }
-    }
-
-    public function getDocumentsRequisByIdSubvention($id)
-    {
-        $this->db->query("SELECT * FROM wbcc_document_requis d, wbcc_document_requis_subvention ds WHERE d.idDocumentRequis = ds.idDocumentRequisF  AND ds.idSubventionF = $id");
-        $res = $this->db->resultSet();
-        return $res;
-    }
-
-    public function getDocumentsRequisNotInSubvention($id)
-    {
-        $this->db->query("SELECT * FROM wbcc_document_requis WHERE idDocumentRequis NOT IN ( SELECT d.idDocumentRequis FROM wbcc_document_requis d, wbcc_document_requis_subvention ds WHERE d.idDocumentRequis = ds.idDocumentRequisF  AND ds.idSubventionF = $id)");
-        $res = $this->db->resultSet();
-        return $res;
-    }
-
-    public function getDocumentsRequis()
-    {
-        $this->db->query("SELECT * FROM wbcc_document_requis ");
-        $res = $this->db->resultSet();
-        return $res;
-    }
-
-    public function findSommaireByIdProjet($idProjet) {
-        $this->db->query("SELECT * FROM wbcc_sommaire WHERE idProjetF = $idProjet LIMIT 1");
-        $res = $this->db->resultSet();
-        return $res;
-    }
-
-    public function findSectionByIdSommaire($idSommaire) {
-        $this->db->query("SELECT * FROM wbcc_section WHERE idSommaireF = $idSommaire AND idSection_ParentF IS NULL ORDER BY numeroSection ASC");
-        $res = $this->db->resultSet();
-        return $res;
-    }
-
-    public function findSectionByIdSection($idSection) {
-        $this->db->query("SELECT * FROM wbcc_section WHERE idSection_ParentF = $idSection ORDER BY numeroSection ASC");
-        $res = $this->db->resultSet();
-        return $res;
     }
 }

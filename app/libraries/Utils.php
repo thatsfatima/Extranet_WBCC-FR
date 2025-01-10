@@ -61,6 +61,8 @@ function chargerPhoto($photo)
 {
     if (file_exists(URLPHOTO . 'profil/' . $photo)) {
         return URLROOT . '/public/img/profil/' . $photo;
+    } else if (file_exists(URLPHOTO . 'immeubles/' . $photo)) {
+        return URLROOT . '/public/img/immeubles/' . $photo;
     } else {
         return URLROOT . '/public/img/profil/default.jpg';
     }

@@ -1,23 +1,24 @@
 <?php
-require_once "../../fpdf183/fpdf.php";
+require_once "../pdf_html.php";
 
-class Sommaire extends FPDF {
+class Sommaire extends PDF_HTML {
     protected $sommaire=array();
     protected $numeroter=false;
     protected $numeroterFooter=false;
     protected $_numPageNum=1;
     protected $links=array();
+    protected $documents;
+
+    public function __construct($documents) {
+        parent::__construct();
+        $this->documents=$documents;
+    }
 
     function AddPage($orientation='', $size='', $rotation=0) {
         parent::AddPage($orientation,$size,$rotation);
 
         if($this->numeroter)
             $this->_numPageNum++;
-
-        // $page = $this->numPageNo();
-        // if (isset($this->links[$page])) {
-        //     $this->SetLink($this->links[$page][0], $page);
-        // }  
     }
 
     function startPageNums() {
@@ -34,18 +35,10 @@ class Sommaire extends FPDF {
     }
 
     function EntrerDonnee($txt, $level=0, $y=0) {
-        // $links[$this->numPageNo()]= $this->AddLink();
-        // $this->verifyPosition($y, $links[$this->numPageNo()]);
         $this->sommaire[]=array('t'=>$txt,'l'=>$level,'p'=>$this->numPageNo());
     }
 
-    // function verifyPosition($y, $link) {
-    //     if ($y != 0) {
-    //         $this->setLink($link, $y);
-    //     }
-    // }
-
-    function insertSommaire( $location=1, $label='Sommaire', $labelSize=20, $entrySize=10, $tocfont='Arial') {
+    function insertSommaire( $location=2, $label='Sommaire', $labelSize=20, $entrySize=10, $tocfont='Arial') {
         
         $this->stopPageNums();
         $this->AddPage();
@@ -55,7 +48,7 @@ class Sommaire extends FPDF {
         $this->Cell(0,5,$label,0,1,'C');
         $this->Ln(10);
 
-        foreach($this->sommaire as $t) {
+        foreach($this->sommaire as $t) {                                              
 
             //Offset
             $level=$t['l'];
@@ -81,6 +74,15 @@ class Sommaire extends FPDF {
             $this->Cell($PageCellSize, $this->FontSize+2, $t['p'], 0, 1, 'R', false);
         }
 
+        // Ajouter les documents annexes
+        $this->AddPage();
+        $this->startPageNums();
+        $this->SetFont($tocfont,'B',$labelSize);
+        $this->Cell(0,5,'Annexes',0,1,'C');
+        $this->Ln(10);
+        foreach ($this->documents as $key => $value) {
+            # code...
+        }
         // Grab it and move to selected location
         $n=$this->page;
         $n_sommaire = $n - $start + 1;

@@ -11529,7 +11529,7 @@ a:focus {
 }
 
 .sidebar .nav-item .collapse {
-  position: absolute;
+  /* position: absolute; */
   left: calc(6.5rem + 1.5rem / 2);
   z-index: 1;
   top: 2px;

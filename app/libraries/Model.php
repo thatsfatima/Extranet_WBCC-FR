@@ -5,7 +5,7 @@
  * Date: 11/6/2019
  * Time: 9:50 PM
  */
-
+require_once __DIR__ . '/../config/config.php';
 class Model
 {
     protected $db;

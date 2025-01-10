@@ -1,51 +1,44 @@
 <?php
-require_once "../../../app/config/config.php";
 require_once "../../../app/libraries/Database.php";
+require_once "../../../app/libraries/Utils.php";
 require_once "../../../app/libraries/Model.php";
-require_once "../../../app/models/Projet.php";
-require_once "../../../app/models/Immeuble.php";
-require_once "pdf.php";
+require_once "../../../app/models/Section.php";
+// require_once "projetPdf.php";
+// require_once "word.php";
 
 $idProjet = $_GET['idProjet'];
 $idImmeuble = $_GET['idImmeuble'];
+$type = $_GET['doc'];
+$class = ($_GET['doc'] == 'pdf') ? 'ProjetPdf' : 'ProjetWord';
+require_once lcfirst($class).'.php';
+$sectionModel = new Section();
 
-$projetModel = new Projet();
-$immeubleModel = new Immeuble();
-
-$projet = $projetModel->findProjetByColumnValue("idProjet", $idProjet);
-$immeuble = $immeubleModel->findImmeubleById($idImmeuble);
-$sommaire = $projetModel->findSommaireByIdProjet($idProjet);
-
-$sections = $projetModel->findSectionByIdSommaire($sommaire[0]->idSommaire);
+$projet = findItemByColumn("wbcc_projet", "idProjet", $idProjet);
+$immeuble =  findItemByColumn("wbcc_immeuble", "idImmeuble", $idImmeuble);
+$sommaire =  findItemByColumn("wbcc_sommaire", "idProjetF", $idProjet);
+$sections =  $sectionModel->getSectionsParentBySommaire($sommaire->idSommaire);
+$fileName = "PROJET_$projet->idProjet";
 
 // Rediger Projet
-$projetPdf = new ProjetPdf($projet);
+$projetDoc = new $class($fileName.'.'.$type, $projet, $immeuble, $sections); 
 
-//Numéro de page
-$projetPdf->AliasNbPages();
+$document = $projetDoc->document();
+var_dump($document);
+die;
+// $projetPdf->Output('D', $nom);
+// header("Content-type: application/vnd.ms-word");  
+// header("Content-Disposition: attachment;Filename=".$fileName.".doc");
+// header("Pragma: no-cache");  
+// header("Expires: 0");
+// $nom = str_replace('"', "", $nom);
+// echo json_encode($nom);
 
-// PAGE DE GARDE
-$projetPdf->AddPage();
-$projetPdf->PageDeGarde($projet, $immeuble);
+// $file = "$nom";
+// $file = str_replace('"', "", $file);
 
-// CONTENU DOCUMENT PROJET AVEC TOUTES LES SECTIONS
-$projetPdf->setMargins(10, 10, 10, 10);
-$projetPdf->startPageNums();
-$projetPdf->ajouterSectionsRecursives($projet, $sections);
 
-// ADD SOMMAIRE
-$projetPdf->insertSommaire();
+// $word = "../../../public/documents/projet/projet_export/PROJET_$projet->idProjet.doc";
 
-header('Content-type: application/pdf');
+// $file2 = $projetWord->getWord("../../../public/documents/projet/projet_export/$nom", $word);
 
-//SAVE COMPTE RENDU
-$nom = __DIR__ . "/$projet->nomProjet.pdf";
-$projetPdf->Output($nom, 'F');
-$nom = str_replace('"', "", $nom);
-$file = "$nom";
-$file = str_replace('"', "", $file);
-
-echo json_encode($file);
-// $pdf->Output($file, 'I');
-
-// echo json_encode($file);
+// echo json_encode($file2);

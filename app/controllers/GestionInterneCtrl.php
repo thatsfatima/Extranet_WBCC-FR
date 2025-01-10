@@ -1,5 +1,4 @@
 <?php
-
 class GestionInterneCtrl extends Controller
 {
     public function __construct()
@@ -12,12 +11,12 @@ class GestionInterneCtrl extends Controller
         $this->contactModel = $this->model('Contact');
         // $this->artisanModel = $this->model('Artisan');
         $this->subventionModel = $this->model('Subvention');
-        $this->critereModel = $this->model('Critere');
+        // $this->critereModel = $this->model('Critere');
         $this->parametreModel = $this->model('Parametres');
+        // $this->pointageModel = $this->model('Pointage');
+        $this->roleModel = $this->model('Roles');
         $this->projetModel = $this->model('Projet');
         $this->immeubleModel = $this->model('Immeuble');
-        // $this->pointageModel = $this->model('Pointage');
-        // $this->roleModel = $this->model('Roles');
         // $this->congeModel = $this->model('Conge');
     }
 
@@ -25,7 +24,6 @@ class GestionInterneCtrl extends Controller
     {
         header("location:javascript://history.go(-1)");
     }
-
     //ROLE
     public function indexRole()
     {
@@ -36,7 +34,6 @@ class GestionInterneCtrl extends Controller
         ];
         $this->view('gestionInterne/role/indexRole', $data);
     }
-
     public function role($id = '')
     {
         $role = $this->roleModel->findByID($id);
@@ -50,7 +47,6 @@ class GestionInterneCtrl extends Controller
         ];
         $this->view('gestionInterne/role/role', $data);
     }
-
     //SUBVENTION
     public function indexSubvention()
     {
@@ -61,6 +57,7 @@ class GestionInterneCtrl extends Controller
         ];
         $this->view('gestionInterne/subvention/indexSubvention', $data);
     }
+
 
     public function subvention($id = '')
     {
@@ -251,18 +248,160 @@ class GestionInterneCtrl extends Controller
     }
 
     //DEBUT NABILA 
+    public function indexPersonnel()
+    {
+        $type = "wbcc";
+        $idContact = Role::connectedUser()->idUtilisateur;
+        $personnels = $this->userModel->getUsersByType($type);
+        $roles = $this->roleModel->getRolesByType($type);
+        $sites = $this->siteModel->getAllSites();
+        $data = [
+            "gerepresence" => linkTo('GestionInterne', 'gerepresence'),
+            "genererAvertissement" => linkTo('GestionInterne', 'genererAvertissement'),
+            "gererPaie" => linkTo('GestionInterne', 'gererPaie'),
+            "gererConges" => linkTo('GestionInterne', 'gererConges'),
+            "tbdPresence" => linkTo('GestionInterne', 'tbdPresence'),
+            "Pointer" => linkTo('GestionInterne', 'Pointer'),
+            "DemanderConge" => linkTo('GestionInterne', 'DemanderConge'),
+            "avertir" => linkTo('GestionInterne', 'avertir'),
+            "dashbord" => linkTo('GestionInterne', 'dashbord'),
+            "sites" => $sites,
+            "personnels" => $personnels,
+            "roles" => $roles,
+            "idContact" => $idContact,
+            "titre" => 'Liste des utilisateurs'
+        ];
+        $this->view('gestionInterne/personnel/indexPersonnel', $data);
+    }
+
+    public function bilanComparatif()
+    {
+        $idUtilisateur = ''; // For filtering by user
+        if (isset($_GET)) {
+            extract($_GET);
+        }
+
+        $idContact = Role::connectedUser()->idUtilisateur;
+        $contacts =   $this->userModel->getUsersByType("wbcc", 1);
+        $contactById =   $this->userModel->findUserByIdContact($idContact);
+        $matricules =   $this->userModel->getUsersByType("wbcc", 1);
+        $pointages = null;
+
+        $pointages =  $this->pointageModel->getAllWithFullName($idContact);
+
+        $data = [
+            "idUtilisateur" => $idUtilisateur,
+            "contacts"  => $contacts,
+            "contactById" => $contactById,
+            "matricules"  => $matricules,
+            "pointages" => $pointages,
+        ];
+        $this->view("gestionInterne/personnel/bilan", $data);
+    }
+
     public function gerepresence()
     {
+        $Motifjustification = '';
+        $etat = '';
+        $site = '';
+        $periode =  'today';
+        $dateOne =  ''; // For single date 'A la date du'
+        $dateDebut =  ''; // For 'Personnaliser'
+        $dateFin = ''; // For 'Personnaliser'
+        $matricule =  '';
+        $idUtilisateur = ''; // For filtering by user
+        $fullName = '';
+        $role = $_SESSION['connectedUser']->role;
+
+        if (isset($_GET)) {
+            extract($_GET);
+        }
+
+
+        $idUtilisateur == '' ?
+            $titre = 'LISTE DES POINTAGES DE TOUS LES UTILISATEURS' :
+            $titre = 'LISTE DES POINTAGES';
+
+        $totalMinuteRetard = 0;
+        $totalMinuteRetardById = 0;
+
         $idContact = Role::connectedUser()->idUtilisateur;
-        $contacts =  $this->contactModel->getAllContacts();
-        $matricules =  $this->userModel->getAll();
-        $pointages =  $this->pointageModel->getAllWithFullName($idContact);
+        $contacts =   $this->userModel->getUsersByType("wbcc", 1);
+        $contactById =  $this->userModel->findUserByIdContact($idContact);
+        $matricules =  $this->userModel->getUsersByType("wbcc", 1);
+        $pointages = null;
+        $pointagesById = $this->pointageModel->getFilteredPointageWithidUser($idContact, $Motifjustification, $etat, $periode, $dateOne, $dateDebut, $dateFin);
+
+        if ($role != 1 && $role != 2) {
+            $titre = 'LISTE DES POINTAGES';
+            $fullName = $this->userModel->findUserByIdContact($idContact)[0]->fullName;
+            $titre .= ' DE ' . $fullName;
+        }
+
+        if ($site) {
+            $titre .= ' DU SITE DE ' . "'" . $site . "'";
+        }
+
+        if ($idUtilisateur) {
+            $fullName = $this->contactModel->findById($idUtilisateur)->fullName;
+            $titre .= ' DE ' . $fullName;
+        }
+
+        if ($periode != "" && $periode != "2" && $periode != "1" && $periode != "today") {
+            $re = getPeriodDates("$periode", []);
+            if (sizeof($re) != 0) {
+                $dateOne = $re['startDate'];
+                $dateDebut = $re['startDate'];
+                $dateFin = $re['endDate'];
+            }
+            $titre .= " du " . date('d/m/Y', strtotime($dateDebut)) . " au " . date('d/m/Y', strtotime($dateFin));
+        } else {
+            if ($periode == "1") {
+                $titre .= " du " . date('d/m/Y', strtotime($dateOne));
+            } else {
+                if ($periode == "today") {
+                    $titre .= " Aujourd'hui";
+                } else {
+                    if ($periode == "2") {
+                        $titre .= " du " . date('d/m/Y', strtotime($dateDebut)) . " au " . date('d/m/Y', strtotime($dateFin));
+                    }
+                }
+            }
+        }
+
+        foreach ($pointagesById as $index => $pointage) {
+            $totalMinuteRetardById += $pointage->nbMinuteRetard;
+        }
+
+        if ($Motifjustification == "" && $etat == "" && $site == "" && $periode == "" && $dateOne == "" && $dateDebut == "" && $dateFin == "" && $matricule == "" && $idUtilisateur == "") {
+            $pointages =  $this->pointageModel->getAllWithFullName($idContact);
+            foreach ($pointages as $index => $pointage) {
+                $totalMinuteRetard += $pointage->nbMinuteRetard;
+            }
+        } else {
+            $pointages = $this->pointageModel->getFilteredPointage($Motifjustification, $etat, $site, $periode, $dateOne, $dateDebut, $dateFin, $matricule, $idUtilisateur);
+            foreach ($pointages as $index => $pointage) {
+                $totalMinuteRetard += $pointage->nbMinuteRetard;
+            }
+        }
+
+
         $data = [
+            "idUtilisateur" => $idUtilisateur,
+            "titre" => $titre,
+            "site" => $site,
+            "etat" => $etat,
+            "Motifjustification" => $Motifjustification,
+            "periode" => $periode,
             "contacts"  => $contacts,
+            "contactById" => $contactById,
             "matricules"  => $matricules,
-            "pointages" => $pointages
+            "pointages" => $pointages,
+            "pointagesById" => $pointagesById,
+            "totalMinuteRetard" => $totalMinuteRetard,
+            "totalMinuteRetardById" => $totalMinuteRetardById,
         ];
-        $this->view("gestionInterne/espaceAdmin/pointage", $data);
+        $this->view("gestionInterne/personnel/pointage", $data);
     }
 
     public function genererAvertissement()
@@ -377,79 +516,110 @@ class GestionInterneCtrl extends Controller
         $this->view("gestionInterne/espaceSalarie/acceuilSalarie", $data);
     }
 
+
+
     //FIN NABILA
 
-  //debut jawher
+    public function indexProjet()
+    {
+        $projets = $this->projetModel->getProjets();
+        $data = [
+            "projets" => $projets,
+            "titre" => "Liste des projets"
+        ];
+        $this->view('gestionInterne/projet/indexProjet', $data);
+    }
 
-  public function indexProjet()
-  {
-      $projets = $this->projetModel->getProjets();
-      $data = [
-          "projets" => $projets,
-          "titre" => "Liste des projets"
-      ];
-      $this->view('gestionInterne/projet/indexProjet', $data);
-  }
 
-  public function projet($id = '')
-  {
-        $projet = false;
-        $nom = "";
-        $description = "";
-        $immeubles= [];
-        $lots = [];
 
-        $id = $id == '' ? 0 : $id;
-        $allDocuments = [];
+    public function projet($id = '')
+    {
+        // Initialiser les variables
+        $projet = null;  // Changer false par null
+        $immeubles = $this->immeubleModel->getAllImmeublesCB();
+        $sommaire = null;
         $immeuble = null;
-        // Tous les immeubles
-        $immeubles = $this->immeubleModel->getAllImmeubles();
-        if ($id != 0 && $id != "") {
+        // Vérifier si l'ID est valide
+        $id = !empty($id) ? $id : 0;
+
+        if ($id != 0) {
             $projet = $this->projetModel->findProjetByColumnValue("idProjet", $id);
-            $immeuble = $this->immeubleModel->findImmeubleById($projet->idImmeuble);
+            $immeuble = findItemByColumn("wbcc_immeuble_cb", "idImmeuble", $projet->idImmeubleCB);
             if ($projet) {
-                $nom =$projet ->nomProjet;
-                $description =$projet ->descriptionProjet;
+                // Charger le sommaire associé au projet
+                $sommaireModel = $this->model('Sommaire');
+                $sommaire = $sommaireModel->getSommaireByProjet($id);
             } else {
+                $_SESSION['error'] = "Projet introuvable";
                 $this->redirectToMethod("GestionInterne", "indexProjet");
+                return;
             }
         }
+
+        // Préparer les données pour la vue
         $data = [
-            "projet"  => $projet,
+            "projet" => $projet ?? null,
+            "immeubles" => $immeubles,
+            "sommaire" => $sommaire,
             "immeuble" => $immeuble,
-            "immeubles" => $immeubles
+            "title" => "Gestion du projet"
         ];
-        $this->view('gestionInterne/projet/projet', $data);
-  }
 
-  public function saveProjet()
-  {
-    // print_r($_POST);
-    extract($_POST);
-    $idImmeuble = $_POST['idImmeuble'];  // Get the selected Immeuble ID
-    echo "\idProjetCTRL = $idProjet";
-    $idUser = Role::connectedUser()->idUtilisateur;
+        // Vérifier quelle vue doit être chargée
+        $view = isset($_GET['view']) && $_GET['view'] === 'sommaire'
+            ? 'gestionInterne/projet/sommaire'
+            : 'gestionInterne/projet/projet';
 
-    $projet = $this->projetModel->saveProjet($idProjet, $nomProjet, $descriptionProjet, $idImmeuble, $idUser);
-      
-    if ($projet) {
-        $idProjet = $projet->idProjet;
+        // Afficher la vue
+        $this->view($view, $data);
     }
-    
-    $this->redirectToMethod("GestionInterne", "projet", $idProjet);
-  }
-  
-  /**
-   * Supprime un projet par son ID
-   * @param int $id l'ID du projet à supprimer
-   * @return void
-   */
-  public function deleteProjetById($id)
-  {
-      // Suppression du projet
-      $this->projetModel->deleteProjetById($id);
-  
-      // Redirection vers la liste des projets
-      $this->redirectToMethod("GestionInterne", "indexProjet");
-  }
+
+    public function saveProjet()
+    {
+        // print_r($_POST);
+        extract($_POST);
+        $idImmeuble = $_POST['idImmeuble'];
+        echo "\idProjetCTRL = $idProjet";
+        $idUser = Role::connectedUser()->idUtilisateur;
+
+        if (isset($_FILES['photoImmeuble'])) {
+            try {
+                $documentCtrl = new DocumentCtrl();
+                echo "Fichier reçu : " . $_FILES['photoImmeuble']['name']; // Vérifiez le nom du fichier
+                $result = $documentCtrl->uploadFile($_FILES['photoImmeuble'], URLPHOTO);
+                
+                if ($result['success']) {
+                    $immeuble = $this->immeubleModel->updatePhotoImmeuble($idImmeuble, $result['filePath']);
+                    echo "Fichier téléchargé avec succès : " . htmlspecialchars($result['filePath']);
+                } else {
+                    echo "Erreur lors du téléchargement : " . $result['error'];
+                }
+            } catch (Exception $e) {
+                echo "Erreur lors du téléchargement : " . $e->getMessage();
+            }
+        }
+
+        $projet = $this->projetModel->saveProjet($idProjet, $nomProjet, $descriptionProjet, $idImmeuble, $idUser);
+
+        if ($projet) {
+            $idProjet = $projet->idProjet;
+        }
+
+        $this->redirectToMethod("GestionInterne", "projet", $idProjet);
+
+    }
+
+    /**
+     * Supprime un projet par son ID
+     * @param int $id l'ID du projet à supprimer
+     * @return void
+     */
+    public function deleteProjetById($id)
+    {
+        // Suppression du projet
+        $this->projetModel->deleteProjetById($id);
+
+        // Redirection vers la liste des projets
+        $this->redirectToMethod("GestionInterne", "indexProjet");
+    }
 }

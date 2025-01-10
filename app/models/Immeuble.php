@@ -2,7 +2,6 @@
 
 class Immeuble extends Model
 {
-
     public function saveImmeubleComplet(
         $idImmeuble,
         $nomImmeuble,
@@ -255,11 +254,24 @@ class Immeuble extends Model
         }
     }
 
+    public function updatePhotoImmeuble($idImmeuble, $photo)
+    {
+        $this->db->query("UPDATE wbcc_immeuble_cb SET photoImmeuble = :photo WHERE idImmeuble = $idImmeuble");
+        $this->db->bind("photo", $photo, null);
+        $this->db->execute();
+    }
+
     public function  findImmeubleById($id)
     {
         $this->db->query("SELECT * FROM wbcc_immeuble
         WHERE idImmeuble = $id");
         return $this->db->single();
+    }
+
+    public function  getAllImmeublesCB()
+    {
+        $this->db->query("SELECT * FROM wbcc_immeuble_cb WHERE etatImmeuble=1 ORDER BY codeImmeuble DESC ");
+        return $this->db->resultSet();
     }
     public function  getAllImmeubles()
     {

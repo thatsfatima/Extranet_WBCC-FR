@@ -1,0 +1,5 @@
+{
+    "require": {
+        "aspose-cloud/aspose-words-cloud": "^24.12"
+    }
+}
