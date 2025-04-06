@@ -10,6 +10,12 @@
             return new $model(); 
         }
 
+        // // Charger le controller
+        // public function controller($controller){
+        //     require_once '../app/controllers/' . $controller . '.php';
+        //     return new $controller();
+        // }
+
         //Charger la vue
         public function view($view, $data = []){
             # tester si le fichier existe

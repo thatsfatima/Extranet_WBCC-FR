@@ -34,7 +34,8 @@ $active = "red";
                 class=" text-center col-md-12 legend font-weight-bold mb-4 pt-2 shadow-02 font-weight-bold text-uppercase">
                 <i class="icofont-info-circle my-1"></i>1-Projet
             </legend>
-            <form class="mt-0 p-0" id="msform" method="POST" action="<?= linkTo("GestionInterne", "saveProjet") ?>">
+            <form class="mt-0 p-0" id="msform" method="POST" enctype="multipart/form-data"
+                action="<?= linkTo("GestionInterne", "saveProjet") ?>">
                 <div class="col-md-12 px-0 mt-0">
                     <input type="hidden" id="idImmeuble" name="idImmeuble"
                         value="<?= $projet ? "$projet->idImmeubleCB" : '' ?>">
@@ -67,7 +68,9 @@ $active = "red";
                                     <div class="d-flex flex-row rounded space-x-3">
                                         <input
                                             class="form-control rounded outline-none shadow-01 border w-75 mr-1 bg-white"
-                                            id="adresse" value="<?= $projet ? "$immeuble->adresse" : "" ?>" readonly />
+                                            id="adresse"
+                                            value="<?= $projet != null  && $immeuble != null ? "$immeuble->adresse" : "" ?>"
+                                            readonly />
                                         <button class="btn saveBtn flex space-x-3 text-white font-weight-bold w-25 px-0"
                                             onclick="onClickImmeuble()" type="button" rel="tooltip" title="Ajouter"
                                             class="btn btn btn-sm  ml-1 text-white">
@@ -88,12 +91,13 @@ $active = "red";
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 w-100">
+                        <div class="col-md-5 w-100" <?= $immeuble != null ? "" : "hidden" ?>>
                             <!-- IMAGE IMMEUBLE -->
                             <div class="col-md-12 mb-4 px-1">
-                                <label class="font-weight-bold">Photo Immeuble : <?= $immeuble->adresse ?> <a
-                                        class="btn btn-danger fs-5" target="_blank"
-                                        href='https://www.google.com/maps/place/<?= $immeuble->adresse ?>'><i
+                                <label class="font-weight-bold">Photo Immeuble :
+                                    <?= $immeuble != null ? $immeuble->adresse : "" ?> <a class="btn btn-danger fs-5"
+                                        target="_blank"
+                                        href='https://www.google.com/maps/place/<?= $immeuble != null ? $immeuble->adresse : "" ?>'><i
                                             class="fas fa-street-view"></i></a></label>
                                 <div class='form-group row w-100'>
                                     <div style=" width: 100%;
@@ -110,17 +114,17 @@ $active = "red";
                                         line-height: 180px;
                                         font-size: 20px;
                                         color: rgba(0,0,0,.3);" id="dropContainer"
-                                        style="border:1px solid black;height:100px;"
-                                        class="row height-4">
-                                        <?= $immeuble->photoImmeuble ? 
-                                        "<img src='chargerPhoto($immeuble->photoImmeuble)' alt='Photo Immeuble' class='img-fluid'>" : 
-                                        "<span class='text-muted text-center px-3'>Ajouter ici votre image ou </br> charger une image depuis votre appareil</span>" ?>
+                                        style="border:1px solid black;height:100px;" class="row height-4">
+                                        <?= $immeuble != null &&  $immeuble->photoImmeuble ?
+                                            "<img src='" . URLROOT . "/public/documents/immeuble/" . $immeuble->photoImmeuble . "' alt='Photo Immeuble' class='w-100 h-100' >" :
+                                            "<span class='text-muted text-center px-3'>Deposer ou choisir une image </span>" ?>
                                     </div>
                                     <div class="row space-x-1 ml-1" style="width: 120%;">
-                                        <input type='file' id="file" class='col-md-10 form-control' name="photoImmeuble"
-                                        accept='.jpg, .png, .jpeg, .JPG, .PNG, .JPEG'>
+                                        <input type='file' id="file" class='col-md-10 form-control' name="file"
+                                            accept='.jpg, .png, .jpeg, .JPG, .PNG, .JPEG'>
                                         <button type="button" rel="tooltip" title="Effacer la pièce jointe"
-                                            onclick="deleteFileImage()" class="flex align-items-center justify-content-center col-md-1 btn btn-danger ">
+                                            onclick="deleteFileImage()"
+                                            class="flex align-items-center justify-content-center col-md-1 btn btn-danger ">
                                             <i class="fas fa-trash" style="font-size: 100%;"></i>
                                         </button>
                                     </div>
@@ -194,6 +198,7 @@ $active = "red";
             <div class="modal-footer" <?= sizeof($immeubles) != 0 ? "" : " hidden" ?>>
                 <input type="hidden" name="idImmeubleSelected" id="idImmeubleSelected" value="">
                 <input type="hidden" name="adresseImmeubleSelected" id="adresseImmeubleSelected" value="">
+                <input type="hidden" name="photoImmeubleSelected" id="photoImmeubleSelected" value="">
                 <button type="button" onclick="saveImmeuble()"
                     class="btn btn btn-md text-white saveBtn mt-4 font-weight-bold px-3 hidden"
                     id="buttonSaveImmeuble">Valider</button>
@@ -287,7 +292,7 @@ require_once APPROOT . '/views/gestionInterne/projet/sommaire.php';
         files = [];
         docs = [];
         let ext = file1.name.split('.')[file1.name.split('.').length - 1];
-        photoImmeuble = "immeuble_" + $('#idImmeubleSelected').val() + "." + ext;
+        photoImmeuble = $('#file').val();
         files.push(file1);
         docs.push({
             numeroDocument: "",
@@ -306,7 +311,6 @@ require_once APPROOT . '/views/gestionInterne/projet/sommaire.php';
             personneANotifier: "",
             opName: $('#nameOP').val()
         })
-
 
         var f = new FileReader();
         f.readAsDataURL(file.files[0]);
@@ -330,7 +334,7 @@ require_once APPROOT . '/views/gestionInterne/projet/sommaire.php';
         $('#modalImmeuble').modal('hide');
         $('#adresse').val(adresse);
         $('#idImmeuble').val(idImmeuble);
-        $('#photoImmeuble').val(photoImmeuble);
+        $('#file').val(photoImmeuble);
     }
 
     function selectImmeuble(row) {
@@ -381,20 +385,32 @@ require_once APPROOT . '/views/gestionInterne/projet/sommaire.php';
                 doc: type,
             },
             beforeSend: function() {
-                $('#exporterModal').modal('show');
+                $('#loadingModal').modal('show');
             },
             success: function(response) {
                 console.log("exporter pdf");
                 console.log(response);
                 setTimeout(() => {
-                    popitup(response, "PROJET_RYM_INVEST", "projet/projet_export");
-                }, 1000)
+                    $('#loadingModal').modal('hide');
+                }, 1000);
+                if (response != '"0"') {
+                    if (type == "pdf") {
+                        popitup(response, "PROJET_RYM_INVEST", "projet/projet_export");
+                    } else {
+                        //document.location.href = `<?= URLROOT ?>/public/documents/projet/projet_export/` +
+                        //response;
+                    }
+                } else {
+                    $("#msgError").text(
+                        "impossible de générer le document !");
+                    $('#errorOperation').modal('show');
+                }
             },
             error: function(response) {
                 console.log("ERROR");
                 console.log(response);
                 setTimeout(() => {
-                    $('#exporterModal').modal('hide');
+                    $('#loadingModal').modal('hide');
                 }, 1000);
                 $("#msgError").text(
                     "Erreur d'enregistrement !");
@@ -402,10 +418,9 @@ require_once APPROOT . '/views/gestionInterne/projet/sommaire.php';
             },
             complete: function() {
                 setTimeout(() => {
-                    $('#exporterModal').modal('hide');
+                    $('#loadingModal').modal('hide');
                 }, 1000);
             },
         });
     }
-
 </script>

@@ -40,12 +40,12 @@ $(document).ready(function () {
     $('#confirmDelete').click(function () {
         if (projectIdToDelete) {
             $.ajax({
-                url: $('#URLROOT').val() + '/GestionInterne/deleteProjetById/' + projectIdToDelete,
+                url: $('#URLROOT').val() + '/Projet/deleteProjetById/' + projectIdToDelete,
                 type: 'POST',
                 success: function () {
                     $('#deleteProjectModal').modal('hide');
                     // Redirection vers la page de liste des projets
-                    window.location.href = $('#URLROOT').val() + '/GestionInterne/indexProjet';
+                    window.location.href = $('#URLROOT').val() + '/Projet/indexProjet';
                 },
                 error: function () {
                     $('#deleteProjectModal').modal('hide');

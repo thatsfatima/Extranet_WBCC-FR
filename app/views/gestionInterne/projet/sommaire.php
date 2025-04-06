@@ -20,25 +20,41 @@ $hasSommaire = isset($sommaire) && is_object($sommaire) && !empty($sommaire->idS
         projetId: <?php echo $projet->idProjet; ?>,
         sommaire: <?php echo $hasSommaire ? json_encode($sommaire) : 'null'; ?>,
         hasSommaire: <?php echo $hasSommaire ? 'true' : 'false'; ?>,
+        immeubleId: <?php echo $projet->idImmeubleCB; ?>, //ajout
         URLROOT: '<?= URLROOT ?>',
         routes: {
             section: {
                 getSectionsBySommaire: '<?= linkTo("Section", "getSectionsBySommaire") ?>',
                 add: '<?= linkTo("Section", "add") ?>',
                 delete: '<?= linkTo("Section", "delete") ?>',
-                updateMultiple: '<?= linkTo("Section", "updateMultiple") ?>'
+                updateMultiple: '<?= linkTo("Section", "updateMultiple") ?>',
+                updateSectionOrder: '<?= linkTo("Section", "updateSectionOrder") ?>',
+                updateAction: '<?= linkTo("Section", "updateAction") ?>'
             },
             sommaire: {
                 getAll: '<?= linkTo("Sommaire", "getAll") ?>'
             },
             sectionDocument: {
-                getAllDocuments: '<?= linkTo("Section", "getAllDocuments") ?>',
+                getAllDocumentsByIdImmeuble: '<?= linkTo("Section", "getAllDocumentsByIdImmeuble", ($projet ? $projet->idImmeubleCB : null)) ?>',
                 uploadDocument: '<?= linkTo("Section", "uploadSectionDocument") ?>',
                 linkDocument: '<?= linkTo("Section", "linkDocumentToSection") ?>',
-                getDocuments: '<?= linkTo("Section", "getSectionDocuments") ?>'
+                getDocuments: '<?= linkTo("Section", "getSectionDocuments") ?>',
+                deleteDocument: '<?= linkTo("Section", "deleteDocument") ?>'
+            },
+            sectionLots: { //ajout
+                getAllLots: '<?= linkTo("Section", "getAllLots") ?>',
+                saveSectionLotsToAcquire: '<?= linkTo("Section", "saveSectionLotsToAcquire") ?>',
+                getAllLotsToAcquire: '<?= linkTo("Section", "getAllLotsToAcquire") ?>'
+            },
+            variableSimulation: {
+                getForSection: '<?= linkTo("Section", "getVariableValuesForSection") ?>',
+                saveValue: '<?= linkTo("Section", "saveVariableValue") ?>',
+                calculate: '<?= linkTo("Section", "calculateSimulation") ?>',
+                htmlProjet: '<?= linkTo("Section", "htmlProjet") ?>'
             }
         }
     };
+
 
 
 
@@ -63,17 +79,26 @@ $hasSommaire = isset($sommaire) && is_object($sommaire) && !empty($sommaire->idS
 
 <div class="container-fluid" id="sommaire-container">
     <legend class="text-center legend font-weight-bold text-uppercase" style="margin-top: 2rem;">
-        <i class="icofont-info-circle my-1"></i>2-Sommaire 
-        <button onclick="onclickExporter('pdf')" type="button"
-            rel="tooltip" title="Ajouter" style="background-color:  darkblue;"
-            class="btn btn btn-sm text-white my-1  ml-1" data-toggle="modal" data-target="#modalCritere">
+        <i class="icofont-info-circle my-1"></i>2-Sommaire
+
+        <button onclick="onclickExporter('pdf')" type="button" rel="tooltip" title="Ajouter"
+            style="background-color:  darkblue;" class="btn btn btn-sm text-white my-1  ml-1" data-toggle="modal"
+            data-target="#modalCritere">
             <i class="fas fa-file-pdf" style="color: #ffffff"></i>
         </button>
-        <button onclick="onclickExporter('docx')" type="button"
-            rel="tooltip" title="Ajouter" style="background-color:  darkblue;"
-            class="btn btn btn-sm text-white my-1  ml-1" data-toggle="modal" data-target="#modalCritere">
-            <i class="fas fa-file-word" style="color: #ffffff"></i>
-        </button>
+        <?php
+        // if ($_SESSION['connectedUser']->role == "1") 
+        {
+        ?>
+            <button hidden onclick="onclickExporter('docx')" type="button" rel="tooltip" title="Ajouter"
+                style="background-color:  darkblue;" class="btn btn btn-sm text-white my-1  ml-1" data-toggle="modal"
+                data-target="#modalCritere">
+                <i class="fas fa-file-word" style="color: #ffffff"></i>
+            </button>
+        <?php
+        }
+        ?>
+
     </legend>
     <div class="row mb-4 mt-4" id="sommaire-row">
         <div class="col-12">
@@ -92,7 +117,7 @@ $hasSommaire = isset($sommaire) && is_object($sommaire) && !empty($sommaire->idS
                         <div class="custom-sidebar">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div class="project-info mb-4">
-                                    <h2 class="h4"><?= $sommaire ? htmlspecialchars($sommaire->titreSommaire) : "" ?></h2>
+                                    <h4 class="h6"><?= $sommaire ? htmlspecialchars($sommaire->titreSommaire) : "" ?></h4>
                                 </div>
                                 <button class="btn btn-sm btn-red" onclick="addMainSection()">
                                     <i class="fas fa-plus"></i>
@@ -340,6 +365,7 @@ $hasSommaire = isset($sommaire) && is_object($sommaire) && !empty($sommaire->idS
                     <!-- Onglet fichiers RYM -->
 
                     <div class="tab-pane fade" id="ryuFileContent">
+                        <div id="actionBarContainer" class="mb-3"></div>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped" id="documentsTable">
                                 <thead class="thead-light">
@@ -378,6 +404,7 @@ $hasSommaire = isset($sommaire) && is_object($sommaire) && !empty($sommaire->idS
 
 
 
+<script src="<?= URLROOT ?>/public/assets/js/projet/actions.js"></script>
 <script src="<?= URLROOT ?>/public/assets/js/projet/documentHandler.js"></script>
 <script src="<?= URLROOT ?>/public/assets/js/projet/sommaire.js"></script>
 <script>

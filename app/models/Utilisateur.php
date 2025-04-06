@@ -10,9 +10,13 @@
 class Utilisateur extends Model
 {
 
-    public function getUsersBySite($id)
+    public function getUsersBySite($id, $etat = "")
     {
-        $this->db->query("SELECT * FROM wbcc_contact c, wbcc_utilisateur u, wbcc_roles r WHERE c.idContact = u.idContactF AND u.role = r.idRole AND idSiteF=$id ");
+        $req = "";
+        if ($etat != "") {
+            $req .= " AND etatUser = $etat ";
+        }
+        $this->db->query("SELECT * FROM wbcc_contact c, wbcc_utilisateur u, wbcc_roles r, wbcc_site s WHERE c.idContact = u.idContactF AND u.role = r.idRole AND u.idSiteF = s.idSite AND idSiteF=$id  AND isInterne=1 $req ");
         return $this->db->resultSet();
     }
 
@@ -74,7 +78,7 @@ class Utilisateur extends Model
         return $this->db->resultSet();
     }
 
-    public function getUsersByType($type = "")
+    public function getUsersByType($type = "", $etat = "")
     {
         if ($type == 'particulier') {
             $this->db->query("
@@ -89,9 +93,13 @@ class Utilisateur extends Model
                     SELECT * FROM wbcc_contact WHERE LOWER(statutContact) like '%locataire%' ");
                 } else {
                     if ($type == "wbcc") {
+                        $req = "";
+                        if ($etat != "") {
+                            $req .= " AND etatUser = $etat ";
+                        }
                         $this->db->query("
                         SELECT * FROM wbcc_contact c, wbcc_utilisateur u, wbcc_roles r, wbcc_site s
-                        WHERE c.idContact = u.idContactF AND u.idSiteF=s.idSite AND u.role = r.idRole AND isInterne=1 ORDER BY c.fullName ASC");
+                        WHERE c.idContact = u.idContactF AND u.idSiteF=s.idSite AND u.role = r.idRole AND isInterne=1 $req  ORDER BY c.fullName ASC");
                     }
                 }
             }
@@ -243,7 +251,7 @@ class Utilisateur extends Model
 
     public function getUserByRole($role)
     {
-        if ($_SESSION["connectedUser"]->libelleRole == "Manager de Site") {
+        if ($_SESSION["connectedUser"]->role == "25") {
             $idSite = $_SESSION["connectedUser"]->idSiteF;
             $this->db->query("SELECT * FROM wbcc_utilisateur u, wbcc_roles r, wbcc_contact c, wbcc_site s  WHERE libelleRole='$role' 
                 AND u.role = r.idRole
@@ -265,9 +273,14 @@ class Utilisateur extends Model
         return $this->db->resultSet();
     }
 
-    public function getUserByidsRoles($idRole1, $idRole2 = "", $type = "", $idSite = "")
+    public function getUserByidsRoles($idRole1, $idRole2 = "", $type = "", $idSite = "", $idUser = "")
     {
         $req = $idRole2 != "" ? " OR role=$idRole2 " :  "";
+
+        if ($type == "artisan") {
+            $req .= " OR role=14 OR role=15 ";
+        }
+
         if ($type == "expert") {
             $req .= " OR isExpert=1 ";
         }
@@ -277,15 +290,21 @@ class Utilisateur extends Model
         }
         $req2 = "";
 
-        if ($idSite != "") {
+        if ($type == "commercial") {
+            $req .= " OR isCommercial=1 ";
+        }
+        if (($type == "gestionnaire" && $idSite != "")) {
             $req2 .= " AND u.idSiteF = $idSite ";
         }
+        if ($idUser != "") {
+            $req2 .= " AND idUtilisateur=$idUser ";
+        }
 
-        if ($_SESSION["connectedUser"]->libelleRole == "Manager de Site") {
+        if ($_SESSION["connectedUser"]->role == "25") {
             $idSite = $_SESSION["connectedUser"]->idSiteF;
             $this->db->query("SELECT * FROM wbcc_utilisateur u, wbcc_roles r, wbcc_contact c, wbcc_site s WHERE (role=$idRole1 $req ) $req2
             AND u.role = r.idRole
-            AND u.idSiteF = s.idSite AND u.idSiteF = $idSite
+            AND u.idSiteF = s.idSite $req2
             AND u.idContactF= c.idContact AND etatUser=1 ");
         } else {
             if ($_SESSION["connectedUser"]->typeCompany == "ARTISAN") {

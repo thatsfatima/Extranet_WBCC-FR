@@ -115,6 +115,21 @@ if ($response == true) {
 
 </body>
 <script>
+    function popitup(url, name, lien = "") {
+    let url2 = url.replaceAll('"', '');
+    let uri = ""
+    if (lien == "") {
+        uri = "opportunite/" + url2;
+    } else {
+        uri = lien + "/" + url2;
+    }
+    let newwindow = window.open(("<?= URLROOT ?>" + '/public/documents/' + uri), name,
+        'height=900,width=1000');
+    if (window.focus) {
+        newwindow.focus()
+    }
+    return false;
+}
     function copy() {
         window.location.href = "tel:+33980084484";
     }

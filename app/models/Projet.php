@@ -63,17 +63,17 @@ class Projet extends Model
 
         // Mise à jour ou insertion du projet dans la base de données
         if ($idProjet != null && $idProjet != "" && $idProjet != "0") {
-            $this->db->query("UPDATE wbcc_projet SET nomProjet=:nomProjet, descriptionProjet=:descriptionProjet, idImmeubleCB=:idImmeubleCB, numeroProjet=:numeroProjet WHERE idProjet=:idProjet");
+            $this->db->query("UPDATE wbcc_projet SET nomProjet=:nomProjet, descriptionProjet=:descriptionProjet, idImmeubleF=:idImmeubleF, numeroProjet=:numeroProjet WHERE idProjet=:idProjet");
             $this->db->bind("idProjet", $idProjet);
         } else {
-            $this->db->query("INSERT INTO wbcc_projet(nomProjet, descriptionProjet, idImmeubleCB, createDate, numeroProjet) VALUES (:nomProjet, :descriptionProjet, :idImmeubleCB, :createDate, :numeroProjet)");
+            $this->db->query("INSERT INTO wbcc_projet(nomProjet, descriptionProjet, idImmeubleF, createDate, numeroProjet) VALUES (:nomProjet, :descriptionProjet, :idImmeubleF, :createDate, :numeroProjet)");
             $this->db->bind("createDate", date("Y-m-d H:i:s"));
         }
 
         // Ajout des bindings communs
         $this->db->bind("nomProjet", $nomProjet);
         $this->db->bind("descriptionProjet", $descriptionProjet);
-        $this->db->bind("idImmeubleCB", $idImmeuble);
+        $this->db->bind("idImmeubleF", $idImmeuble);
         $this->db->bind("numeroProjet", $numeroProjet);
 
         // Exécute la requête et retourne le projet enregistré ou false en cas d'échec
@@ -81,7 +81,7 @@ class Projet extends Model
             if ($idProjet != null && $idProjet != "" && $idProjet != "0") {
                 return $this->findProjetByColumnValue("idProjet", $idProjet);
             } else {
-                return $this->findProjetByColumnValue("nomProjet", $nomProjet);
+                return $this->findProjetByColumnValue("numeroProjet", $numeroProjet);
             }
         } else {
             return false;

@@ -61,10 +61,17 @@ function chargerPhoto($photo)
 {
     if (file_exists(URLPHOTO . 'profil/' . $photo)) {
         return URLROOT . '/public/img/profil/' . $photo;
-    } else if (file_exists(URLPHOTO . 'immeubles/' . $photo)) {
-        return URLROOT . '/public/img/immeubles/' . $photo;
     } else {
         return URLROOT . '/public/img/profil/default.jpg';
+    }
+}
+
+function chargerImageImmeuble($photo)
+{
+    if (file_exists(URLPHOTO . 'immeubles/' . $photo)) {
+        return URLROOT . '/public/img/immeubles/' . $photo;
+    } else {
+        return URLROOT . '/public/img/immeubles/default.jpg';
     }
 }
 
@@ -702,7 +709,7 @@ function getModulesByIdUserAndIdRole($user, $idRole = null)
     $tab = [];
     $db->query("SELECT * FROM wbcc_module");
     $modules = $db->resultSet();
-
+    
     foreach ($modules as $key => $module) {
         $db->query("SELECT * FROM wbcc_sous_module WHERE idModuleF=$module->idModule");
         $sousModules = $db->resultSet();

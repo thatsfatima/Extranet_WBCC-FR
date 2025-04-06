@@ -43,6 +43,28 @@ class Sommaire extends Model
         }
     }
 
+    public function sommaireForRT($rt)
+    {
+        $idRT = $rt->idRT;
+
+        $this->db->query("SELECT * FROM wbcc_sommaire WHERE idRTF = $idRT");
+        $sommaire = $this->db->single();
+
+        if ($sommaire) {
+            return $sommaire;
+        }
+
+        $this->db->query("INSERT INTO wbcc_sommaire (numeroSommaire, titreSommaire, idRTF) VALUES (:numeroSommaire, :titreSommaire, :idRTF)");
+        $this->db->bind(':numeroSommaire', $rt->numeroRT);
+        $this->db->bind(':titreSommaire', "" . $rt->numeroRT . " - " . $rt->numeroOP);
+        $this->db->bind(':idRTF', $idRT);
+        $this->db->execute();
+
+        $this->db->query("SELECT * FROM wbcc_sommaire WHERE idRTF = $idRT LIMIT 1");
+        $sommaire = $this->db->single();
+        
+        return $sommaire;
+    }
 
     public function updateSommaire($id, $data)
     {
@@ -163,5 +185,29 @@ class Sommaire extends Model
             error_log("Erreur lors de la copie du sommaire avec sections: " . $e->getMessage());
             return false;
         }
+    }
+
+    // Tableau global prévisionnel
+    public function updateHtmlTPG($idSommaire, $html)
+    {
+        $this->db->query("UPDATE {$this->table} SET htmlTPG = :html WHERE idSommaire = :idSommaire");
+        $this->db->bind(':html', $html);
+        $this->db->bind(':idSommaire', $idSommaire);
+        return $this->db->execute();
+    }
+
+    public function getHtmlTPG($idSommaire)
+    {
+        $this->db->query("SELECT htmlTPG FROM {$this->table} WHERE idSommaire = :idSommaire");
+        $this->db->bind(':idSommaire', $idSommaire);
+        $result = $this->db->single();
+        return $result ? $result->htmlTPG : null;
+    }
+
+    public function clearHtmlTPG($idSommaire)
+    {
+        $this->db->query("UPDATE {$this->table} SET htmlTPG = NULL WHERE idSommaire = :idSommaire");
+        $this->db->bind(':idSommaire', $idSommaire);
+        return $this->db->execute();
     }
 }

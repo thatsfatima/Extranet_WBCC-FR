@@ -4,6 +4,7 @@ let mockData = {
     titreSommaire: null,
     sections: []
 };
+let spreadsheet;
 let sommaires = [];
 let activeSection = null;
 
@@ -17,7 +18,7 @@ $(document).ready(function () {
     }
 });
 
-// Chargement des sections depuis la base de données// Modification de la fonction loadSectionsFromDatabase
+// Chargement des sections depuis la base de données
 function loadSectionsFromDatabase() {
     if (!CONFIG.sommaire) {
         console.log('Sommaire is null');
@@ -25,17 +26,19 @@ function loadSectionsFromDatabase() {
     }
 
     $.ajax({
-        url: CONFIG.routes.section.getSectionsBySommaire,
+        url: URLROOT + '/public/json/section.php?action=getSectionsBySommaire&idSommaire=' + CONFIG.sommaire.idSommaire,
         method: 'GET',
-        data: {
-            idSommaire: CONFIG.sommaire.idSommaire
-        },
-        dataType: 'json',
+        dataType: 'JSON',
         success: function (response) {
-            if (response.sections) {
+            console.log("response success");
+            console.log(response);
+
+            if (response.length != 0) {
                 // Mettre à jour les numéros avant l'affichage
-                mockData.sections = updateAllSectionNumbers(response.sections);
-                mockData.titreSommaire = response.titreSommaire;
+                mockData.sections = updateAllSectionNumbers(response);
+
+                mockData.titreSommaire = CONFIG.sommaire.titreSommaire;
+
                 displaySectionsTree(mockData.sections);
 
                 // Restaurer la section active si elle existe
@@ -62,8 +65,9 @@ function loadSectionsFromDatabase() {
                 $('#sections-tree').html('<p class="text-muted text-center">Aucune section trouvée</p>');
             }
         },
-        error: function (xhr, status, error) {
-            console.error('Erreur lors du chargement des sections:', error);
+        error: function (response) {
+            console.error('Erreur lors du chargement des sections:');
+            console.error(response);
             $('#sections-tree').html(
                 '<div class="alert alert-danger">Erreur lors du chargement des sections</div>'
             );
@@ -71,9 +75,12 @@ function loadSectionsFromDatabase() {
     });
 }
 
+
+
 // Affichage des sections dans le menu déroulant
 function displaySectionsTree(sections, parentId = null, level = 0) {
-    // Filtrer les sections du niveau courant
+    // Filtrer les sections du niveau courantù
+
     let currentLevelSections = sections.filter(s => {
         if (parentId == null) {
             return !s.idSection_parentF;
@@ -83,7 +90,6 @@ function displaySectionsTree(sections, parentId = null, level = 0) {
 
     // Trier les sections par leur numéro
     currentLevelSections.sort((a, b) => {
-        // Convertir les numéros de section en tableau de nombres
         const aNumbers = a.numeroSection.split('.').map(Number);
         const bNumbers = b.numeroSection.split('.').map(Number);
 
@@ -102,42 +108,83 @@ function displaySectionsTree(sections, parentId = null, level = 0) {
 
     currentLevelSections.forEach((section, index) => {
         const hasSubsections = sections.some(s => s.idSection_parentF == section.idSection);
+        activeSectionId = section.idSection
+        // Récupérer la section active depuis le localStorage
+        const activeSection = localStorage.getItem('activeSection');
+
+        // Déterminer si cette section ou l'une de ses parents est active
+        let isActiveOrParent = false;
+        let currentSection = section;
+        while (currentSection) {
+            if (currentSection.idSection == activeSection) {
+                isActiveOrParent = true;
+                break;
+            }
+            currentSection = sections.find(s => s.idSection == currentSection.idSection_parentF);
+        }
 
         html += `
-            <div class="section-item" data-section-id="${section.idSection}">
-                <div class="d-flex align-items-center">
-                    ${hasSubsections ? `
-                        <div class="section-toggle mr-2" onclick="toggleSubsections(event, this)">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    ` : '<div style="width: 20px;"></div>'}
-                    <div class="flex-grow-1" onclick="showSection(${section.idSection})">
-                        <span class="mr-2">${section.numeroSection}</span>
-                        ${section.titreSection}
-                    </div>
-                    <div class="section-actions">
-                        <button class="btn btn-sm btn-link" onclick="event.stopPropagation(); addSubSection(${section.idSection})" title="Ajouter une sous-section">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <button class="btn btn-sm btn-link text-danger" onclick="event.stopPropagation(); deleteSection(${section.idSection})" title="Supprimer la section">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
+        <div class="section-item" data-section-id="${section.idSection}">
+            <div class="d-flex align-items-center">
                 ${hasSubsections ? `
-                    <div class="subsections">
-                        ${displaySectionsTree(sections, section.idSection, level + 1)}
+                    <div class="section-toggle mr-2" onclick="toggleSubsections(event, this)">
+                        <i class="fas fa-chevron-${isActiveOrParent ? 'down' : 'right'}"></i>
                     </div>
-                ` : ''}
+                ` : '<div style="width: 20px;"></div>'}
+                <div class="flex-grow-1" onclick="showSection(${section.idSection})">
+                    <span class="mr-2">${section.numeroSection}</span>
+                    ${section.titreSection}
+                </div>
+                <div class="section-actions">
+                    <button class="btn btn-sm btn-link" onclick="event.stopPropagation(); addSubSection(${section.idSection})" title="Ajouter une sous-section">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="btn btn-sm btn-link text-danger" onclick="event.stopPropagation(); deleteSection(${section.idSection})" title="Supprimer la section">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </div>
-        `;
+            ${hasSubsections ? `
+                <div class="subsections ${isActiveOrParent ? '' : 'collapsed'}">
+                    ${displaySectionsTree(sections, section.idSection, level + 1)}
+                </div>
+            ` : ''}
+        </div>
+    `;
     });
 
+    // Si on est au niveau racine (level 0), initialiser le DOM
     if (level == 0) {
-        $('#sections-tree').html(html || '<p class="text-muted text-center">Aucune section trouvée</p>');
+        const rootDropZone = `
+        <div class="root-drop-zone" data-level="root">
+            ${html || '<p class="text-muted text-center">Aucune section trouvée</p>'}
+        </div>
+    `;
+
+        $('#sections-tree').html(rootDropZone);
     }
+
     return html;
 }
+
+/**
+ * Supprime les colonnes vides d'un tableau de données
+ * @param {array} data - Le tableau de données
+ */
+function removeEmptyColumns(data) {
+    let maxColumns = 0;
+    for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+            if (data[i][j] !== "") {
+                maxColumns = Math.max(maxColumns, j + 1);
+            }
+        }
+    }
+    for (let i = 0; i < data.length; i++) {
+        data[i] = data[i].slice(0, maxColumns); // Garder seulement les colonnes avec des données
+    }
+}
+
 // Fonction pour afficher ou masquer les sous-sections
 function toggleSubsections(event, element) {
     event.stopPropagation();
@@ -153,10 +200,87 @@ function triggerFileUpload(sectionId) {
 }
 
 
+function toggleContent(idSection) {
+    const toggleSwitch = document.getElementById('toggleSwitch-' + idSection);
+    const texteDiv = document.getElementById('text-section-content');
+    const tableDiv = document.getElementById('tableur-section-content');
+    const toggleLabel = document.getElementById('toggleLabel-' + idSection);
+
+    if (toggleSwitch.checked) {
+        toggleSwitch.value = 'tableur';
+        texteDiv.style.display = 'none';
+        tableDiv.style.display = 'block';
+        toggleLabel.innerText = "Tableur";
+    } else {
+        toggleSwitch.value = 'editeur';
+        texteDiv.style.display = 'block';
+        tableDiv.style.display = 'none';
+        toggleLabel.innerText = "Editeur";
+    }
+}
+
+function convertHTMLToSpreadsheetData(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const rows = doc.querySelectorAll('tr');
+    const tableData = [];
+
+    rows.forEach(row => {
+        const rowData = [];
+        row.querySelectorAll('td').forEach(cell => {
+            rowData.push(cell.textContent.trim());
+        });
+        tableData.push(rowData);
+    });
+
+    return tableData;
+}
+
+function getComptes() {
+    $.ajax({
+        url: URLROOT + '/public/json/lot.php?action=getComptesByImmeuble&idImmeuble=' + CONFIG.immeubleId,
+        method: 'GET',
+        dataType: 'JSON',
+        success: function (response) {
+            // console.log("response success");
+            // console.log(response);
+            if (response.length != 0) {
+                return response;
+            }
+        },
+        error: function (response) {
+            console.error('Erreur lors du chargement des sections:');
+            console.error(response);
+        }
+    });
+}
+
+function getCCTPGlobal() {
+    let cctpGlobal = [];
+    $.ajax({
+        url: URLROOT + '/public/json/cctp.php?action=getLinesCCTPForImmeuble&idImmeuble=' + CONFIG.immeubleId + "&type=global&idProjet=" + $('#idProjet').val(),
+        method: 'GET',
+        dataType: 'json',
+        success: (response) => {
+            console.log("response cctp G");
+            console.log(response);
+            let html = '';
+            if (response) {
+                return response;
+            }
+
+        },
+        error: (response) => {
+            console.error('Erreur lors du chargement du cctp:', response);
+        }
+    });
+}
+
 // Affichage d'une section
 function showSection(sectionId) {
     const section = mockData.sections.find(s => s.idSection == sectionId);
     if (!section) return;
+    console.log('Section', section);
 
     // Sauvegarder l'ID de la section active
     localStorage.setItem('activeSection', sectionId);
@@ -175,6 +299,7 @@ function showSection(sectionId) {
                     <h4>${section.numeroSection} - ${section.titreSection}</h4>
                 </div>
                 <div class="btn-group">
+                    ${Actions.generateActionSelect(section.idSection)}
                     <button class="btn btn-sm btn-outline-secondary" onclick="triggerFileUpload(${section.idSection})">
                         <i class="fas fa-upload"></i> Document
                     </button>
@@ -201,10 +326,49 @@ function showSection(sectionId) {
 
             <div class="form-group">
                 <label>Contenu de la section</label>
-                <textarea class="form-control tinymce-editor" 
-                          id="section-content-${section.idSection}"
-                          data-section-id="${section.idSection}"
-                          rows="3">${section.contenuSection || ''}</textarea>
+                <div id="text-section-content">
+                    <textarea class="form-control tinymce-editor" 
+                              id="section-content-${section.idSection}"
+                              data-section-id="${section.idSection}"
+                              rows="3">${section.contenuSection || ''}</textarea>
+                </div>
+            </div>
+
+             <!-- Section des lots (initialement cachée) -->
+            <div id="lots-section-${sectionId}" class="lots-section mt-4">
+                <div class="lots-header mb-3">
+                  <!--   <h5>Lots associés</h5> -->
+                </div>
+                <div id="lots-container-${sectionId}" class="lots-container">
+                    <!-- Les lots seront chargés ici -->
+                </div>
+            </div>
+
+             <!-- Section des CCTP (initialement cachée) -->
+            <div id="cctp-section-${sectionId}" class="cctp-section mt-4">
+                <div class="cctp-header mb-3">
+                  <!--   <h5>CCTP associés</h5> -->
+                </div>
+                <div id="cctp-container-${sectionId}" class="cctp-container">
+                    <!-- Les CCTP seront chargés ici -->
+                </div>
+            </div>
+             <!-- Section des CCTP (initialement cachée) -->
+            <div id="cctpGlobal-section-${sectionId}" class="cctp-section mt-4">
+                <div class="cctp-header mb-3">
+                  <!--   <h5>CCTP associés</h5> -->
+                </div>
+                <div id="cctpGlobal-container-${sectionId}" class="cctp-container">
+                    <!-- Les CCTP seront chargés ici -->
+                </div>
+            </div>
+             <div id="situation-copro-section-${sectionId}" class="situation-copro-section mt-4">
+                <div class="situation-copro-header mb-3">
+                  <!--   <h5>Situation des Copros</h5> -->
+                </div>
+                <div id="situation-copro-container-${sectionId}" class="situation-copro-container">
+                    <!-- Les lots seront chargés ici -->
+                </div>
             </div>
         </div>
     `;
@@ -212,19 +376,56 @@ function showSection(sectionId) {
     $('#section-content').html(html);
     initializeTinyMCE();
 
+    // Charger les lots immédiatement
+    if (section.action == 'tousLots') {
+        console.log('Section avec action tousLots - chargement automatique des lots');
+        Actions.loadLots(section.idSection, 'tousLots');
+        $(`#lots-section-${section.idSection}`).show();
+    } else if (section.action == 'lotAcquerir') {
+        console.log('Section avec action lotAcquerir - chargement automatique des lots');
+        Actions.loadLots(section.idSection, 'lotAcquerir');
+        $(`#lots-section-${section.idSection}`).show();
+    } else if (section.action == 'lotAssocie') {
+        console.log('Section avec action lotAssocie - chargement automatique des variables');
+        Actions.loadLots(section.idSection);
+        $(`#lots-section-${section.idSection}`).show();
+    } else if (section.action == 'cctp') {
+        console.log('Section avec action CCTP - chargement automatique des variables');
+        $(`#cctp-section-${section.idSection}`).show();
+        displayArticlesAcquireTable(section.articles, section.idSection);
+    } else if (section.action == 'tpg') {
+        console.log('Section avec action tpg - chargement automatique du tableau prévisionnel global');
+        Actions.loadLots(section.idSection);
+        $(`#lots-section-${section.idSection}`).show();
+    } else if (section.action == 'cctpG') {
+        console.log('Section avec action CCTP Global - chargement');
+        $(`#cctpGlobal-section-${section.idSection}`).show();
+        displayCCTPGlobal(section.idSection); //Changer
+    } else if (section.action == 'situationCopro') {
+        console.log('Section avec action SITUATION COPRO - chargement');
+        $(`#situation-copro-section-${section.idSection}`).show();
+        displaySituationCopro(section.idSection); //Changer
+    }
+
+
     // Ajouter les écouteurs d'événements pour la sauvegarde automatique
     $(`#section-title-${section.idSection}`).on('blur', function () {
-        saveSection(section.idSection, true); // true indique une sauvegarde automatique
+        saveSection(section.idSection, true);
     });
 
     // Pour TinyMCE, on écoute l'événement de changement
     tinymce.get(`section-content-${section.idSection}`).on('blur', function () {
-        saveSection(section.idSection, true); // true indique une sauvegarde automatique
+        saveSection(section.idSection, true);
+    });
+
+    // Écouteur pour le select des actions
+    $('.form-select').on('change', function () {
+        const action = $(this).val();
+        if (action == 'tous' || action == 'acquerir') {
+            $(`#lots-section-${section.idSection}`).show();
+        }
     });
 }
-
-
-
 
 // Gestion du formulaire de création de section
 $('#createSectionForm').on('submit', function (e) {
@@ -267,7 +468,7 @@ $('#createSectionForm').on('submit', function (e) {
                 $('input[name="titreSection"]').val('');
             }
         },
-        error: function (xhr, status, error) {
+        error: function (response) {
             console.error('Erreur lors de la création de la section:', error);
             if (xhr.status == 200) {
                 $('#createSectionModal').modal('hide');
@@ -304,6 +505,7 @@ function showCreateSommaireModal(e) {
 function addMainSection() {
     $('#parentSectionId').val('');
     calculateSectionNumber(null);
+
     $('#createSectionModal').modal('show');
 }
 
@@ -325,6 +527,7 @@ function calculateSectionNumber(parentId) {
         // Pour une section principale
         const mainSections = sections.filter(s => !s.idSection_parentF);
         numeroSection = (mainSections.length + 1).toString();
+
     } else {
         // Pour une sous-section
         const parentSection = sections.find(s => parseInt(s.idSection) == parseInt(parentId));
@@ -380,13 +583,86 @@ function selectSection(sectionId) {
 
 
 // Sauvegarde d'une section
+// function saveSection(sectionId, isAutoSave = false) {
+//     const section = {
+//         idSection: sectionId,
+//         titreSection: $(`#section-title-${sectionId}`).val().trim(),
+//         numeroSection: mockData.sections.find(s => s.idSection == sectionId).numeroSection,
+//         typeContenu: $(`#toggleSwitch-${sectionId}`).val()
+//     };
+//     // console.log(" Sauvegarde de la section", section);
+
+//     // console.log(JSON.stringify({
+//     //     sections: [section]
+//     // }));
+//     $.ajax({
+//         url: CONFIG.routes.section.updateMultiple,
+//         method: 'POST',
+//         contentType: 'application/json',
+//         data: JSON.stringify({
+//             sections: [section]
+//         }),
+//         success: function (response) {
+//             if (response.success) {
+//                 // Mettre à jour les données locales
+//                 const sectionIndex = mockData.sections.findIndex(s => s.idSection == sectionId);
+//                 if (sectionIndex !== -1) {
+//                     mockData.sections[sectionIndex] = { ...mockData.sections[sectionIndex], ...section };
+//                 }
+
+//                 // Rafraîchir l'arborescence
+//                 displaySectionsTree(mockData.sections);
+
+//                 // Afficher la confirmation seulement si ce n'est pas une sauvegarde automatique
+//                 if (!isAutoSave) {
+//                     $('#saveConfirmationModal').modal('show');
+//                     setTimeout(function () {
+//                         $('#saveConfirmationModal').modal('hide');
+//                     }, 800);
+//                 }
+//             } else {
+//                 alert('Erreur lors de la sauvegarde: ' + (response.error || 'Erreur inconnue'));
+//             }
+//         },
+//         error: function (response) {
+//             alert('Erreur lors de la sauvegarde: ' + error);
+//         }
+//     });
+// }
+
+function initializeTableSaveButton(sectionId) {
+    $(`#btnSaveTab-${sectionId}`).off('click').on('click', function () {
+        console.log("Bouton de sauvegarde du tableur cliqué");
+        saveSection(sectionId, false);
+    });
+}
+
+
 function saveSection(sectionId, isAutoSave = false) {
+    const currentSection = mockData.sections.find(s => s.idSection == sectionId);
+
+    // Définir 'editeur' comme type de contenu par défaut
+    const typeContenu = 'editeur';
+
+    // Construction de l'objet section en préservant les données existantes
     const section = {
         idSection: sectionId,
         titreSection: $(`#section-title-${sectionId}`).val().trim(),
-        contenuSection: tinymce.get(`section-content-${sectionId}`).getContent(),
-        numeroSection: mockData.sections.find(s => s.idSection == sectionId).numeroSection
+        numeroSection: currentSection.numeroSection,
+        typeContenu: typeContenu,
+        contenuSection: currentSection.contenuSection,
+        contenuSectionTableur: currentSection.contenuSectionTableur
     };
+
+    // Utiliser TinyMCE comme éditeur par défaut
+    try {
+        section.contenuSection = tinymce.get(`section-content-${sectionId}`).getContent();
+        // Garder l'ancien contenuSectionTableur tel quel
+    } catch (e) {
+        console.error("Erreur lors de la récupération du contenu TinyMCE:", e);
+    }
+
+    console.log("Données à envoyer:", section);
 
     $.ajax({
         url: CONFIG.routes.section.updateMultiple,
@@ -396,17 +672,13 @@ function saveSection(sectionId, isAutoSave = false) {
             sections: [section]
         }),
         success: function (response) {
+            console.log("Réponse du serveur:", response);
             if (response.success) {
-                // Mettre à jour les données locales
                 const sectionIndex = mockData.sections.findIndex(s => s.idSection == sectionId);
                 if (sectionIndex !== -1) {
                     mockData.sections[sectionIndex] = { ...mockData.sections[sectionIndex], ...section };
                 }
 
-                // Rafraîchir l'arborescence
-                displaySectionsTree(mockData.sections);
-
-                // Afficher la confirmation seulement si ce n'est pas une sauvegarde automatique
                 if (!isAutoSave) {
                     $('#saveConfirmationModal').modal('show');
                     setTimeout(function () {
@@ -414,18 +686,35 @@ function saveSection(sectionId, isAutoSave = false) {
                     }, 800);
                 }
             } else {
+                console.error("Erreur lors de la sauvegarde:", response.error);
                 alert('Erreur lors de la sauvegarde: ' + (response.error || 'Erreur inconnue'));
             }
         },
-        error: function (xhr, status, error) {
+        error: function (response) {
+            console.error("Erreur AJAX:", error);
+            console.error("Status:", status);
+            console.error("Réponse:", xhr.responseText);
             alert('Erreur lors de la sauvegarde: ' + error);
         }
     });
 }
 
+function convertSpreadsheetDataToHTML(data) {
+    let tableHTML = '<table class="spreadsheet-table">\n<tbody>\n';
+
+    data.forEach(row => {
+        tableHTML += '<tr>\n';
+        row.forEach(cell => {
+            tableHTML += `<td>${cell || ''}</td>\n`;
+        });
+        tableHTML += '</tr>\n';
+    });
+
+    tableHTML += '</tbody>\n</table>';
+    return tableHTML;
+}
 
 // Affichage des sections
-
 function displaySections(sections, parentId = null, level = 0) {
     function getNextNumber(parentSection) {
         const siblings = sections.filter(s => {
@@ -490,6 +779,7 @@ function displaySections(sections, parentId = null, level = 0) {
                     <div class="section-number mr-2">${section.numeroSection}</div>
                     <div class="section-title flex-grow-1">${section.titreSection}</div>
                     <div class="section-actions">
+                       
                         <button class="btn btn-sm btn-link" 
                                 onclick="event.stopPropagation(); addSubSection(${section.idSection})"
                                 title="Ajouter une sous-section">
@@ -522,7 +812,6 @@ function displaySections(sections, parentId = null, level = 0) {
     return html;
 }
 
-
 // Fonction pour initialiser TinyMCE
 function initializeTinyMCE() {
     tinymce.remove();
@@ -536,7 +825,7 @@ function initializeTinyMCE() {
         plugins: [
             'lists link image code table'
         ],
-        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link | table',
+        toolbar: 'undo redo | fontselect fontsizeselect | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | table ',
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
     });
 }
@@ -594,7 +883,7 @@ function initializeTinyMCE() {
 //                 $('#errorModal').modal('show');
 //             }
 //         },
-//         error: function (xhr, status, error) {s
+//         error: function (response) {s
 //             console.error('Erreur AJAX:', {
 //                 status: status,
 //                 error: error,
@@ -627,13 +916,12 @@ function deleteSection(sectionId) {
         .modal('show');
 }
 
-
 // Fonction pour confirmer la suppression
 $('#confirmDeleteBtn').click(function () {
     const sectionId = $('#deleteSectionModal').data('sectionId');
 
     // Logs avant la suppression
-    console.log('========== DÉBUT SUPPRESSION ==========');
+    console.log('===== DÉBUT SUPPRESSION =====');
     console.log('Tentative de suppression section ID:', sectionId);
     console.log('Section à supprimer:', mockData.sections.find(s => s.idSection == sectionId));
     console.log('URL qui sera appelée:', CONFIG.routes.section.delete + '/' + sectionId);
@@ -646,17 +934,17 @@ $('#confirmDeleteBtn').click(function () {
         method: 'POST',
         dataType: 'json',
         beforeSend: function () {
-            console.log('========== ENVOI REQUÊTE ==========');
+            console.log('===== ENVOI REQUÊTE =====');
             console.log('Envoi requête DELETE pour section:', sectionId);
         },
         success: function (response) {
-            console.log('========== RÉPONSE SERVEUR ==========');
+            console.log('===== RÉPONSE SERVEUR =====');
             console.log('Réponse brute du serveur:', response);
             console.log('Type de la réponse:', typeof response);
             console.log('URL appelée:', CONFIG.routes.section.delete + '/' + sectionId);
 
             if (!response || response.success) {
-                console.log('========== SUPPRESSION LOCALE ==========');
+                console.log('===== SUPPRESSION LOCALE =====');
 
                 function removeSection(sections, id) {
                     console.log('Début removeSection pour ID:', id);
@@ -695,9 +983,9 @@ $('#confirmDeleteBtn').click(function () {
                     $('#section-content').empty();
                 }
 
-                console.log('========== FIN SUPPRESSION RÉUSSIE ==========');
+                console.log('===== FIN SUPPRESSION RÉUSSIE =====');
             } else {
-                console.log('========== ERREUR SUPPRESSION ==========');
+                console.log('===== ERREUR SUPPRESSION =====');
                 console.error('Détails de l\'erreur:', {
                     response: response,
                     error: response.error,
@@ -708,8 +996,8 @@ $('#confirmDeleteBtn').click(function () {
                 $('#errorModal').modal('show');
             }
         },
-        error: function (xhr, status, error) {
-            console.log('========== ERREUR AJAX ==========');
+        error: function (response) {
+            console.log('===== ERREUR AJAX =====');
             console.error('Détails erreur AJAX:', {
                 xhr: xhr,
                 status: status,
@@ -739,20 +1027,32 @@ $('#confirmDeleteBtn').click(function () {
 
 // Fonction pour recalculer tous les numéros de sections
 function updateAllSectionNumbers(sections) {
-    // Trie les sections principales
-    const mainSections = sections.filter(s => !s.idSection_parentF);
-    mainSections.sort((a, b) => {
-        const aNum = parseInt(a.numeroSection.split('.')[0]);
-        const bNum = parseInt(b.numeroSection.split('.')[0]);
-        return aNum - bNum;
-    });
+    // Fonction récursive pour mettre à jour les numéros
+    function updateNumbers(parentId) {
+        // Récupérer toutes les sections du même niveau
+        const levelSections = sections.filter(s =>
+            (!parentId && !s.idSection_parentF) ||
+            (s.idSection_parentF == parentId)
+        );
 
-    // Met à jour les numéros des sections principales
-    mainSections.forEach((section, index) => {
-        section.numeroSection = (index + 1).toString();
-        updateSubSectionNumbers(section, sections);
-    });
+        // Mettre à jour les numéros pour ce niveau
+        levelSections.forEach((section, index) => {
+            if (!parentId) {
+                // Sections principales
+                section.numeroSection = (index + 1).toString();
+            } else {
+                // Sous-sections
+                const parentSection = sections.find(s => s.idSection == parentId);
+                section.numeroSection = `${parentSection.numeroSection}.${index + 1}`;
+            }
 
+            // Récursivement mettre à jour les sous-sections
+            updateNumbers(section.idSection);
+        });
+    }
+
+    // Commencer par le niveau racine
+    updateNumbers(null);
     return sections;
 }
 
@@ -776,3 +1076,278 @@ function updateSubSectionNumbers(parentSection, allSections) {
         updateSubSectionNumbers(section, allSections);
     });
 }
+
+// Initialisation du drag and drop dans displaySectionsTree
+function initializeDragAndDrop() {
+    $('.section-item').attr('draggable', true)
+        .on('dragstart', function (e) {
+            e.stopPropagation();
+            e.originalEvent.dataTransfer.setData('application/x-section-id', $(this).data('section-id'));
+            $(this).addClass('dragging');
+        })
+        .on('dragover', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const rect = this.getBoundingClientRect();
+            const midY = (rect.bottom + rect.top) / 2;
+            const mouseY = e.clientY;
+            const threshold = 10; // Zone en pixels pour détecter le drop à l'intérieur
+
+            $(this).removeClass('drag-over-top drag-over-bottom drag-over-inside');
+
+            if (Math.abs(mouseY - midY) <= threshold) {
+                // Si on est proche du milieu, c'est un drop à l'intérieur
+                $(this).addClass('drag-over-inside');
+            } else if (mouseY < midY) {
+                // Au-dessus du milieu
+                $(this).addClass('drag-over-top');
+            } else {
+                // En-dessous du milieu
+                $(this).addClass('drag-over-bottom');
+            }
+        })
+        .on('dragleave', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('drag-over-top drag-over-bottom drag-over-inside');
+        })
+        .on('drop', async function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const draggedId = e.originalEvent.dataTransfer.getData('application/x-section-id');
+            const targetId = $(this).data('section-id');
+
+            if (!draggedId || draggedId == targetId) {
+                $(this).removeClass('drag-over-top drag-over-bottom drag-over-inside');
+                return;
+            }
+
+            const rect = this.getBoundingClientRect();
+            const midY = (rect.bottom + rect.top) / 2;
+            const mouseY = e.clientY;
+            const threshold = 10;
+
+            let dropType = 'after';
+            if (Math.abs(mouseY - midY) <= threshold) {
+                dropType = 'inside';
+            } else if (mouseY < midY) {
+                dropType = 'before';
+            }
+
+            if (await canMoveSection(draggedId, targetId)) {
+                await moveSection(draggedId, targetId, dropType);
+            }
+
+            $(this).removeClass('drag-over-top drag-over-bottom drag-over-inside');
+        });
+
+    // Zone de drop racine pour le niveau principal
+    $('.root-drop-zone').on('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).addClass('drag-over');
+    })
+        .on('dragleave', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('drag-over');
+        })
+        .on('drop', async function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const draggedId = e.originalEvent.dataTransfer.getData('application/x-section-id');
+            if (draggedId) {
+                await moveSection(draggedId, null, 'root');
+            }
+            $(this).removeClass('drag-over');
+        });
+}
+// Rendre les éléments draggable
+function makeItemsDraggable() {
+    $('.section-item').attr('draggable', true);
+}
+
+// Vérifier si le déplacement est possible
+function canMoveSection(draggedId, targetId) {
+    // Vérification des IDs
+    if (!draggedId || !targetId) {
+        console.error('IDs invalides');
+        return false;
+    }
+
+    // Récupération des sections
+    const draggedSection = mockData.sections.find(s => s.idSection == draggedId);
+    const targetSection = mockData.sections.find(s => s.idSection == targetId);
+
+    // Vérifications de base
+    if (!draggedSection || !targetSection) {
+        console.error('Sections non trouvées');
+        return false;
+    }
+
+    // Éviter de déplacer une section vers elle-même
+    if (draggedId == targetId) {
+        return false;
+    }
+
+    // Éviter de déplacer une section parent vers un de ses enfants
+    let currentParent = targetSection;
+    while (currentParent) {
+        if (currentParent.idSection == draggedId) {
+            return false;
+        }
+        currentParent = mockData.sections.find(s => s.idSection == currentParent.idSection_parentF);
+    }
+
+    return true;
+}
+
+// Vérifier si une section est parent d'une autre
+function isParentOf(potentialParent, child, sections) {
+    if (!child || !potentialParent) return false;
+
+    let current = child;
+    while (current.idSection_parentF) {
+        if (current.idSection_parentF == potentialParent.idSection) {
+            return true;
+        }
+        current = sections.find(s => s.idSection == current.idSection_parentF);
+    }
+    return false;
+}
+
+// Déplacer une section
+async function moveSection(draggedId, targetId, dropType) {
+    if (!draggedId) {
+        console.error('ID de section manquant');
+        return;
+    }
+
+    const draggedSection = mockData.sections.find(s => s.idSection == draggedId);
+    const targetSection = targetId ? mockData.sections.find(s => s.idSection == targetId) : null;
+
+    if (!draggedSection) {
+        console.error('Section source non trouvée');
+        return;
+    }
+
+    // Sauvegarder l'ancien état
+    const oldParentId = draggedSection.idSection_parentF;
+    const oldNumeroSection = draggedSection.numeroSection;
+
+    try {
+        // Gérer les différents types de déplacement
+        switch (dropType) {
+            case 'inside':
+                // Déplacer comme sous-section
+                draggedSection.idSection_parentF = targetId;
+                break;
+
+            case 'root':
+                // Déplacer au niveau racine
+                draggedSection.idSection_parentF = null;
+                break;
+
+            case 'before':
+            case 'after':
+                // Conserver le même parent que la cible
+                draggedSection.idSection_parentF = targetSection.idSection_parentF;
+
+                // Retirer la section de sa position actuelle
+                const sections = mockData.sections.filter(s => s.idSection != draggedId);
+
+                // Trouver l'index d'insertion
+                const targetIndex = sections.findIndex(s => s.idSection == targetId);
+                const insertIndex = dropType == 'before' ? targetIndex : targetIndex + 1;
+
+                // Insérer à la nouvelle position
+                sections.splice(insertIndex, 0, draggedSection);
+                mockData.sections = sections;
+                break;
+        }
+
+        // Mettre à jour les numéros
+        mockData.sections = updateAllSectionNumbers(mockData.sections);
+
+        // Préparer les données pour la mise à jour
+        const updateData = {
+            sections: mockData.sections.map(section => ({
+                idSection: section.idSection,
+                idSection_parentF: section.idSection_parentF,
+                numeroSection: section.numeroSection
+            }))
+        };
+
+        console.log('Données envoyées au serveur:', updateData);
+
+        const response = await $.ajax({
+            url: CONFIG.routes.section.updateSectionOrder,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(updateData)
+        });
+
+        if (!response.success) {
+            throw new Error(response.error || 'Erreur lors de la mise à jour');
+        }
+
+        displaySectionsTree(mockData.sections);
+        // initializeDragAndDrop();
+
+    } catch (error) {
+        console.error('Erreur lors du déplacement:', error);
+
+        // Restaurer l'état précédent
+        draggedSection.idSection_parentF = oldParentId;
+        draggedSection.numeroSection = oldNumeroSection;
+        mockData.sections = updateAllSectionNumbers(mockData.sections);
+
+        displaySectionsTree(mockData.sections);
+        // initializeDragAndDrop();
+
+        alert('Erreur lors du déplacement de la section');
+    }
+}
+
+// Styles CSS pour le drag and drop
+// const styles = `
+// .section-item {
+//     cursor: move;
+//     transition: background-color 0.2s ease;
+// }
+
+// .section-item.dragging {
+//     opacity: 0.5;
+// }
+
+// .section-item.drag-over {
+//     background-color: rgba(0, 123, 255, 0.1);
+//     border: 1px dashed #007bff;
+// }
+// `;
+
+// Ajouter les styles au document
+// const styleSheet = document.createElement('style');
+// styleSheet.textContent = styles;
+// document.head.appendChild(styleSheet);
+
+
+
+// Fonction utilitaire pour afficher les notifications
+// function showNotification(type, message) {
+//     const notifDiv = document.createElement('div');
+//     notifDiv.className = `alert alert-${type == 'success' ? 'success' : 'danger'} position-fixed`;
+//     notifDiv.style.top = '20px';
+//     notifDiv.style.right = '20px';
+//     notifDiv.style.zIndex = '9999';
+//     notifDiv.innerHTML = message;
+
+//     document.body.appendChild(notifDiv);
+
+//     setTimeout(() => {
+//         notifDiv.remove();
+//     }, 3000);
+// }

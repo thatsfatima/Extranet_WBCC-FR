@@ -19,6 +19,108 @@ class SommaireCtrl extends Controller
         ]);
     }
 
+    public function updateHtmlTPG()
+    {
+        ob_clean();
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                if (!isset($_POST['sommaireId']) || !isset($_POST['html'])) {
+                    throw new Exception('Paramètres manquants');
+                }
+
+                $sommaireId = $_POST['sommaireId'];
+                $html = $_POST['html'];
+
+                if ($this->sommaireModel->updateHtmlTPG($sommaireId, $html)) {
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'HTML TPG mis à jour avec succès'
+                    ]);
+                } else {
+                    throw new Exception('Erreur lors de la mise à jour du HTML TPG');
+                }
+            } catch (Exception $e) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Méthode non autorisée'
+            ]);
+        }
+        exit();
+    }
+
+    public function getHtmlTPG()
+    {
+        ob_clean();
+        header('Content-Type: application/json');
+
+        // Vérifier si 'sommaireId' existe dans la requête
+        if (!isset($_GET['sommaireId'])) {
+            echo json_encode([
+                'success' => false,
+                'error' => 'ID du sommaire manquant'
+            ]);
+            exit();
+        }
+
+        $sommaireId = $_GET['sommaireId'];
+
+        // Récupérer l'HTML sans utiliser try-catch
+        $html = $this->sommaireModel->getHtmlTPG($sommaireId);
+
+        echo json_encode([
+            'success' => true,
+            'data' => [
+                'html' => $html
+            ]
+        ]);
+        exit();
+    }
+
+    public function clearHtmlTPG()
+    {
+        ob_clean();
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                if (!isset($_POST['sommaireId'])) {
+                    throw new Exception('ID du sommaire manquant');
+                }
+
+                $sommaireId = $_POST['sommaireId'];
+
+                // Mettre htmlTPG à NULL dans la base de données
+                if ($this->sommaireModel->clearHtmlTPG($sommaireId)) {
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'HTML TPG effacé avec succès'
+                    ]);
+                } else {
+                    throw new Exception('Erreur lors de l\'effacement du HTML TPG');
+                }
+            } catch (Exception $e) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'success' => false,
+                'error' => 'Méthode non autorisée'
+            ]);
+        }
+        exit();
+    }
+
     public function getAll()
     {
         $this->view = false;
@@ -89,23 +191,23 @@ class SommaireCtrl extends Controller
                 $newSommaireId = $this->sommaireModel->copySommaireWithSections($sourceSommaireId, $data);
                 if ($newSommaireId) {
                     $_SESSION['success'] = "Sommaire et ses sections copiés avec succès";
-                    $this->redirectToMethod('GestionInterne', 'projet', $data['idProjetF']);
+                    $this->redirectToMethod('Projet', 'projet', $data['idProjetF']);
                 } else {
                     $_SESSION['error'] = "Erreur lors de la copie du sommaire";
-                    $this->redirectToMethod('GestionInterne', 'projet', $data['idProjetF']);
+                    $this->redirectToMethod('Projet', 'projet', $data['idProjetF']);
                 }
             } else {
                 // Création d'un sommaire vide
                 if ($this->sommaireModel->create($data)) {
                     $_SESSION['success'] = "Sommaire créé avec succès";
-                    $this->redirectToMethod('GestionInterne', 'projet', $data['idProjetF']);
+                    $this->redirectToMethod('Projet', 'projet', $data['idProjetF']);
                 } else {
                     $_SESSION['error'] = "Erreur lors de la création du sommaire";
-                    $this->redirectToMethod('GestionInterne', 'projet', $data['idProjetF']);
+                    $this->redirectToMethod('Projet', 'projet', $data['idProjetF']);
                 }
             }
         } else {
-            $this->redirectToMethod('GestionInterne', 'projet');
+            $this->redirectToMethod('Projet', 'projet');
         }
     }
 

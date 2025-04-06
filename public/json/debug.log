@@ -1,0 +1,2353 @@
+Array
+(
+    [idSommaire] => 45 
+    [sections] => Array
+        (
+            [0] => Array
+                (
+                    [titreSection] => Introduction
+                    [numeroSection] => 
+                    [idSection_parentF] => 
+                )
+
+            [1] => Array
+                (
+                    [titreSection] => Photo Immeuble
+                    [numeroSection] => 1-
+                    [idSection_parentF] => 
+                )
+
+            [2] => Array
+                (
+                    [titreSection] => Contexte
+                    [numeroSection] => 2-
+                    [idSection_parentF] => 
+                )
+
+            [3] => Array
+                (
+                    [titreSection] => Deroulement de la séance
+                    [numeroSection] => 3-
+                    [idSection_parentF] => 
+                )
+
+            [4] => Array
+                (
+                    [titreSection] => Detail des dégradations
+                    [numeroSection] => 4-
+                    [idSection_parentF] => 
+                )
+
+            [5] => Array
+                (
+                    [titreSection] => Piéce 1 : Cuisine-1
+                    [numeroSection] => 4-1-1
+                    [idSection_parentF] => 4
+                )
+
+            [6] => Array
+                (
+                    [titreSection] => Commentaire Cuisine-1
+                    [numeroSection] => 4-1-2
+                    [idSection_parentF] => 4
+                )
+
+            [7] => Array
+                (
+                    [titreSection] => Commentaire sur les supports de la piéce
+                    [numeroSection] => 4-1-3
+                    [idSection_parentF] => 4
+                )
+
+            [8] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés de la piéce
+                    [numeroSection] => 4-1-4
+                    [idSection_parentF] => 4
+                )
+
+            [9] => Array
+                (
+                    [titreSection] => Cuisine-1 : PLAFOND
+                    [numeroSection] => 4-1-2-1
+                    [idSection_parentF] => 8
+                )
+
+            [10] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du PLAFOND
+                    [numeroSection] => 4-1-2-2
+                    [idSection_parentF] => 9
+                )
+
+            [11] => Array
+                (
+                    [titreSection] => Commentaire sur le PLAFOND
+                    [numeroSection] => 4-1-2-3
+                    [idSection_parentF] => 9
+                )
+
+            [12] => Array
+                (
+                    [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                    [numeroSection] => 4-1-3-1
+                    [idSection_parentF] => 9
+                )
+
+            [13] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                    [numeroSection] => 4-1-3-2
+                    [idSection_parentF] => 12
+                )
+
+            [14] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_1 Sinistré
+                    [numeroSection] => 4-1-3-3
+                    [idSection_parentF] => 12
+                )
+
+            [15] => Array
+                (
+                    [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                    [numeroSection] => 4-1-4-1
+                    [idSection_parentF] => 12
+                )
+
+            [16] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                    [numeroSection] => 4-1-4-2
+                    [idSection_parentF] => 15
+                )
+
+            [17] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_2 Sinistré
+                    [numeroSection] => 4-1-4-3
+                    [idSection_parentF] => 15
+                )
+
+            [18] => Array
+                (
+                    [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                    [numeroSection] => 4-1-5-1
+                    [idSection_parentF] => 15
+                )
+
+            [19] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                    [numeroSection] => 4-1-5-2
+                    [idSection_parentF] => 18
+                )
+
+            [20] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_3 Sinistré
+                    [numeroSection] => 4-1-5-3
+                    [idSection_parentF] => 18
+                )
+
+            [21] => Array
+                (
+                    [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                    [numeroSection] => 4-1-6-1
+                    [idSection_parentF] => 18
+                )
+
+            [22] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                    [numeroSection] => 4-1-6-2
+                    [idSection_parentF] => 21
+                )
+
+            [23] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                    [numeroSection] => 4-1-6-3
+                    [idSection_parentF] => 21
+                )
+
+            [24] => Array
+                (
+                    [titreSection] => Piéce 2 : Chambre-1
+                    [numeroSection] => 4-2-1
+                    [idSection_parentF] => 4
+                )
+
+            [25] => Array
+                (
+                    [titreSection] => Commentaire Chambre-1
+                    [numeroSection] => 4-2-2
+                    [idSection_parentF] => 4
+                )
+
+            [26] => Array
+                (
+                    [titreSection] => Commentaire sur les supports de la piéce
+                    [numeroSection] => 4-2-3
+                    [idSection_parentF] => 4
+                )
+
+            [27] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés de la piéce
+                    [numeroSection] => 4-2-4
+                    [idSection_parentF] => 4
+                )
+
+            [28] => Array
+                (
+                    [titreSection] => Chambre-1 : MUR_1 Sinistré
+                    [numeroSection] => 4-2-2-1
+                    [idSection_parentF] => 27
+                )
+
+            [29] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                    [numeroSection] => 4-2-2-2
+                    [idSection_parentF] => 28
+                )
+
+            [30] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_1 Sinistré
+                    [numeroSection] => 4-2-2-3
+                    [idSection_parentF] => 28
+                )
+
+            [31] => Array
+                (
+                    [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                    [numeroSection] => 4-2-3-1
+                    [idSection_parentF] => 28
+                )
+
+            [32] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                    [numeroSection] => 4-2-3-2
+                    [idSection_parentF] => 31
+                )
+
+            [33] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                    [numeroSection] => 4-2-3-3
+                    [idSection_parentF] => 31
+                )
+
+            [34] => Array
+                (
+                    [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                    [numeroSection] => 4-2-4-1
+                    [idSection_parentF] => 31
+                )
+
+            [35] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                    [numeroSection] => 4-2-4-2
+                    [idSection_parentF] => 34
+                )
+
+            [36] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                    [numeroSection] => 4-2-4-3
+                    [idSection_parentF] => 34
+                )
+
+            [37] => Array
+                (
+                    [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                    [numeroSection] => 4-2-5-1
+                    [idSection_parentF] => 34
+                )
+
+            [38] => Array
+                (
+                    [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                    [numeroSection] => 4-2-5-2
+                    [idSection_parentF] => 37
+                )
+
+            [39] => Array
+                (
+                    [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                    [numeroSection] => 4-2-5-3
+                    [idSection_parentF] => 37
+                )
+
+            [40] => Array
+                (
+                    [titreSection] => Commentaire et Circonstances du Sinistre
+                    [numeroSection] => 5-
+                    [idSection_parentF] => 
+                )
+
+        )
+
+)
+Array
+(
+    [raw_post_data] => {"idSommaire":"45 ","sections":[{"titreSection":"Photo Immeuble","numeroSection":"1-","idSection_parentF":null},{"titreSection":"Contexte","numeroSection":"2-","idSection_parentF":null},{"titreSection":"Deroulement de la séance","numeroSection":"3-","idSection_parentF":null},{"titreSection":"Detail des dégradations","numeroSection":"4-","idSection_parentF":null},{"titreSection":"Piéce 1 : Cuisine-1","numeroSection":"4-1-1","idSection_parentF":4},{"titreSection":"Commentaire Cuisine-1","numeroSection":"4-1-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-1-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-1-4","idSection_parentF":4},{"titreSection":"Cuisine-1 : PLAFOND","numeroSection":"4-1-2-1","idSection_parentF":8},{"titreSection":"Commentaire sur les métrés du PLAFOND","numeroSection":"4-1-2-2","idSection_parentF":9},{"titreSection":"Commentaire sur le PLAFOND","numeroSection":"4-1-2-3","idSection_parentF":9},{"titreSection":"Cuisine-1 : MUR_1 Sinistré","numeroSection":"4-1-3-1","idSection_parentF":9},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-1-3-2","idSection_parentF":12},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-1-3-3","idSection_parentF":12},{"titreSection":"Cuisine-1 : MUR_2 Sinistré","numeroSection":"4-1-4-1","idSection_parentF":12},{"titreSection":"Commentaire sur les métrés du MUR_2 Sinistré","numeroSection":"4-1-4-2","idSection_parentF":15},{"titreSection":"Commentaire sur le MUR_2 Sinistré","numeroSection":"4-1-4-3","idSection_parentF":15},{"titreSection":"Cuisine-1 : MUR_3 Sinistré","numeroSection":"4-1-5-1","idSection_parentF":15},{"titreSection":"Commentaire sur les métrés du MUR_3 Sinistré","numeroSection":"4-1-5-2","idSection_parentF":18},{"titreSection":"Commentaire sur le MUR_3 Sinistré","numeroSection":"4-1-5-3","idSection_parentF":18},{"titreSection":"Cuisine-1 : MUR_4 Non Sinistré","numeroSection":"4-1-6-1","idSection_parentF":18},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-1-6-2","idSection_parentF":21},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-1-6-3","idSection_parentF":21},{"titreSection":"Piéce 2 : Chambre-1","numeroSection":"4-2-1","idSection_parentF":4},{"titreSection":"Commentaire Chambre-1","numeroSection":"4-2-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-2-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-2-4","idSection_parentF":4},{"titreSection":"Chambre-1 : MUR_1 Sinistré","numeroSection":"4-2-2-1","idSection_parentF":27},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-2-2-2","idSection_parentF":28},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-2-2-3","idSection_parentF":28},{"titreSection":"Chambre-1 : MUR_2 Non Sinistré","numeroSection":"4-2-3-1","idSection_parentF":28},{"titreSection":"Commentaire sur les métrés du MUR_2 Non Sinistré","numeroSection":"4-2-3-2","idSection_parentF":31},{"titreSection":"Commentaire sur le MUR_2 Non Sinistré","numeroSection":"4-2-3-3","idSection_parentF":31},{"titreSection":"Chambre-1 : MUR_3 Non Sinistré","numeroSection":"4-2-4-1","idSection_parentF":31},{"titreSection":"Commentaire sur les métrés du MUR_3 Non Sinistré","numeroSection":"4-2-4-2","idSection_parentF":34},{"titreSection":"Commentaire sur le MUR_3 Non Sinistré","numeroSection":"4-2-4-3","idSection_parentF":34},{"titreSection":"Chambre-1 : MUR_4 Non Sinistré","numeroSection":"4-2-5-1","idSection_parentF":34},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-2-5-2","idSection_parentF":37},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-2-5-3","idSection_parentF":37},{"titreSection":"Commentaire et Circonstances du Sinistre","numeroSection":"5-","idSection_parentF":null}]}
+    [decoded_data] => Array
+        (
+            [idSommaire] => 45 
+            [sections] => Array
+                (
+                    [0] => Array
+                        (
+                            [titreSection] => Photo Immeuble
+                            [numeroSection] => 1-
+                            [idSection_parentF] => 
+                        )
+
+                    [1] => Array
+                        (
+                            [titreSection] => Contexte
+                            [numeroSection] => 2-
+                            [idSection_parentF] => 
+                        )
+
+                    [2] => Array
+                        (
+                            [titreSection] => Deroulement de la séance
+                            [numeroSection] => 3-
+                            [idSection_parentF] => 
+                        )
+
+                    [3] => Array
+                        (
+                            [titreSection] => Detail des dégradations
+                            [numeroSection] => 4-
+                            [idSection_parentF] => 
+                        )
+
+                    [4] => Array
+                        (
+                            [titreSection] => Piéce 1 : Cuisine-1
+                            [numeroSection] => 4-1-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [5] => Array
+                        (
+                            [titreSection] => Commentaire Cuisine-1
+                            [numeroSection] => 4-1-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [6] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-1-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [7] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-1-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [8] => Array
+                        (
+                            [titreSection] => Cuisine-1 : PLAFOND
+                            [numeroSection] => 4-1-2-1
+                            [idSection_parentF] => 8
+                        )
+
+                    [9] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du PLAFOND
+                            [numeroSection] => 4-1-2-2
+                            [idSection_parentF] => 9
+                        )
+
+                    [10] => Array
+                        (
+                            [titreSection] => Commentaire sur le PLAFOND
+                            [numeroSection] => 4-1-2-3
+                            [idSection_parentF] => 9
+                        )
+
+                    [11] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-1
+                            [idSection_parentF] => 9
+                        )
+
+                    [12] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-2
+                            [idSection_parentF] => 12
+                        )
+
+                    [13] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-3
+                            [idSection_parentF] => 12
+                        )
+
+                    [14] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-1
+                            [idSection_parentF] => 12
+                        )
+
+                    [15] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-2
+                            [idSection_parentF] => 15
+                        )
+
+                    [16] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-3
+                            [idSection_parentF] => 15
+                        )
+
+                    [17] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-1
+                            [idSection_parentF] => 15
+                        )
+
+                    [18] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-2
+                            [idSection_parentF] => 18
+                        )
+
+                    [19] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-3
+                            [idSection_parentF] => 18
+                        )
+
+                    [20] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-1
+                            [idSection_parentF] => 18
+                        )
+
+                    [21] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-2
+                            [idSection_parentF] => 21
+                        )
+
+                    [22] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-3
+                            [idSection_parentF] => 21
+                        )
+
+                    [23] => Array
+                        (
+                            [titreSection] => Piéce 2 : Chambre-1
+                            [numeroSection] => 4-2-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [24] => Array
+                        (
+                            [titreSection] => Commentaire Chambre-1
+                            [numeroSection] => 4-2-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [25] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-2-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [26] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-2-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [27] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-1
+                            [idSection_parentF] => 27
+                        )
+
+                    [28] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-2
+                            [idSection_parentF] => 28
+                        )
+
+                    [29] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-3
+                            [idSection_parentF] => 28
+                        )
+
+                    [30] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-1
+                            [idSection_parentF] => 28
+                        )
+
+                    [31] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-2
+                            [idSection_parentF] => 31
+                        )
+
+                    [32] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-3
+                            [idSection_parentF] => 31
+                        )
+
+                    [33] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-1
+                            [idSection_parentF] => 31
+                        )
+
+                    [34] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-2
+                            [idSection_parentF] => 34
+                        )
+
+                    [35] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-3
+                            [idSection_parentF] => 34
+                        )
+
+                    [36] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-1
+                            [idSection_parentF] => 34
+                        )
+
+                    [37] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-2
+                            [idSection_parentF] => 37
+                        )
+
+                    [38] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-3
+                            [idSection_parentF] => 37
+                        )
+
+                    [39] => Array
+                        (
+                            [titreSection] => Commentaire et Circonstances du Sinistre
+                            [numeroSection] => 5-
+                            [idSection_parentF] => 
+                        )
+
+                )
+
+        )
+
+    [server_response] => Script atteint ici
+)
+Array
+(
+    [raw_post_data] => {"idSommaire":"45 ","sections":[{"titreSection":"Photo Immeuble","numeroSection":"1-","idSection_parentF":null},{"titreSection":"Contexte","numeroSection":"2-","idSection_parentF":null},{"titreSection":"Deroulement de la séance","numeroSection":"3-","idSection_parentF":null},{"titreSection":"Detail des dégradations","numeroSection":"4-","idSection_parentF":null},{"titreSection":"Piéce 1 : Cuisine-1","numeroSection":"4-1-1","idSection_parentF":4},{"titreSection":"Commentaire Cuisine-1","numeroSection":"4-1-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-1-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-1-4","idSection_parentF":4},{"titreSection":"Cuisine-1 : PLAFOND","numeroSection":"4-1-2-1","idSection_parentF":8},{"titreSection":"Commentaire sur les métrés du PLAFOND","numeroSection":"4-1-2-2","idSection_parentF":9},{"titreSection":"Commentaire sur le PLAFOND","numeroSection":"4-1-2-3","idSection_parentF":9},{"titreSection":"Cuisine-1 : MUR_1 Sinistré","numeroSection":"4-1-3-1","idSection_parentF":9},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-1-3-2","idSection_parentF":12},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-1-3-3","idSection_parentF":12},{"titreSection":"Cuisine-1 : MUR_2 Sinistré","numeroSection":"4-1-4-1","idSection_parentF":12},{"titreSection":"Commentaire sur les métrés du MUR_2 Sinistré","numeroSection":"4-1-4-2","idSection_parentF":15},{"titreSection":"Commentaire sur le MUR_2 Sinistré","numeroSection":"4-1-4-3","idSection_parentF":15},{"titreSection":"Cuisine-1 : MUR_3 Sinistré","numeroSection":"4-1-5-1","idSection_parentF":15},{"titreSection":"Commentaire sur les métrés du MUR_3 Sinistré","numeroSection":"4-1-5-2","idSection_parentF":18},{"titreSection":"Commentaire sur le MUR_3 Sinistré","numeroSection":"4-1-5-3","idSection_parentF":18},{"titreSection":"Cuisine-1 : MUR_4 Non Sinistré","numeroSection":"4-1-6-1","idSection_parentF":18},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-1-6-2","idSection_parentF":21},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-1-6-3","idSection_parentF":21},{"titreSection":"Piéce 2 : Chambre-1","numeroSection":"4-2-1","idSection_parentF":4},{"titreSection":"Commentaire Chambre-1","numeroSection":"4-2-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-2-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-2-4","idSection_parentF":4},{"titreSection":"Chambre-1 : MUR_1 Sinistré","numeroSection":"4-2-2-1","idSection_parentF":27},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-2-2-2","idSection_parentF":28},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-2-2-3","idSection_parentF":28},{"titreSection":"Chambre-1 : MUR_2 Non Sinistré","numeroSection":"4-2-3-1","idSection_parentF":28},{"titreSection":"Commentaire sur les métrés du MUR_2 Non Sinistré","numeroSection":"4-2-3-2","idSection_parentF":31},{"titreSection":"Commentaire sur le MUR_2 Non Sinistré","numeroSection":"4-2-3-3","idSection_parentF":31},{"titreSection":"Chambre-1 : MUR_3 Non Sinistré","numeroSection":"4-2-4-1","idSection_parentF":31},{"titreSection":"Commentaire sur les métrés du MUR_3 Non Sinistré","numeroSection":"4-2-4-2","idSection_parentF":34},{"titreSection":"Commentaire sur le MUR_3 Non Sinistré","numeroSection":"4-2-4-3","idSection_parentF":34},{"titreSection":"Chambre-1 : MUR_4 Non Sinistré","numeroSection":"4-2-5-1","idSection_parentF":34},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-2-5-2","idSection_parentF":37},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-2-5-3","idSection_parentF":37},{"titreSection":"Commentaire et Circonstances du Sinistre","numeroSection":"5-","idSection_parentF":null}]}
+    [decoded_data] => Array
+        (
+            [idSommaire] => 45 
+            [sections] => Array
+                (
+                    [0] => Array
+                        (
+                            [titreSection] => Photo Immeuble
+                            [numeroSection] => 1-
+                            [idSection_parentF] => 
+                        )
+
+                    [1] => Array
+                        (
+                            [titreSection] => Contexte
+                            [numeroSection] => 2-
+                            [idSection_parentF] => 
+                        )
+
+                    [2] => Array
+                        (
+                            [titreSection] => Deroulement de la séance
+                            [numeroSection] => 3-
+                            [idSection_parentF] => 
+                        )
+
+                    [3] => Array
+                        (
+                            [titreSection] => Detail des dégradations
+                            [numeroSection] => 4-
+                            [idSection_parentF] => 
+                        )
+
+                    [4] => Array
+                        (
+                            [titreSection] => Piéce 1 : Cuisine-1
+                            [numeroSection] => 4-1-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [5] => Array
+                        (
+                            [titreSection] => Commentaire Cuisine-1
+                            [numeroSection] => 4-1-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [6] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-1-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [7] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-1-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [8] => Array
+                        (
+                            [titreSection] => Cuisine-1 : PLAFOND
+                            [numeroSection] => 4-1-2-1
+                            [idSection_parentF] => 8
+                        )
+
+                    [9] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du PLAFOND
+                            [numeroSection] => 4-1-2-2
+                            [idSection_parentF] => 9
+                        )
+
+                    [10] => Array
+                        (
+                            [titreSection] => Commentaire sur le PLAFOND
+                            [numeroSection] => 4-1-2-3
+                            [idSection_parentF] => 9
+                        )
+
+                    [11] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-1
+                            [idSection_parentF] => 9
+                        )
+
+                    [12] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-2
+                            [idSection_parentF] => 12
+                        )
+
+                    [13] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-3
+                            [idSection_parentF] => 12
+                        )
+
+                    [14] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-1
+                            [idSection_parentF] => 12
+                        )
+
+                    [15] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-2
+                            [idSection_parentF] => 15
+                        )
+
+                    [16] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-3
+                            [idSection_parentF] => 15
+                        )
+
+                    [17] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-1
+                            [idSection_parentF] => 15
+                        )
+
+                    [18] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-2
+                            [idSection_parentF] => 18
+                        )
+
+                    [19] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-3
+                            [idSection_parentF] => 18
+                        )
+
+                    [20] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-1
+                            [idSection_parentF] => 18
+                        )
+
+                    [21] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-2
+                            [idSection_parentF] => 21
+                        )
+
+                    [22] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-3
+                            [idSection_parentF] => 21
+                        )
+
+                    [23] => Array
+                        (
+                            [titreSection] => Piéce 2 : Chambre-1
+                            [numeroSection] => 4-2-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [24] => Array
+                        (
+                            [titreSection] => Commentaire Chambre-1
+                            [numeroSection] => 4-2-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [25] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-2-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [26] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-2-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [27] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-1
+                            [idSection_parentF] => 27
+                        )
+
+                    [28] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-2
+                            [idSection_parentF] => 28
+                        )
+
+                    [29] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-3
+                            [idSection_parentF] => 28
+                        )
+
+                    [30] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-1
+                            [idSection_parentF] => 28
+                        )
+
+                    [31] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-2
+                            [idSection_parentF] => 31
+                        )
+
+                    [32] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-3
+                            [idSection_parentF] => 31
+                        )
+
+                    [33] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-1
+                            [idSection_parentF] => 31
+                        )
+
+                    [34] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-2
+                            [idSection_parentF] => 34
+                        )
+
+                    [35] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-3
+                            [idSection_parentF] => 34
+                        )
+
+                    [36] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-1
+                            [idSection_parentF] => 34
+                        )
+
+                    [37] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-2
+                            [idSection_parentF] => 37
+                        )
+
+                    [38] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-3
+                            [idSection_parentF] => 37
+                        )
+
+                    [39] => Array
+                        (
+                            [titreSection] => Commentaire et Circonstances du Sinistre
+                            [numeroSection] => 5-
+                            [idSection_parentF] => 
+                        )
+
+                )
+
+        )
+
+    [server_response] => Script atteint ici
+)
+Array
+(
+    [raw_post_data] => {"idSommaire":"45 ","sections":[{"titreSection":"Photo Immeuble","numeroSection":"1-","idSection_parentF":null},{"titreSection":"Contexte","numeroSection":"2-","idSection_parentF":null},{"titreSection":"Deroulement de la séance","numeroSection":"3-","idSection_parentF":null},{"titreSection":"Detail des dégradations","numeroSection":"4-","idSection_parentF":null},{"titreSection":"Piéce 1 : Cuisine-1","numeroSection":"4-1-1","idSection_parentF":4},{"titreSection":"Commentaire Cuisine-1","numeroSection":"4-1-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-1-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-1-4","idSection_parentF":4},{"titreSection":"Cuisine-1 : PLAFOND","numeroSection":"4-1-2-1","idSection_parentF":8},{"titreSection":"Commentaire sur les métrés du PLAFOND","numeroSection":"4-1-2-2","idSection_parentF":9},{"titreSection":"Commentaire sur le PLAFOND","numeroSection":"4-1-2-3","idSection_parentF":9},{"titreSection":"Cuisine-1 : MUR_1 Sinistré","numeroSection":"4-1-3-1","idSection_parentF":9},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-1-3-2","idSection_parentF":12},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-1-3-3","idSection_parentF":12},{"titreSection":"Cuisine-1 : MUR_2 Sinistré","numeroSection":"4-1-4-1","idSection_parentF":12},{"titreSection":"Commentaire sur les métrés du MUR_2 Sinistré","numeroSection":"4-1-4-2","idSection_parentF":15},{"titreSection":"Commentaire sur le MUR_2 Sinistré","numeroSection":"4-1-4-3","idSection_parentF":15},{"titreSection":"Cuisine-1 : MUR_3 Sinistré","numeroSection":"4-1-5-1","idSection_parentF":15},{"titreSection":"Commentaire sur les métrés du MUR_3 Sinistré","numeroSection":"4-1-5-2","idSection_parentF":18},{"titreSection":"Commentaire sur le MUR_3 Sinistré","numeroSection":"4-1-5-3","idSection_parentF":18},{"titreSection":"Cuisine-1 : MUR_4 Non Sinistré","numeroSection":"4-1-6-1","idSection_parentF":18},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-1-6-2","idSection_parentF":21},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-1-6-3","idSection_parentF":21},{"titreSection":"Piéce 2 : Chambre-1","numeroSection":"4-2-1","idSection_parentF":4},{"titreSection":"Commentaire Chambre-1","numeroSection":"4-2-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-2-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-2-4","idSection_parentF":4},{"titreSection":"Chambre-1 : MUR_1 Sinistré","numeroSection":"4-2-2-1","idSection_parentF":27},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-2-2-2","idSection_parentF":28},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-2-2-3","idSection_parentF":28},{"titreSection":"Chambre-1 : MUR_2 Non Sinistré","numeroSection":"4-2-3-1","idSection_parentF":28},{"titreSection":"Commentaire sur les métrés du MUR_2 Non Sinistré","numeroSection":"4-2-3-2","idSection_parentF":31},{"titreSection":"Commentaire sur le MUR_2 Non Sinistré","numeroSection":"4-2-3-3","idSection_parentF":31},{"titreSection":"Chambre-1 : MUR_3 Non Sinistré","numeroSection":"4-2-4-1","idSection_parentF":31},{"titreSection":"Commentaire sur les métrés du MUR_3 Non Sinistré","numeroSection":"4-2-4-2","idSection_parentF":34},{"titreSection":"Commentaire sur le MUR_3 Non Sinistré","numeroSection":"4-2-4-3","idSection_parentF":34},{"titreSection":"Chambre-1 : MUR_4 Non Sinistré","numeroSection":"4-2-5-1","idSection_parentF":34},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-2-5-2","idSection_parentF":37},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-2-5-3","idSection_parentF":37},{"titreSection":"Commentaire et Circonstances du Sinistre","numeroSection":"5-","idSection_parentF":null}]}
+    [decoded_data] => Array
+        (
+            [idSommaire] => 45 
+            [sections] => Array
+                (
+                    [0] => Array
+                        (
+                            [titreSection] => Photo Immeuble
+                            [numeroSection] => 1-
+                            [idSection_parentF] => 
+                        )
+
+                    [1] => Array
+                        (
+                            [titreSection] => Contexte
+                            [numeroSection] => 2-
+                            [idSection_parentF] => 
+                        )
+
+                    [2] => Array
+                        (
+                            [titreSection] => Deroulement de la séance
+                            [numeroSection] => 3-
+                            [idSection_parentF] => 
+                        )
+
+                    [3] => Array
+                        (
+                            [titreSection] => Detail des dégradations
+                            [numeroSection] => 4-
+                            [idSection_parentF] => 
+                        )
+
+                    [4] => Array
+                        (
+                            [titreSection] => Piéce 1 : Cuisine-1
+                            [numeroSection] => 4-1-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [5] => Array
+                        (
+                            [titreSection] => Commentaire Cuisine-1
+                            [numeroSection] => 4-1-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [6] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-1-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [7] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-1-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [8] => Array
+                        (
+                            [titreSection] => Cuisine-1 : PLAFOND
+                            [numeroSection] => 4-1-2-1
+                            [idSection_parentF] => 8
+                        )
+
+                    [9] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du PLAFOND
+                            [numeroSection] => 4-1-2-2
+                            [idSection_parentF] => 9
+                        )
+
+                    [10] => Array
+                        (
+                            [titreSection] => Commentaire sur le PLAFOND
+                            [numeroSection] => 4-1-2-3
+                            [idSection_parentF] => 9
+                        )
+
+                    [11] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-1
+                            [idSection_parentF] => 9
+                        )
+
+                    [12] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-2
+                            [idSection_parentF] => 12
+                        )
+
+                    [13] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-3
+                            [idSection_parentF] => 12
+                        )
+
+                    [14] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-1
+                            [idSection_parentF] => 12
+                        )
+
+                    [15] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-2
+                            [idSection_parentF] => 15
+                        )
+
+                    [16] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-3
+                            [idSection_parentF] => 15
+                        )
+
+                    [17] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-1
+                            [idSection_parentF] => 15
+                        )
+
+                    [18] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-2
+                            [idSection_parentF] => 18
+                        )
+
+                    [19] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-3
+                            [idSection_parentF] => 18
+                        )
+
+                    [20] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-1
+                            [idSection_parentF] => 18
+                        )
+
+                    [21] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-2
+                            [idSection_parentF] => 21
+                        )
+
+                    [22] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-3
+                            [idSection_parentF] => 21
+                        )
+
+                    [23] => Array
+                        (
+                            [titreSection] => Piéce 2 : Chambre-1
+                            [numeroSection] => 4-2-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [24] => Array
+                        (
+                            [titreSection] => Commentaire Chambre-1
+                            [numeroSection] => 4-2-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [25] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-2-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [26] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-2-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [27] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-1
+                            [idSection_parentF] => 27
+                        )
+
+                    [28] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-2
+                            [idSection_parentF] => 28
+                        )
+
+                    [29] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-3
+                            [idSection_parentF] => 28
+                        )
+
+                    [30] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-1
+                            [idSection_parentF] => 28
+                        )
+
+                    [31] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-2
+                            [idSection_parentF] => 31
+                        )
+
+                    [32] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-3
+                            [idSection_parentF] => 31
+                        )
+
+                    [33] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-1
+                            [idSection_parentF] => 31
+                        )
+
+                    [34] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-2
+                            [idSection_parentF] => 34
+                        )
+
+                    [35] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-3
+                            [idSection_parentF] => 34
+                        )
+
+                    [36] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-1
+                            [idSection_parentF] => 34
+                        )
+
+                    [37] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-2
+                            [idSection_parentF] => 37
+                        )
+
+                    [38] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-3
+                            [idSection_parentF] => 37
+                        )
+
+                    [39] => Array
+                        (
+                            [titreSection] => Commentaire et Circonstances du Sinistre
+                            [numeroSection] => 5-
+                            [idSection_parentF] => 
+                        )
+
+                )
+
+        )
+
+    [server_response] => Script atteint ici
+)
+Array
+(
+    [raw_post_data] => {"idSommaire":"45 ","sections":[{"titreSection":"Photo Immeuble","numeroSection":"1-","idSection_parentF":null},{"titreSection":"Contexte","numeroSection":"2-","idSection_parentF":null},{"titreSection":"Deroulement de la séance","numeroSection":"3-","idSection_parentF":null},{"titreSection":"Detail des dégradations","numeroSection":"4-","idSection_parentF":null},{"titreSection":"Piéce 1 : Cuisine-1","numeroSection":"4-1-1","idSection_parentF":4},{"titreSection":"Commentaire Cuisine-1","numeroSection":"4-1-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-1-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-1-4","idSection_parentF":4},{"titreSection":"Cuisine-1 : PLAFOND","numeroSection":"4-1-2-1","idSection_parentF":8},{"titreSection":"Commentaire sur les métrés du PLAFOND","numeroSection":"4-1-2-2","idSection_parentF":9},{"titreSection":"Commentaire sur le PLAFOND","numeroSection":"4-1-2-3","idSection_parentF":9},{"titreSection":"Cuisine-1 : MUR_1 Sinistré","numeroSection":"4-1-3-1","idSection_parentF":9},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-1-3-2","idSection_parentF":12},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-1-3-3","idSection_parentF":12},{"titreSection":"Cuisine-1 : MUR_2 Sinistré","numeroSection":"4-1-4-1","idSection_parentF":12},{"titreSection":"Commentaire sur les métrés du MUR_2 Sinistré","numeroSection":"4-1-4-2","idSection_parentF":15},{"titreSection":"Commentaire sur le MUR_2 Sinistré","numeroSection":"4-1-4-3","idSection_parentF":15},{"titreSection":"Cuisine-1 : MUR_3 Sinistré","numeroSection":"4-1-5-1","idSection_parentF":15},{"titreSection":"Commentaire sur les métrés du MUR_3 Sinistré","numeroSection":"4-1-5-2","idSection_parentF":18},{"titreSection":"Commentaire sur le MUR_3 Sinistré","numeroSection":"4-1-5-3","idSection_parentF":18},{"titreSection":"Cuisine-1 : MUR_4 Non Sinistré","numeroSection":"4-1-6-1","idSection_parentF":18},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-1-6-2","idSection_parentF":21},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-1-6-3","idSection_parentF":21},{"titreSection":"Piéce 2 : Chambre-1","numeroSection":"4-2-1","idSection_parentF":4},{"titreSection":"Commentaire Chambre-1","numeroSection":"4-2-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-2-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-2-4","idSection_parentF":4},{"titreSection":"Chambre-1 : MUR_1 Sinistré","numeroSection":"4-2-2-1","idSection_parentF":27},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-2-2-2","idSection_parentF":28},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-2-2-3","idSection_parentF":28},{"titreSection":"Chambre-1 : MUR_2 Non Sinistré","numeroSection":"4-2-3-1","idSection_parentF":28},{"titreSection":"Commentaire sur les métrés du MUR_2 Non Sinistré","numeroSection":"4-2-3-2","idSection_parentF":31},{"titreSection":"Commentaire sur le MUR_2 Non Sinistré","numeroSection":"4-2-3-3","idSection_parentF":31},{"titreSection":"Chambre-1 : MUR_3 Non Sinistré","numeroSection":"4-2-4-1","idSection_parentF":31},{"titreSection":"Commentaire sur les métrés du MUR_3 Non Sinistré","numeroSection":"4-2-4-2","idSection_parentF":34},{"titreSection":"Commentaire sur le MUR_3 Non Sinistré","numeroSection":"4-2-4-3","idSection_parentF":34},{"titreSection":"Chambre-1 : MUR_4 Non Sinistré","numeroSection":"4-2-5-1","idSection_parentF":34},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-2-5-2","idSection_parentF":37},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-2-5-3","idSection_parentF":37},{"titreSection":"Commentaire et Circonstances du Sinistre","numeroSection":"5-","idSection_parentF":null}]}
+    [decoded_data] => Array
+        (
+            [idSommaire] => 45 
+            [sections] => Array
+                (
+                    [0] => Array
+                        (
+                            [titreSection] => Photo Immeuble
+                            [numeroSection] => 1-
+                            [idSection_parentF] => 
+                        )
+
+                    [1] => Array
+                        (
+                            [titreSection] => Contexte
+                            [numeroSection] => 2-
+                            [idSection_parentF] => 
+                        )
+
+                    [2] => Array
+                        (
+                            [titreSection] => Deroulement de la séance
+                            [numeroSection] => 3-
+                            [idSection_parentF] => 
+                        )
+
+                    [3] => Array
+                        (
+                            [titreSection] => Detail des dégradations
+                            [numeroSection] => 4-
+                            [idSection_parentF] => 
+                        )
+
+                    [4] => Array
+                        (
+                            [titreSection] => Piéce 1 : Cuisine-1
+                            [numeroSection] => 4-1-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [5] => Array
+                        (
+                            [titreSection] => Commentaire Cuisine-1
+                            [numeroSection] => 4-1-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [6] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-1-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [7] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-1-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [8] => Array
+                        (
+                            [titreSection] => Cuisine-1 : PLAFOND
+                            [numeroSection] => 4-1-2-1
+                            [idSection_parentF] => 8
+                        )
+
+                    [9] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du PLAFOND
+                            [numeroSection] => 4-1-2-2
+                            [idSection_parentF] => 9
+                        )
+
+                    [10] => Array
+                        (
+                            [titreSection] => Commentaire sur le PLAFOND
+                            [numeroSection] => 4-1-2-3
+                            [idSection_parentF] => 9
+                        )
+
+                    [11] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-1
+                            [idSection_parentF] => 9
+                        )
+
+                    [12] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-2
+                            [idSection_parentF] => 12
+                        )
+
+                    [13] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-3
+                            [idSection_parentF] => 12
+                        )
+
+                    [14] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-1
+                            [idSection_parentF] => 12
+                        )
+
+                    [15] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-2
+                            [idSection_parentF] => 15
+                        )
+
+                    [16] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-3
+                            [idSection_parentF] => 15
+                        )
+
+                    [17] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-1
+                            [idSection_parentF] => 15
+                        )
+
+                    [18] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-2
+                            [idSection_parentF] => 18
+                        )
+
+                    [19] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-3
+                            [idSection_parentF] => 18
+                        )
+
+                    [20] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-1
+                            [idSection_parentF] => 18
+                        )
+
+                    [21] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-2
+                            [idSection_parentF] => 21
+                        )
+
+                    [22] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-3
+                            [idSection_parentF] => 21
+                        )
+
+                    [23] => Array
+                        (
+                            [titreSection] => Piéce 2 : Chambre-1
+                            [numeroSection] => 4-2-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [24] => Array
+                        (
+                            [titreSection] => Commentaire Chambre-1
+                            [numeroSection] => 4-2-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [25] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-2-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [26] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-2-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [27] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-1
+                            [idSection_parentF] => 27
+                        )
+
+                    [28] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-2
+                            [idSection_parentF] => 28
+                        )
+
+                    [29] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-3
+                            [idSection_parentF] => 28
+                        )
+
+                    [30] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-1
+                            [idSection_parentF] => 28
+                        )
+
+                    [31] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-2
+                            [idSection_parentF] => 31
+                        )
+
+                    [32] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-3
+                            [idSection_parentF] => 31
+                        )
+
+                    [33] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-1
+                            [idSection_parentF] => 31
+                        )
+
+                    [34] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-2
+                            [idSection_parentF] => 34
+                        )
+
+                    [35] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-3
+                            [idSection_parentF] => 34
+                        )
+
+                    [36] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-1
+                            [idSection_parentF] => 34
+                        )
+
+                    [37] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-2
+                            [idSection_parentF] => 37
+                        )
+
+                    [38] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-3
+                            [idSection_parentF] => 37
+                        )
+
+                    [39] => Array
+                        (
+                            [titreSection] => Commentaire et Circonstances du Sinistre
+                            [numeroSection] => 5-
+                            [idSection_parentF] => 
+                        )
+
+                )
+
+        )
+
+    [server_response] => Script atteint ici
+)
+Array
+(
+    [raw_post_data] => {"idSommaire":"45 ","sections":[{"titreSection":"Photo Immeuble","numeroSection":"1-","idSection_parentF":null},{"titreSection":"Contexte","numeroSection":"2-","idSection_parentF":null},{"titreSection":"Deroulement de la séance","numeroSection":"3-","idSection_parentF":null},{"titreSection":"Detail des dégradations","numeroSection":"4-","idSection_parentF":null},{"titreSection":"Piéce 1 : Cuisine-1","numeroSection":"4-1-1","idSection_parentF":4},{"titreSection":"Commentaire Cuisine-1","numeroSection":"4-1-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-1-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-1-4","idSection_parentF":4},{"titreSection":"Cuisine-1 : PLAFOND","numeroSection":"4-1-2-1","idSection_parentF":8},{"titreSection":"Commentaire sur les métrés du PLAFOND","numeroSection":"4-1-2-2","idSection_parentF":9},{"titreSection":"Commentaire sur le PLAFOND","numeroSection":"4-1-2-3","idSection_parentF":9},{"titreSection":"Cuisine-1 : MUR_1 Sinistré","numeroSection":"4-1-3-1","idSection_parentF":9},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-1-3-2","idSection_parentF":12},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-1-3-3","idSection_parentF":12},{"titreSection":"Cuisine-1 : MUR_2 Sinistré","numeroSection":"4-1-4-1","idSection_parentF":12},{"titreSection":"Commentaire sur les métrés du MUR_2 Sinistré","numeroSection":"4-1-4-2","idSection_parentF":15},{"titreSection":"Commentaire sur le MUR_2 Sinistré","numeroSection":"4-1-4-3","idSection_parentF":15},{"titreSection":"Cuisine-1 : MUR_3 Sinistré","numeroSection":"4-1-5-1","idSection_parentF":15},{"titreSection":"Commentaire sur les métrés du MUR_3 Sinistré","numeroSection":"4-1-5-2","idSection_parentF":18},{"titreSection":"Commentaire sur le MUR_3 Sinistré","numeroSection":"4-1-5-3","idSection_parentF":18},{"titreSection":"Cuisine-1 : MUR_4 Non Sinistré","numeroSection":"4-1-6-1","idSection_parentF":18},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-1-6-2","idSection_parentF":21},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-1-6-3","idSection_parentF":21},{"titreSection":"Piéce 2 : Chambre-1","numeroSection":"4-2-1","idSection_parentF":4},{"titreSection":"Commentaire Chambre-1","numeroSection":"4-2-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-2-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-2-4","idSection_parentF":4},{"titreSection":"Chambre-1 : MUR_1 Sinistré","numeroSection":"4-2-2-1","idSection_parentF":27},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-2-2-2","idSection_parentF":28},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-2-2-3","idSection_parentF":28},{"titreSection":"Chambre-1 : MUR_2 Non Sinistré","numeroSection":"4-2-3-1","idSection_parentF":28},{"titreSection":"Commentaire sur les métrés du MUR_2 Non Sinistré","numeroSection":"4-2-3-2","idSection_parentF":31},{"titreSection":"Commentaire sur le MUR_2 Non Sinistré","numeroSection":"4-2-3-3","idSection_parentF":31},{"titreSection":"Chambre-1 : MUR_3 Non Sinistré","numeroSection":"4-2-4-1","idSection_parentF":31},{"titreSection":"Commentaire sur les métrés du MUR_3 Non Sinistré","numeroSection":"4-2-4-2","idSection_parentF":34},{"titreSection":"Commentaire sur le MUR_3 Non Sinistré","numeroSection":"4-2-4-3","idSection_parentF":34},{"titreSection":"Chambre-1 : MUR_4 Non Sinistré","numeroSection":"4-2-5-1","idSection_parentF":34},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-2-5-2","idSection_parentF":37},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-2-5-3","idSection_parentF":37},{"titreSection":"Commentaire et Circonstances du Sinistre","numeroSection":"5-","idSection_parentF":null}]}
+    [decoded_data] => Array
+        (
+            [idSommaire] => 45 
+            [sections] => Array
+                (
+                    [0] => Array
+                        (
+                            [titreSection] => Photo Immeuble
+                            [numeroSection] => 1-
+                            [idSection_parentF] => 
+                        )
+
+                    [1] => Array
+                        (
+                            [titreSection] => Contexte
+                            [numeroSection] => 2-
+                            [idSection_parentF] => 
+                        )
+
+                    [2] => Array
+                        (
+                            [titreSection] => Deroulement de la séance
+                            [numeroSection] => 3-
+                            [idSection_parentF] => 
+                        )
+
+                    [3] => Array
+                        (
+                            [titreSection] => Detail des dégradations
+                            [numeroSection] => 4-
+                            [idSection_parentF] => 
+                        )
+
+                    [4] => Array
+                        (
+                            [titreSection] => Piéce 1 : Cuisine-1
+                            [numeroSection] => 4-1-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [5] => Array
+                        (
+                            [titreSection] => Commentaire Cuisine-1
+                            [numeroSection] => 4-1-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [6] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-1-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [7] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-1-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [8] => Array
+                        (
+                            [titreSection] => Cuisine-1 : PLAFOND
+                            [numeroSection] => 4-1-2-1
+                            [idSection_parentF] => 8
+                        )
+
+                    [9] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du PLAFOND
+                            [numeroSection] => 4-1-2-2
+                            [idSection_parentF] => 9
+                        )
+
+                    [10] => Array
+                        (
+                            [titreSection] => Commentaire sur le PLAFOND
+                            [numeroSection] => 4-1-2-3
+                            [idSection_parentF] => 9
+                        )
+
+                    [11] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-1
+                            [idSection_parentF] => 9
+                        )
+
+                    [12] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-2
+                            [idSection_parentF] => 12
+                        )
+
+                    [13] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-3
+                            [idSection_parentF] => 12
+                        )
+
+                    [14] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-1
+                            [idSection_parentF] => 12
+                        )
+
+                    [15] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-2
+                            [idSection_parentF] => 15
+                        )
+
+                    [16] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-3
+                            [idSection_parentF] => 15
+                        )
+
+                    [17] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-1
+                            [idSection_parentF] => 15
+                        )
+
+                    [18] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-2
+                            [idSection_parentF] => 18
+                        )
+
+                    [19] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-3
+                            [idSection_parentF] => 18
+                        )
+
+                    [20] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-1
+                            [idSection_parentF] => 18
+                        )
+
+                    [21] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-2
+                            [idSection_parentF] => 21
+                        )
+
+                    [22] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-3
+                            [idSection_parentF] => 21
+                        )
+
+                    [23] => Array
+                        (
+                            [titreSection] => Piéce 2 : Chambre-1
+                            [numeroSection] => 4-2-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [24] => Array
+                        (
+                            [titreSection] => Commentaire Chambre-1
+                            [numeroSection] => 4-2-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [25] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-2-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [26] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-2-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [27] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-1
+                            [idSection_parentF] => 27
+                        )
+
+                    [28] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-2
+                            [idSection_parentF] => 28
+                        )
+
+                    [29] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-3
+                            [idSection_parentF] => 28
+                        )
+
+                    [30] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-1
+                            [idSection_parentF] => 28
+                        )
+
+                    [31] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-2
+                            [idSection_parentF] => 31
+                        )
+
+                    [32] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-3
+                            [idSection_parentF] => 31
+                        )
+
+                    [33] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-1
+                            [idSection_parentF] => 31
+                        )
+
+                    [34] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-2
+                            [idSection_parentF] => 34
+                        )
+
+                    [35] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-3
+                            [idSection_parentF] => 34
+                        )
+
+                    [36] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-1
+                            [idSection_parentF] => 34
+                        )
+
+                    [37] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-2
+                            [idSection_parentF] => 37
+                        )
+
+                    [38] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-3
+                            [idSection_parentF] => 37
+                        )
+
+                    [39] => Array
+                        (
+                            [titreSection] => Commentaire et Circonstances du Sinistre
+                            [numeroSection] => 5-
+                            [idSection_parentF] => 
+                        )
+
+                )
+
+        )
+
+    [server_response] => Script atteint ici
+)
+Array
+(
+    [raw_post_data] => {"idSommaire":"45 ","sections":[{"titreSection":"Photo Immeuble","numeroSection":"1-","idSection_parentF":null},{"titreSection":"Contexte","numeroSection":"2-","idSection_parentF":null},{"titreSection":"Deroulement de la séance","numeroSection":"3-","idSection_parentF":null},{"titreSection":"Detail des dégradations","numeroSection":"4-","idSection_parentF":null},{"titreSection":"Piéce 1 : Cuisine-1","numeroSection":"4-1-1","idSection_parentF":4},{"titreSection":"Commentaire Cuisine-1","numeroSection":"4-1-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-1-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-1-4","idSection_parentF":4},{"titreSection":"Cuisine-1 : PLAFOND","numeroSection":"4-1-2-1","idSection_parentF":8},{"titreSection":"Commentaire sur les métrés du PLAFOND","numeroSection":"4-1-2-2","idSection_parentF":9},{"titreSection":"Commentaire sur le PLAFOND","numeroSection":"4-1-2-3","idSection_parentF":9},{"titreSection":"Cuisine-1 : MUR_1 Sinistré","numeroSection":"4-1-3-1","idSection_parentF":9},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-1-3-2","idSection_parentF":12},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-1-3-3","idSection_parentF":12},{"titreSection":"Cuisine-1 : MUR_2 Sinistré","numeroSection":"4-1-4-1","idSection_parentF":12},{"titreSection":"Commentaire sur les métrés du MUR_2 Sinistré","numeroSection":"4-1-4-2","idSection_parentF":15},{"titreSection":"Commentaire sur le MUR_2 Sinistré","numeroSection":"4-1-4-3","idSection_parentF":15},{"titreSection":"Cuisine-1 : MUR_3 Sinistré","numeroSection":"4-1-5-1","idSection_parentF":15},{"titreSection":"Commentaire sur les métrés du MUR_3 Sinistré","numeroSection":"4-1-5-2","idSection_parentF":18},{"titreSection":"Commentaire sur le MUR_3 Sinistré","numeroSection":"4-1-5-3","idSection_parentF":18},{"titreSection":"Cuisine-1 : MUR_4 Non Sinistré","numeroSection":"4-1-6-1","idSection_parentF":18},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-1-6-2","idSection_parentF":21},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-1-6-3","idSection_parentF":21},{"titreSection":"Piéce 2 : Chambre-1","numeroSection":"4-2-1","idSection_parentF":4},{"titreSection":"Commentaire Chambre-1","numeroSection":"4-2-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-2-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-2-4","idSection_parentF":4},{"titreSection":"Chambre-1 : MUR_1 Sinistré","numeroSection":"4-2-2-1","idSection_parentF":27},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-2-2-2","idSection_parentF":28},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-2-2-3","idSection_parentF":28},{"titreSection":"Chambre-1 : MUR_2 Non Sinistré","numeroSection":"4-2-3-1","idSection_parentF":28},{"titreSection":"Commentaire sur les métrés du MUR_2 Non Sinistré","numeroSection":"4-2-3-2","idSection_parentF":31},{"titreSection":"Commentaire sur le MUR_2 Non Sinistré","numeroSection":"4-2-3-3","idSection_parentF":31},{"titreSection":"Chambre-1 : MUR_3 Non Sinistré","numeroSection":"4-2-4-1","idSection_parentF":31},{"titreSection":"Commentaire sur les métrés du MUR_3 Non Sinistré","numeroSection":"4-2-4-2","idSection_parentF":34},{"titreSection":"Commentaire sur le MUR_3 Non Sinistré","numeroSection":"4-2-4-3","idSection_parentF":34},{"titreSection":"Chambre-1 : MUR_4 Non Sinistré","numeroSection":"4-2-5-1","idSection_parentF":34},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-2-5-2","idSection_parentF":37},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-2-5-3","idSection_parentF":37},{"titreSection":"Commentaire et Circonstances du Sinistre","numeroSection":"5-","idSection_parentF":null}]}
+    [decoded_data] => Array
+        (
+            [idSommaire] => 45 
+            [sections] => Array
+                (
+                    [0] => Array
+                        (
+                            [titreSection] => Photo Immeuble
+                            [numeroSection] => 1-
+                            [idSection_parentF] => 
+                        )
+
+                    [1] => Array
+                        (
+                            [titreSection] => Contexte
+                            [numeroSection] => 2-
+                            [idSection_parentF] => 
+                        )
+
+                    [2] => Array
+                        (
+                            [titreSection] => Deroulement de la séance
+                            [numeroSection] => 3-
+                            [idSection_parentF] => 
+                        )
+
+                    [3] => Array
+                        (
+                            [titreSection] => Detail des dégradations
+                            [numeroSection] => 4-
+                            [idSection_parentF] => 
+                        )
+
+                    [4] => Array
+                        (
+                            [titreSection] => Piéce 1 : Cuisine-1
+                            [numeroSection] => 4-1-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [5] => Array
+                        (
+                            [titreSection] => Commentaire Cuisine-1
+                            [numeroSection] => 4-1-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [6] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-1-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [7] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-1-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [8] => Array
+                        (
+                            [titreSection] => Cuisine-1 : PLAFOND
+                            [numeroSection] => 4-1-2-1
+                            [idSection_parentF] => 8
+                        )
+
+                    [9] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du PLAFOND
+                            [numeroSection] => 4-1-2-2
+                            [idSection_parentF] => 9
+                        )
+
+                    [10] => Array
+                        (
+                            [titreSection] => Commentaire sur le PLAFOND
+                            [numeroSection] => 4-1-2-3
+                            [idSection_parentF] => 9
+                        )
+
+                    [11] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-1
+                            [idSection_parentF] => 9
+                        )
+
+                    [12] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-2
+                            [idSection_parentF] => 12
+                        )
+
+                    [13] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-3
+                            [idSection_parentF] => 12
+                        )
+
+                    [14] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-1
+                            [idSection_parentF] => 12
+                        )
+
+                    [15] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-2
+                            [idSection_parentF] => 15
+                        )
+
+                    [16] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-3
+                            [idSection_parentF] => 15
+                        )
+
+                    [17] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-1
+                            [idSection_parentF] => 15
+                        )
+
+                    [18] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-2
+                            [idSection_parentF] => 18
+                        )
+
+                    [19] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-3
+                            [idSection_parentF] => 18
+                        )
+
+                    [20] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-1
+                            [idSection_parentF] => 18
+                        )
+
+                    [21] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-2
+                            [idSection_parentF] => 21
+                        )
+
+                    [22] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-3
+                            [idSection_parentF] => 21
+                        )
+
+                    [23] => Array
+                        (
+                            [titreSection] => Piéce 2 : Chambre-1
+                            [numeroSection] => 4-2-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [24] => Array
+                        (
+                            [titreSection] => Commentaire Chambre-1
+                            [numeroSection] => 4-2-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [25] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-2-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [26] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-2-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [27] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-1
+                            [idSection_parentF] => 27
+                        )
+
+                    [28] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-2
+                            [idSection_parentF] => 28
+                        )
+
+                    [29] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-3
+                            [idSection_parentF] => 28
+                        )
+
+                    [30] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-1
+                            [idSection_parentF] => 28
+                        )
+
+                    [31] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-2
+                            [idSection_parentF] => 31
+                        )
+
+                    [32] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-3
+                            [idSection_parentF] => 31
+                        )
+
+                    [33] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-1
+                            [idSection_parentF] => 31
+                        )
+
+                    [34] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-2
+                            [idSection_parentF] => 34
+                        )
+
+                    [35] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-3
+                            [idSection_parentF] => 34
+                        )
+
+                    [36] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-1
+                            [idSection_parentF] => 34
+                        )
+
+                    [37] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-2
+                            [idSection_parentF] => 37
+                        )
+
+                    [38] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-3
+                            [idSection_parentF] => 37
+                        )
+
+                    [39] => Array
+                        (
+                            [titreSection] => Commentaire et Circonstances du Sinistre
+                            [numeroSection] => 5-
+                            [idSection_parentF] => 
+                        )
+
+                )
+
+        )
+
+    [server_response] => Script atteint ici
+)
+Array
+(
+    [raw_post_data] => {"idSommaire":"45 ","sections":[{"titreSection":"Photo Immeuble","numeroSection":"1-","idSection_parentF":null},{"titreSection":"Contexte","numeroSection":"2-","idSection_parentF":null},{"titreSection":"Deroulement de la séance","numeroSection":"3-","idSection_parentF":null},{"titreSection":"Detail des dégradations","numeroSection":"4-","idSection_parentF":null},{"titreSection":"Piéce 1 : Cuisine-1","numeroSection":"4-1-1","idSection_parentF":4},{"titreSection":"Commentaire Cuisine-1","numeroSection":"4-1-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-1-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-1-4","idSection_parentF":4},{"titreSection":"Cuisine-1 : PLAFOND","numeroSection":"4-1-2-1","idSection_parentF":8},{"titreSection":"Commentaire sur les métrés du PLAFOND","numeroSection":"4-1-2-2","idSection_parentF":9},{"titreSection":"Commentaire sur le PLAFOND","numeroSection":"4-1-2-3","idSection_parentF":9},{"titreSection":"Cuisine-1 : MUR_1 Sinistré","numeroSection":"4-1-3-1","idSection_parentF":9},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-1-3-2","idSection_parentF":12},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-1-3-3","idSection_parentF":12},{"titreSection":"Cuisine-1 : MUR_2 Sinistré","numeroSection":"4-1-4-1","idSection_parentF":12},{"titreSection":"Commentaire sur les métrés du MUR_2 Sinistré","numeroSection":"4-1-4-2","idSection_parentF":15},{"titreSection":"Commentaire sur le MUR_2 Sinistré","numeroSection":"4-1-4-3","idSection_parentF":15},{"titreSection":"Cuisine-1 : MUR_3 Sinistré","numeroSection":"4-1-5-1","idSection_parentF":15},{"titreSection":"Commentaire sur les métrés du MUR_3 Sinistré","numeroSection":"4-1-5-2","idSection_parentF":18},{"titreSection":"Commentaire sur le MUR_3 Sinistré","numeroSection":"4-1-5-3","idSection_parentF":18},{"titreSection":"Cuisine-1 : MUR_4 Non Sinistré","numeroSection":"4-1-6-1","idSection_parentF":18},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-1-6-2","idSection_parentF":21},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-1-6-3","idSection_parentF":21},{"titreSection":"Piéce 2 : Chambre-1","numeroSection":"4-2-1","idSection_parentF":4},{"titreSection":"Commentaire Chambre-1","numeroSection":"4-2-2","idSection_parentF":4},{"titreSection":"Commentaire sur les supports de la piéce","numeroSection":"4-2-3","idSection_parentF":4},{"titreSection":"Commentaire sur les métrés de la piéce","numeroSection":"4-2-4","idSection_parentF":4},{"titreSection":"Chambre-1 : MUR_1 Sinistré","numeroSection":"4-2-2-1","idSection_parentF":27},{"titreSection":"Commentaire sur les métrés du MUR_1 Sinistré","numeroSection":"4-2-2-2","idSection_parentF":28},{"titreSection":"Commentaire sur le MUR_1 Sinistré","numeroSection":"4-2-2-3","idSection_parentF":28},{"titreSection":"Chambre-1 : MUR_2 Non Sinistré","numeroSection":"4-2-3-1","idSection_parentF":28},{"titreSection":"Commentaire sur les métrés du MUR_2 Non Sinistré","numeroSection":"4-2-3-2","idSection_parentF":31},{"titreSection":"Commentaire sur le MUR_2 Non Sinistré","numeroSection":"4-2-3-3","idSection_parentF":31},{"titreSection":"Chambre-1 : MUR_3 Non Sinistré","numeroSection":"4-2-4-1","idSection_parentF":31},{"titreSection":"Commentaire sur les métrés du MUR_3 Non Sinistré","numeroSection":"4-2-4-2","idSection_parentF":34},{"titreSection":"Commentaire sur le MUR_3 Non Sinistré","numeroSection":"4-2-4-3","idSection_parentF":34},{"titreSection":"Chambre-1 : MUR_4 Non Sinistré","numeroSection":"4-2-5-1","idSection_parentF":34},{"titreSection":"Commentaire sur les métrés du MUR_4 Non Sinistré","numeroSection":"4-2-5-2","idSection_parentF":37},{"titreSection":"Commentaire sur le MUR_4 Non Sinistré","numeroSection":"4-2-5-3","idSection_parentF":37},{"titreSection":"Commentaire et Circonstances du Sinistre","numeroSection":"5-","idSection_parentF":null}]}
+    [decoded_data] => Array
+        (
+            [idSommaire] => 45 
+            [sections] => Array
+                (
+                    [0] => Array
+                        (
+                            [titreSection] => Photo Immeuble
+                            [numeroSection] => 1-
+                            [idSection_parentF] => 
+                        )
+
+                    [1] => Array
+                        (
+                            [titreSection] => Contexte
+                            [numeroSection] => 2-
+                            [idSection_parentF] => 
+                        )
+
+                    [2] => Array
+                        (
+                            [titreSection] => Deroulement de la séance
+                            [numeroSection] => 3-
+                            [idSection_parentF] => 
+                        )
+
+                    [3] => Array
+                        (
+                            [titreSection] => Detail des dégradations
+                            [numeroSection] => 4-
+                            [idSection_parentF] => 
+                        )
+
+                    [4] => Array
+                        (
+                            [titreSection] => Piéce 1 : Cuisine-1
+                            [numeroSection] => 4-1-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [5] => Array
+                        (
+                            [titreSection] => Commentaire Cuisine-1
+                            [numeroSection] => 4-1-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [6] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-1-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [7] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-1-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [8] => Array
+                        (
+                            [titreSection] => Cuisine-1 : PLAFOND
+                            [numeroSection] => 4-1-2-1
+                            [idSection_parentF] => 8
+                        )
+
+                    [9] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du PLAFOND
+                            [numeroSection] => 4-1-2-2
+                            [idSection_parentF] => 9
+                        )
+
+                    [10] => Array
+                        (
+                            [titreSection] => Commentaire sur le PLAFOND
+                            [numeroSection] => 4-1-2-3
+                            [idSection_parentF] => 9
+                        )
+
+                    [11] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-1
+                            [idSection_parentF] => 9
+                        )
+
+                    [12] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-2
+                            [idSection_parentF] => 12
+                        )
+
+                    [13] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-1-3-3
+                            [idSection_parentF] => 12
+                        )
+
+                    [14] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-1
+                            [idSection_parentF] => 12
+                        )
+
+                    [15] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-2
+                            [idSection_parentF] => 15
+                        )
+
+                    [16] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Sinistré
+                            [numeroSection] => 4-1-4-3
+                            [idSection_parentF] => 15
+                        )
+
+                    [17] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-1
+                            [idSection_parentF] => 15
+                        )
+
+                    [18] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-2
+                            [idSection_parentF] => 18
+                        )
+
+                    [19] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Sinistré
+                            [numeroSection] => 4-1-5-3
+                            [idSection_parentF] => 18
+                        )
+
+                    [20] => Array
+                        (
+                            [titreSection] => Cuisine-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-1
+                            [idSection_parentF] => 18
+                        )
+
+                    [21] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-2
+                            [idSection_parentF] => 21
+                        )
+
+                    [22] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-1-6-3
+                            [idSection_parentF] => 21
+                        )
+
+                    [23] => Array
+                        (
+                            [titreSection] => Piéce 2 : Chambre-1
+                            [numeroSection] => 4-2-1
+                            [idSection_parentF] => 4
+                        )
+
+                    [24] => Array
+                        (
+                            [titreSection] => Commentaire Chambre-1
+                            [numeroSection] => 4-2-2
+                            [idSection_parentF] => 4
+                        )
+
+                    [25] => Array
+                        (
+                            [titreSection] => Commentaire sur les supports de la piéce
+                            [numeroSection] => 4-2-3
+                            [idSection_parentF] => 4
+                        )
+
+                    [26] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés de la piéce
+                            [numeroSection] => 4-2-4
+                            [idSection_parentF] => 4
+                        )
+
+                    [27] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-1
+                            [idSection_parentF] => 27
+                        )
+
+                    [28] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-2
+                            [idSection_parentF] => 28
+                        )
+
+                    [29] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_1 Sinistré
+                            [numeroSection] => 4-2-2-3
+                            [idSection_parentF] => 28
+                        )
+
+                    [30] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-1
+                            [idSection_parentF] => 28
+                        )
+
+                    [31] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-2
+                            [idSection_parentF] => 31
+                        )
+
+                    [32] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_2 Non Sinistré
+                            [numeroSection] => 4-2-3-3
+                            [idSection_parentF] => 31
+                        )
+
+                    [33] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-1
+                            [idSection_parentF] => 31
+                        )
+
+                    [34] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-2
+                            [idSection_parentF] => 34
+                        )
+
+                    [35] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_3 Non Sinistré
+                            [numeroSection] => 4-2-4-3
+                            [idSection_parentF] => 34
+                        )
+
+                    [36] => Array
+                        (
+                            [titreSection] => Chambre-1 : MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-1
+                            [idSection_parentF] => 34
+                        )
+
+                    [37] => Array
+                        (
+                            [titreSection] => Commentaire sur les métrés du MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-2
+                            [idSection_parentF] => 37
+                        )
+
+                    [38] => Array
+                        (
+                            [titreSection] => Commentaire sur le MUR_4 Non Sinistré
+                            [numeroSection] => 4-2-5-3
+                            [idSection_parentF] => 37
+                        )
+
+                    [39] => Array
+                        (
+                            [titreSection] => Commentaire et Circonstances du Sinistre
+                            [numeroSection] => 5-
+                            [idSection_parentF] => 
+                        )
+
+                )
+
+        )
+
+    [server_response] => Script atteint ici
+)

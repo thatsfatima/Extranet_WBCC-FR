@@ -11,7 +11,60 @@ class Section extends Model
     public $contenuSection;
     public $idSommaireF;
     public $idSection_parentF;
+    public $contenuSectionTableur;
+    public $typeContenu;
 
+    public function getArticlesBySection($idSection, $idImmeuble, $idProjet, $type = '')
+    {
+        $articles = [];
+        if ($type == "global") {
+            $articles = $this->getLinesCCTPForImmeuble($idImmeuble, '', 'global');
+        } else {
+            $this->db->query("SELECT * FROM wbcc_section_table WHERE idSectionF = $idSection ORDER BY idTableSection");
+            $articles = $this->db->resultSet();
+        }
+
+        return $articles;
+    }
+
+    public function getLinesCCTPForImmeuble($idImmeuble, $idProjet, $type = '')
+    {
+        $datas = [];
+        //GET OP FOR AMO FOR IMMEUBLE
+        $this->db->query("SELECT * FROM wbcc_opportunity o, wbcc_devis d, wbcc_opportunity_devis od WHERE o.idImmeuble=$idImmeuble AND o.type='A.M.O.' AND d.idDevis=od.idDevisF AND o.idOpportunity = od.idOpportunityF AND d.typeDevis='CCTP' AND od.valide=1 LIMIT 1; ");
+        $opDevis =  $this->db->single();
+        // echo json_encode("SELECT * FROM wbcc_opportunity o, wbcc_devis d, wbcc_opportunity_devis od WHERE o.idImmeuble=$idImmeuble AND o.type='A.M.O.' AND d.idDevis=od.idDevisF AND o.idOpportunity = od.idOpportunityF AND d.typeDevis='CCTP' AND od.valide=1 LIMIT 1; ");
+        // die;
+        if ($opDevis) {
+            //GET sections
+            $sections = $this->getSectionsByDevis($opDevis->idDevis);
+
+            if (sizeof($sections) != 0) {
+                $req = '';
+                if ($type == "global") {
+                    $req = "";
+                } else {
+                    $req = " AND projetIds NOT LIKE '%;$idProjet;%'";
+                }
+                foreach ($sections as $key => $sect) {
+                    $this->db->query("SELECT * FROM wbcc_section_table WHERE idSectionF = $sect->idSection $req ORDER BY idTableSection");
+                    $articles = $this->db->resultSet();
+                    if (sizeof($articles) != 0) {
+                        $datas = array_merge($datas, $articles);
+                    }
+                }
+            }
+        }
+        return $datas;
+    }
+
+
+    public function getSectionsByDevis($idDevis)
+    {
+        $this->db->query("SELECT * FROM wbcc_section WHERE idDevisF=$idDevis");
+        $result = $this->db->resultSet();
+        return $result;
+    }
 
     public function create($data)
     {
@@ -99,15 +152,30 @@ class Section extends Model
             $query = "UPDATE {$this->table} SET 
                       titreSection = :titreSection,
                       numeroSection = :numeroSection,
-                      contenuSection = :contenuSection
-                      WHERE idSection = :idSection";
+                      typeContenu = :typeContenu";
+
+            // On ne met à jour que le contenu correspondant au type actif
+            if ($data['typeContenu'] === 'tableur') {
+                $query .= ", contenuSectionTableur = :contenuSectionTableur";
+            } else {
+                $query .= ", contenuSection = :contenuSection";
+            }
+
+            $query .= " WHERE idSection = :idSection";
 
             $this->db->query($query);
 
             $this->db->bind(':titreSection', $data['titreSection']);
             $this->db->bind(':numeroSection', $data['numeroSection']);
-            $this->db->bind(':contenuSection', $data['contenuSection']);
+            $this->db->bind(':typeContenu', $data['typeContenu']);
             $this->db->bind(':idSection', $id);
+
+            // Bind uniquement le champ correspondant au type actif
+            if ($data['typeContenu'] === 'tableur') {
+                $this->db->bind(':contenuSectionTableur', $data['contenuSectionTableur']);
+            } else {
+                $this->db->bind(':contenuSection', $data['contenuSection']);
+            }
 
             return $this->db->execute();
         } catch (Exception $e) {
@@ -171,7 +239,6 @@ class Section extends Model
             ->doQuery();
     }
 
-
     public function updateMultiple($sections)
     {
         try {
@@ -180,9 +247,16 @@ class Section extends Model
 
                 $data = [
                     'titreSection' => $section['titreSection'],
-                    'contenuSection' => $section['contenuSection'],
-                    'numeroSection' => $section['numeroSection']
+                    'numeroSection' => $section['numeroSection'],
+                    'typeContenu' => $section['typeContenu']
                 ];
+
+                // N'inclure que le contenu correspondant au type actif
+                if ($section['typeContenu'] === 'tableur') {
+                    $data['contenuSectionTableur'] = $section['contenuSectionTableur'];
+                } else {
+                    $data['contenuSection'] = $section['contenuSection'];
+                }
 
                 if (!$this->updateSection($section['idSection'], $data)) {
                     error_log("Échec de la mise à jour pour la section ID: " . $section['idSection']);
@@ -195,18 +269,79 @@ class Section extends Model
             return false;
         }
     }
+    
+    public function getSectionBySommaireForRT($idSommaire)
+    {
+        try {
+            $this->db->query("SELECT * FROM wbcc_section WHERE idSommaireF = :idSommaire ORDER BY CAST((REPLACE(numeroSection,'.', '')) AS int )");
+            $this->db->bind(':idSommaire', $idSommaire);
+            return $this->db->resultSet();
+        } catch (Exception $e) {
+            error_log("Erreur dans getSectionBySommaireForRT: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
     public function getSectionsBySommaire($sommaireId)
     {
         try {
-            $this->db->query("SELECT * FROM {$this->table} WHERE idSommaireF = :sommaireId ORDER BY numeroSection");
+            $this->db->query("SELECT * FROM {$this->table} WHERE idSommaireF = :sommaireId ORDER BY CAST((REPLACE(numeroSection,'.', '')) AS int )");
             $this->db->bind(':sommaireId', $sommaireId);
             $result = $this->db->resultSet();
-            return $result;
+            $sections = [];
+            foreach ($result as $key => $section) {
+                $section->articles = [];
+                $this->db->query("SELECT * FROM wbcc_section_table WHERE idSectionF = $section->idSection ORDER BY idTableSection");
+                $articles = $this->db->resultSet();
+                $section->articles = $articles;
+                $sections[] = $section;
+            }
+            return $sections;
         } catch (Exception $e) {
             error_log("Erreur dans getSectionsBySommaire: " . $e->getMessage());
             throw $e;
         }
     }
+
+    public function getSectionsForRT($idSommaire, $numeroSection, $titreSection, $contenuSection = "", $numeroParent = "")
+    {
+        try {
+            $this->db->query("SELECT * FROM wbcc_section WHERE idSommaireF = :idSommaire AND numeroSection LIKE :numeroSection LIMIT 1");
+            $this->db->bind(':idSommaire', $idSommaire);
+            $this->db->bind(':numeroSection', $numeroSection);
+            $section = $this->db->single();
+
+            $idParent = "";
+            if ($numeroParent && $numeroParent != "") {
+                $this->db->query("SELECT * FROM wbcc_section WHERE idSommaireF = :idSommaire AND numeroSection LIKE :numeroParent LIMIT 1");
+                $this->db->bind(':idSommaire', $idSommaire);
+                $this->db->bind(':numeroParent', $numeroParent);
+                $idParent = $this->db->single()->idSection ?? "";
+            }
+
+            if ($section) {
+                $this->db->query("UPDATE wbcc_section SET numeroSection = :numeroSection, titreSection = :titreSection, contenuSection = :contenuSection, idSection_parentF = :idSectionParent WHERE idSection = :idSection");
+                $this->db->bind(':idSection', $section->idSection);
+                $this->db->bind(':numeroSection', $numeroSection);
+                $this->db->bind(':titreSection', $titreSection);
+                $this->db->bind(':contenuSection', $contenuSection);
+                $this->db->bind(':idSectionParent', $idParent);
+                return $this->db->execute();
+            } else {
+                $this->db->query("INSERT INTO wbcc_section (idSommaireF, numeroSection, titreSection, contenuSection, idSection_parentF) VALUES (:idSommaire, :numeroSection, :titreSection, :contenuSection, :idSectionParent)");
+                $this->db->bind(':idSommaire', $idSommaire);
+                $this->db->bind(':numeroSection', $numeroSection);
+                $this->db->bind(':titreSection', $titreSection);
+                $this->db->bind(':contenuSection', $contenuSection);
+                $this->db->bind(':idSectionParent', $idParent);
+                return $this->db->execute();
+            }
+        } catch (Exception $e) {
+            error_log("Erreur dans getSectionsForRT: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
     public function getChildSections($parentId)
     {
         return $this->select()
@@ -313,7 +448,8 @@ class Section extends Model
     public function getSectionsParentBySommaire($sommaireId)
     {
         try {
-            $this->db->query("SELECT * FROM {$this->table} WHERE idSommaireF = :sommaireId AND idSection_ParentF IS NULL ORDER BY numeroSection");
+            // $this->db->query("SELECT * FROM {$this->table} WHERE idSommaireF = :sommaireId AND idSection_ParentF IS NULL ORDER BY numeroSection");
+            $this->db->query("SELECT * FROM {$this->table} WHERE idSommaireF = :sommaireId AND idSection_ParentF IS NULL ORDER BY CAST((REPLACE(numeroSection,'.', '')) AS int ) ");
             $this->db->bind(':sommaireId', $sommaireId);
             $result = $this->db->resultSet();
             return $result;
@@ -326,7 +462,7 @@ class Section extends Model
     public function getSectionsByParent($idSection)
     {
         try {
-            $this->db->query("SELECT * FROM {$this->table} WHERE idSection_parentF = :idSection ORDER BY numeroSection");
+            $this->db->query("SELECT * FROM {$this->table} WHERE idSection_parentF = :idSection ORDER BY CAST((REPLACE(numeroSection,'.', '')) AS INT) ");
             $this->db->bind(':idSection', $idSection);
 
             $result = $this->db->resultSet();
@@ -334,6 +470,85 @@ class Section extends Model
         } catch (Exception $e) {
             error_log("Erreur dans getSectionsBySommaire: " . $e->getMessage());
             throw $e;
+        }
+    }
+
+    public function unlinkDocument($sectionId, $documentId)
+    {
+        try {
+            $this->db->query("DELETE FROM wbcc_section_document 
+                          WHERE idSectionF = :sectionId 
+                          AND idDocumentF = :documentId");
+
+            $this->db->bind(':sectionId', $sectionId);
+            $this->db->bind(':documentId', $documentId);
+
+            return $this->db->execute();
+        } catch (Exception $e) {
+            error_log("Erreur dans unlinkDocument: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getDocumentsBySommaire($sommaireId)
+    {
+        try {
+            $this->db->query("SELECT d.* FROM wbcc_document d JOIN wbcc_section_document sd ON d.idDocument = sd.idDocumentF JOIN wbcc_section s ON sd.idSectionF = s.idSection WHERE s.idSommaireF = :sommaireId");
+            $this->db->bind(':sommaireId', $sommaireId);
+            $result = $this->db->resultSet();
+            return $result;
+        } catch (Exception $e) {
+            error_log("Erreur dans getDocumentsBySommaire: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function updateMultipleSections($sections)
+    {
+        try {
+            foreach ($sections as $section) {
+                $query = "UPDATE {$this->table} SET 
+                          idSection_parentF = :parentId,
+                          numeroSection = :numeroSection
+                          WHERE idSection = :idSection";
+
+                $this->db->query($query);
+
+                // Bind des paramètres
+                $this->db->bind(':parentId', $section['idSection_parentF']);
+                $this->db->bind(':numeroSection', $section['numeroSection']);
+                $this->db->bind(':idSection', $section['idSection']);
+
+                if (!$this->db->execute()) {
+                    error_log("Échec de la mise à jour pour la section ID: " . $section['idSection']);
+                    return false;
+                }
+            }
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Erreur dans updateMultipleSections: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateSectionAction($sectionId, $action, $contenuSection)
+    {
+        try {
+
+            $this->db->query("UPDATE {$this->table} 
+                             SET action = :action,
+                                 contenuSection = :contenuSection 
+                             WHERE idSection = :sectionId");
+
+            $this->db->bind(':action', $action);
+            $this->db->bind(':contenuSection', $contenuSection);
+            $this->db->bind(':sectionId', $sectionId);
+
+            return $this->db->execute();
+        } catch (Exception $e) {
+            error_log("Erreur dans updateSectionAction: " . $e->getMessage());
+            return false;
         }
     }
 }

@@ -8,15 +8,16 @@ class GestionInterneCtrl extends Controller
         $this->userModel = $this->model('Utilisateur');
         // $this->equipementModel = $this->model('Equipement');
         // $this->pieceModel = $this->model('Piece');
-        $this->contactModel = $this->model('Contact');
+        // $this->contactModel = $this->model('Contact');
         // $this->artisanModel = $this->model('Artisan');
         $this->subventionModel = $this->model('Subvention');
-        // $this->critereModel = $this->model('Critere');
+        $this->critereModel = $this->model('Critere');
         $this->parametreModel = $this->model('Parametres');
         // $this->pointageModel = $this->model('Pointage');
         $this->roleModel = $this->model('Roles');
         $this->projetModel = $this->model('Projet');
         $this->immeubleModel = $this->model('Immeuble');
+        $this->jourFerieModel = $this->model('JourFerie');
         // $this->congeModel = $this->model('Conge');
     }
 
@@ -24,6 +25,18 @@ class GestionInterneCtrl extends Controller
     {
         header("location:javascript://history.go(-1)");
     }
+
+    public function indexAgendas() {
+        $agenda = linkTo('GestionAgenda', 'getAgendas');
+        echo $agenda;
+        extract($agenda);
+
+        $data = [
+            "titre" => $titre
+        ];
+        $this->view('gestionInterne/agenda/indexAgendas', $data);
+    }
+    
     //ROLE
     public function indexRole()
     {
@@ -250,9 +263,14 @@ class GestionInterneCtrl extends Controller
     //DEBUT NABILA 
     public function indexPersonnel()
     {
+        $role = $_SESSION['connectedUser']->role;
         $type = "wbcc";
         $idContact = Role::connectedUser()->idUtilisateur;
-        $personnels = $this->userModel->getUsersByType($type);
+        if ($role == 25) {
+            $personnels = $this->userModel->getUsersBySite(($_SESSION['connectedUser'])->idSiteF, 1);
+        } else {
+            $personnels = $this->userModel->getUsersByType($type);
+        }
         $roles = $this->roleModel->getRolesByType($type);
         $sites = $this->siteModel->getAllSites();
         $data = [
@@ -273,28 +291,90 @@ class GestionInterneCtrl extends Controller
         ];
         $this->view('gestionInterne/personnel/indexPersonnel', $data);
     }
-
     public function bilanComparatif()
     {
+
+        $site = "";
+        $periode = 'today';
+        $date1 = "";
+        $date2 = "";
+        $startDate = "";
+        $endDate = "";
+        $previousStartDate = "";
+        $previousEndDate = "";
         $idUtilisateur = ''; // For filtering by user
+        $selectedEmploye = "";
+        $role = $_SESSION['connectedUser']->role;
+        $re = getPeriodDates("$periode", []);
+
         if (isset($_GET)) {
             extract($_GET);
         }
 
-        $idContact = Role::connectedUser()->idUtilisateur;
-        $contacts =   $this->userModel->getUsersByType("wbcc", 1);
-        $contactById =   $this->userModel->findUserByIdContact($idContact);
-        $matricules =   $this->userModel->getUsersByType("wbcc", 1);
-        $pointages = null;
+        if ($periode != "all" && $periode != "custom" && $periode != "day" && $periode != "today") {
+            $re = getPeriodDates("$periode", []);
+            if (sizeof($re) != 0) {
+                $date1 = $re['startDate'];
+                $date2 = $re['endDate'];
+                $startDate = $re['startDate'];
+                $endDate = $re['endDate'];
+                $previousStartDate = $re['previousStartDate'];
+                $previousEndDate = $re['previousEndDate'];
+            }
+        }
 
+        if ($periode === "today") {
+            if (sizeof($re) != 0) {
+                $startDate = $re['startDate'];
+                $endDate = $re['endDate'];
+                $previousStartDate = $re['previousStartDate'];
+                $previousEndDate = $re['previousEndDate'];
+            }
+        }
+
+        $idContact = Role::connectedUser()->idUtilisateur;
+        if ($selectedEmploye || ($role != 1 && $role != 2 && $role != 25)) {
+            if ($role != 1 && $role != 2 && $role != 25) {
+                $selectedEmploye = $this->contactModel->findById($_SESSION['connectedUser']->idContactF)->fullName;
+            } else {
+                $selectedEmploye = $this->contactModel->findById($idContact);
+            }
+        }
+        $sites = $this->siteModel->getAllSites();
+        $contactsList =   $this->userModel->getUsersByType("wbcc", "1");
+
+        if ($role == 25) {
+            $contactsList =   $this->userModel->getUsersBySite($_SESSION['connectedUser']->idSiteF, 1);
+        }
+        if ($idUtilisateur == "") {
+            $contacts =   $contactsList;
+        } else {
+            $contacts = [];
+            $contacts[] =  $this->userModel->findUserByIdContact($idUtilisateur);
+        }
+        $user = false;
+        $user = $this->contactModel->findById($idContact);
+        $contactById =   $this->userModel->findUserByIdContact($idContact);
+        $pointages = null;
         $pointages =  $this->pointageModel->getAllWithFullName($idContact);
 
         $data = [
             "idUtilisateur" => $idUtilisateur,
+            "selectedEmploye" => $selectedEmploye,
             "contacts"  => $contacts,
+            "contactsList" => $contactsList,
             "contactById" => $contactById,
-            "matricules"  => $matricules,
+            "site" => $site,
+            "sites" => $sites,
             "pointages" => $pointages,
+            "periode" => $periode,
+            "date1" => $date1,
+            "date2" => $date2,
+            "startDate" => $startDate,
+            "endDate" => $endDate,
+            'previousStartDate' => $previousStartDate,
+            'previousEndDate' => $previousEndDate,
+            "user" => $user
         ];
         $this->view("gestionInterne/personnel/bilan", $data);
     }
@@ -317,6 +397,9 @@ class GestionInterneCtrl extends Controller
             extract($_GET);
         }
 
+        if ($role == 25) {
+            $site = $_SESSION['connectedUser']->idSiteF;
+        }
 
         $idUtilisateur == '' ?
             $titre = 'LISTE DES POINTAGES DE TOUS LES UTILISATEURS' :
@@ -326,26 +409,48 @@ class GestionInterneCtrl extends Controller
         $totalMinuteRetardById = 0;
 
         $idContact = Role::connectedUser()->idUtilisateur;
-        $contacts =   $this->userModel->getUsersByType("wbcc", 1);
+        $sites = $this->siteModel->getAllSites();
+
         $contactById =  $this->userModel->findUserByIdContact($idContact);
-        $matricules =  $this->userModel->getUsersByType("wbcc", 1);
+        $contacts = [];
+        $matricules = [];
+        if ($role == 1 || $role == 2) {
+            $contacts =   $this->userModel->getUsersByType("wbcc", 1);
+            $matricules =  $this->userModel->getUsersByType("wbcc", 1);
+            if ($idUtilisateur) {
+                $fullName = $this->contactModel->findById($idUtilisateur)->fullName;
+                $titre .= ' DE ' . $fullName;
+            }
+        } else {
+            if ($role == 25) {
+                $contacts =   $this->userModel->getUsersBySite($_SESSION['connectedUser']->idSiteF, 1);
+                $matricules =  $this->userModel->getUsersBySite($_SESSION['connectedUser']->idSiteF, 1);
+                if ($idUtilisateur) {
+                    $fullName = $this->contactModel->findById($idUtilisateur)->fullName;
+                    $titre .= ' DE ' . $fullName;
+                }
+            } else {
+                $idUtilisateur = $_SESSION['connectedUser']->idUtilisateur;
+                $fullName = $this->userModel->findUserByIdContact(Role::connectedUser()->idContactF)->fullName;
+                $titre .= ' DE ' . $fullName;
+            }
+        }
+
         $pointages = null;
-        $pointagesById = $this->pointageModel->getFilteredPointageWithidUser($idContact, $Motifjustification, $etat, $periode, $dateOne, $dateDebut, $dateFin);
+        $pointagesById = $this->pointageModel->getFilteredPointageWithidUser($idUtilisateur, $Motifjustification, $etat, $periode, $dateOne, $dateDebut, $dateFin);
 
-        if ($role != 1 && $role != 2) {
+        if ($role != 1 && $role != 2 && $role != 25) {
             $titre = 'LISTE DES POINTAGES';
-            $fullName = $this->userModel->findUserByIdContact($idContact)[0]->fullName;
+            $fullName = $this->userModel->findUserById($idContact)->fullName;
             $titre .= ' DE ' . $fullName;
         }
 
-        if ($site) {
-            $titre .= ' DU SITE DE ' . "'" . $site . "'";
+        if ($site != "") {
+            $siteObj = findItemByColumn("wbcc_site", "idSite", $site);
+            $titre .= ' DU SITE DE ' . "'" . $siteObj->nomSite . "'";
         }
 
-        if ($idUtilisateur) {
-            $fullName = $this->contactModel->findById($idUtilisateur)->fullName;
-            $titre .= ' DE ' . $fullName;
-        }
+
 
         if ($periode != "" && $periode != "2" && $periode != "1" && $periode != "today") {
             $re = getPeriodDates("$periode", []);
@@ -373,26 +478,37 @@ class GestionInterneCtrl extends Controller
             $totalMinuteRetardById += $pointage->nbMinuteRetard;
         }
 
-        if ($Motifjustification == "" && $etat == "" && $site == "" && $periode == "" && $dateOne == "" && $dateDebut == "" && $dateFin == "" && $matricule == "" && $idUtilisateur == "") {
-            $pointages =  $this->pointageModel->getAllWithFullName($idContact);
-            foreach ($pointages as $index => $pointage) {
-                $totalMinuteRetard += $pointage->nbMinuteRetard;
+        if ($role == 1 || $role == 2) {
+            if ($Motifjustification == "" && $etat == "" && $site == "" && $periode == "" && $dateOne == "" && $dateDebut == "" && $dateFin == "" && $matricule == "" && $idUtilisateur == "") {
+                $pointages =  $this->pointageModel->getAllWithFullName($idContact);
+                foreach ($pointages as $index => $pointage) {
+                    $totalMinuteRetard += $pointage->nbMinuteRetard;
+                }
+            } else {
+                $pointages = $this->pointageModel->getFilteredPointage($Motifjustification, $etat, $site, $periode, $dateOne, $dateDebut, $dateFin, $matricule, $idUtilisateur);
+                foreach ($pointages as $index => $pointage) {
+                    $totalMinuteRetard += $pointage->nbMinuteRetard;
+                }
             }
-        } else {
+        }
+
+        if ($role == 25) {
             $pointages = $this->pointageModel->getFilteredPointage($Motifjustification, $etat, $site, $periode, $dateOne, $dateDebut, $dateFin, $matricule, $idUtilisateur);
             foreach ($pointages as $index => $pointage) {
                 $totalMinuteRetard += $pointage->nbMinuteRetard;
             }
         }
-
-
         $data = [
             "idUtilisateur" => $idUtilisateur,
             "titre" => $titre,
             "site" => $site,
+            "sites" => $sites,
             "etat" => $etat,
             "Motifjustification" => $Motifjustification,
             "periode" => $periode,
+            "dateOne" => $dateOne,
+            "dateFin" => $dateFin,
+            "dateDebut" => $dateDebut,
             "contacts"  => $contacts,
             "contactById" => $contactById,
             "matricules"  => $matricules,
@@ -582,21 +698,17 @@ class GestionInterneCtrl extends Controller
         echo "\idProjetCTRL = $idProjet";
         $idUser = Role::connectedUser()->idUtilisateur;
 
-        if (isset($_FILES['photoImmeuble'])) {
-            try {
-                $documentCtrl = new DocumentCtrl();
-                echo "Fichier reçu : " . $_FILES['photoImmeuble']['name']; // Vérifiez le nom du fichier
-                $result = $documentCtrl->uploadFile($_FILES['photoImmeuble'], URLPHOTO);
-                
-                if ($result['success']) {
-                    $immeuble = $this->immeubleModel->updatePhotoImmeuble($idImmeuble, $result['filePath']);
-                    echo "Fichier téléchargé avec succès : " . htmlspecialchars($result['filePath']);
-                } else {
-                    echo "Erreur lors du téléchargement : " . $result['error'];
-                }
-            } catch (Exception $e) {
-                echo "Erreur lors du téléchargement : " . $e->getMessage();
+        if (isset($_FILES['file'])) {
+            $file = $_FILES['file'];
+            $uploadBaseDir = $_SERVER['DOCUMENT_ROOT'] . '/public/documents/immeuble/';
+            $uploadFile = $uploadBaseDir . $file['name'];
+            if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
+                $this->immeubleModel->updatePhotoImmeuble($idImmeuble, $file['name']);
+            } else {
+                echo "Error uploading file.";
             }
+        } else {
+            echo "No file uploaded.";
         }
 
         $projet = $this->projetModel->saveProjet($idProjet, $nomProjet, $descriptionProjet, $idImmeuble, $idUser);
@@ -606,7 +718,6 @@ class GestionInterneCtrl extends Controller
         }
 
         $this->redirectToMethod("GestionInterne", "projet", $idProjet);
-
     }
 
     /**
@@ -621,5 +732,133 @@ class GestionInterneCtrl extends Controller
 
         // Redirection vers la liste des projets
         $this->redirectToMethod("GestionInterne", "indexProjet");
+    }
+    
+    // Liste des jours fériés
+    public function indexJourFerie()
+    {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
+        if (!isset($_SESSION['connectedUser'])) {
+            die('Utilisateur non connecté.');
+        }
+        
+        $idSiteUser = $_SESSION['connectedUser']->idSite;
+        $idUser = $_SESSION['connectedUser']->idUtilisateur;
+        $idSite = isset($_GET['site']) && is_numeric($_GET['site']) ? $_GET['site'] : $idSiteUser;
+        $annee = isset($_GET['annee']) && preg_match('/^\d{4}$/', $_GET['annee']) ? $_GET['annee'] : date('Y');
+
+        $joursFeries = $this->jourFerieModel->getAllJoursFeries($idSite, $annee);
+        if ($joursFeries === false) {
+            die('Erreur lors de la récupération des jours fériés.');
+        }
+
+        $site = $this->siteModel->findById($idSite);
+        if ($site === false) {
+            die('Site introuvable.');
+        }
+
+        $sites = $this->siteModel->getAllSites();
+        if ($sites === false) {
+            die('Erreur lors de la récupération des sites.');
+        }
+
+        $data = [
+            "joursFeries" => $joursFeries,
+            "titre" => "Jours fériés ",
+            "sousTitre" => "Liste des jours fériés ". $annee . "_WBCC-" . $site->nomSite,
+            "annee" => $annee,
+            "site" => $site,
+            "sites" => $sites,
+        ];
+        $this->view('gestionInterne/jourFerie/indexJourFerie', $data);
+    }
+
+    public function jourFerie($id = '')
+    {
+        $idSiteUser = $_SESSION['connectedUser']->idSite;
+        $idUser = $_SESSION['connectedUser']->idUtilisateur;
+
+        $idSite = (isset($_GET['site'])) ? $_GET['site'] : $idSiteUser;
+        $annee = (isset($_GET['annee'])) ? $_GET['annee'] : date('Y');
+
+        $joursFeries = $this->jourFerieModel->getAllJoursFeries($idSite, $annee);
+        $site = $this->siteModel->findById($idSite);
+        $sites = $this->siteModel->getAllSites();
+        $jourFerie = $this->jourFerieModel->findJourFerieByColumnValue("idJourFerie", $id);
+        $data = [
+            "jourFerie" => $jourFerie,
+            "joursFeries" => $joursFeries,
+            "titre" => "Jours fériés",
+            "sousTitre" => "Ajout de jours fériés ". $annee . "_WBCC-" . $site->nomSite,
+            "annee" => $annee,
+            "site" => $site,
+            "sites" => $sites
+        ];
+        $this->view('gestionInterne/jourFerie/jourFerie', $data);
+    }
+
+    public function saveJourFerie($idJourFerie = null)
+    {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+
+        extract($_POST);
+        $nomJourFerie = $_POST['nomJourFerie'] ?? null;
+        $dateJourFerie = $_POST['dateJourFerie'] ?? null;
+        $anneeJourFerie = $_POST['anneeJourFerie'] ?? null;
+        $idSiteF = $_POST['idSiteF'] ?? null;
+        $payer = $_POST['payer'] ?? null;
+        $chomer = $_POST['chomer'] ?? null;
+        if (empty($nomJourFerie) || empty($dateJourFerie)) {
+            die('Les champs "Nom" et "Date" sont obligatoires.');
+        }        
+
+        $idSiteUser = $_SESSION['connectedUser']->idSite;
+        $idUser = Role::connectedUser()->idUtilisateur;
+
+        $idSite = (isset($_GET['site'])) ? $_GET['site'] : $idSiteUser;
+        $annee = (isset($_GET['annee'])) ? $_GET['annee'] : date('Y');
+
+        $joursFeries = $this->jourFerieModel->getAllJoursFeries($idSite, $annee);
+        $site = $this->siteModel->findById($idSite);
+        $sites = $this->siteModel->getAllSites();
+        $jourFerie = $this->jourFerieModel->findJourFerie($anneeJourFerie, $idSiteF, $nomJourFerie);
+        if (!$jourFerie) {
+            $jourFerie = $this->jourFerieModel->saveJourFerie($nomJourFerie, $dateJourFerie, $anneeJourFerie, $idSiteF, $payer, $chomer, $idJourFerie);
+        }
+        $data = [
+            "jourFerie" => $jourFerie,
+            "titre" => "Jours fériés",
+            "sousTitre" => "Ajout de jours fériés ". $annee . "_WBCC-" . $site->nomSite,
+            "annee" => $annee,
+            "site" => $site,
+            "sites" => $sites
+        ];
+        $this->view('gestionInterne/jourFerie/jourFerie', $data);
+    }
+
+    public function ajoutJourFerie() {
+        extract($_GET);
+
+        $idSiteUser = $_SESSION['connectedUser']->idSite;
+        $idUser = Role::connectedUser()->idUtilisateur;
+        $idSite = (isset($_GET['idSite'])) ? $_GET['idSite'] : $idSiteUser;
+        $annee = (isset($_GET['annee'])) ? $_GET['annee'] : date('Y');
+        $anneeReference = (isset($_GET['anneeReference'])) ? $_GET['anneeReference'] : date('Y');
+
+        $joursFeries = $this->jourFerieModel->getAllJoursFeries($idSite, $anneeReference);
+        foreach ($joursFeries as $jourFerie) {
+            $date = date("{$annee}-m-d", strtotime($jourFerie->dateJourFerie));
+            $this->jourFerieModel->saveJourFerie($jourFerie->nomJourFerie, $date, $annee, $idSite, $jourFerie->Payer, $jourFerie->Chomer, null);
+        }
+    }
+
+    public function deleteJourFerie($id)
+    {
+        $this->jourFerieModel->deleteJourFerieById($id);
     }
 }

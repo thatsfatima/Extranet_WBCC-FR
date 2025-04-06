@@ -2,6 +2,72 @@
 
 class Immeuble extends Model
 {
+    public function saveImmeuble(
+        $idImmeuble,
+        $codeImmeuble,
+        $nomImmeuble,
+        $adresse1,
+        $codePostal,
+        $ville,
+        $departement,
+        $region,
+        $digicode1,
+        $digicode2,
+        $interphone,
+        $nbBatiment,
+        $libelleBatiment,
+        $source,
+        $etatImmeuble,
+        $typeImmeuble
+    ) {
+        if ($idImmeuble != "" && $idImmeuble != null && $idImmeuble != "0") {
+            $this->db->query("
+            UPDATE wbcc_immeuble SET codeImmeuble=:codeImmeuble, nomImmeubleSyndic = :nomImmeuble, adresse=:adresse1,
+            codePostal = :codePostal, ville=:ville, departement=:departement,
+            region = :region, digicode1=:digicode1, digicode2=:digicode2, 
+            nomInterphone = :interphone, nbreBatiment=:nbBatiment, libelleBatiment=:libelleBatiment, editDate=:editDate, source=:source, etatImmeuble=:etatImmeuble,
+            typeImmeuble=:typeImmeuble
+            WHERE idImmeuble = :idImmeuble");
+            $this->db->bind("idImmeuble", $idImmeuble, null);
+        } else {
+            $numeroImmeuble = "IMM" . date("dmYHis") . $codeImmeuble;
+            $this->db->query("
+            INSERT INTO wbcc_immeuble 
+            (codeImmeuble, numeroImmeuble, nomImmeubleSyndic, adresse, codePostal, 
+            ville, departement, region, digicode1, digicode2, nomInterphone, nbreBatiment, 
+            libelleBatiment, editDate, source, etatImmeuble, typeImmeuble) 
+            VALUES (:codeImmeuble,:numeroImmeuble, :nomImmeuble, :adresse1, :codePostal, :ville, :departement, :region, :digicode1, :digicode2, 
+            :interphone, :nbBatiment, :libelleBatiment, :editDate, :source, :etatImmeuble, :typeImmeuble)");
+            $this->db->bind("numeroImmeuble", $numeroImmeuble, null);
+        }
+
+        $this->db->bind("codeImmeuble", $codeImmeuble, null);
+        $this->db->bind("nomImmeuble", $nomImmeuble, null);
+        $this->db->bind("adresse1", $adresse1, null);
+        $this->db->bind("codePostal", $codePostal, null);
+        $this->db->bind("ville", $ville, null);
+        $this->db->bind("departement", $departement, null);
+        $this->db->bind("region", $region, null);
+        $this->db->bind("digicode1", $digicode1, null);
+        $this->db->bind("digicode2", $digicode2, null);
+        $this->db->bind("interphone", $interphone, null);
+        $this->db->bind("nbBatiment", $nbBatiment, null);
+        $this->db->bind("libelleBatiment", $libelleBatiment, null);
+        $this->db->bind("editDate", date('Y-m-d H:i:s'), null);
+        $this->db->bind("source", $source, null);
+        $this->db->bind("etatImmeuble", $etatImmeuble, null);
+        $this->db->bind("typeImmeuble", $typeImmeuble, null);
+        if ($this->db->execute()) {
+            if ($idImmeuble != "" && $idImmeuble != null && $idImmeuble != "0") {
+                return $this->findImmeubleById($idImmeuble);
+            } else {
+                return $this->findByNumero($numeroImmeuble);
+            }
+        } else {
+            return false;
+        }
+    }
+
     public function saveImmeubleComplet(
         $idImmeuble,
         $nomImmeuble,
@@ -11,7 +77,7 @@ class Immeuble extends Model
         $departement,
         $region,
         $typeImmeuble,
-        $nomDO,
+        $nomDO = '',
         $idDO,
         $nomGardien,
         $idGardien,
@@ -230,9 +296,13 @@ class Immeuble extends Model
             $this->db->execute();
             //UPDATE INFOS ASSURANCES FOR IMMEUBLE HLM
             if ($typeImmeuble == "HLM") {
-                $this->db->query("SELECT * FROM wbcc_immeuble WHERE idDO = $idDO OR nomDO=:nomDO ");
-                $this->db->bind("nomDO", $nomDO, null);
-                $ims =  $this->db->resultSet();
+                $ims = [];
+                if ($idDO != null && $idDO != '') {
+                    $this->db->query("SELECT * FROM wbcc_immeuble WHERE idDO = $idDO OR nomDO=:nomDO ");
+                    $this->db->bind("nomDO", $nomDO, null);
+                    $ims =  $this->db->resultSet();
+                }
+
                 foreach ($ims as $key => $im) {
                     $this->db->query("UPDATE wbcc_immeuble SET numPolice = :numPolice, dateEffetContrat=:dateEffetContrat,
                         dateEcheanceContrat = :dateEcheanceContrat, nomCompagnieAssurance=:nomCompagnieAssurance, nomCourtier=:nomCourtier,
@@ -254,13 +324,6 @@ class Immeuble extends Model
         }
     }
 
-    public function updatePhotoImmeuble($idImmeuble, $photo)
-    {
-        $this->db->query("UPDATE wbcc_immeuble_cb SET photoImmeuble = :photo WHERE idImmeuble = $idImmeuble");
-        $this->db->bind("photo", $photo, null);
-        $this->db->execute();
-    }
-
     public function  findImmeubleById($id)
     {
         $this->db->query("SELECT * FROM wbcc_immeuble
@@ -273,9 +336,18 @@ class Immeuble extends Model
         $this->db->query("SELECT * FROM wbcc_immeuble_cb WHERE etatImmeuble=1 ORDER BY codeImmeuble DESC ");
         return $this->db->resultSet();
     }
-    public function  getAllImmeubles()
+    
+    public function  getAllImmeubles($source = "", $columnOrder = "idImmeuble", $orderBy = "DESC", $etat = "")
     {
-        $this->db->query("SELECT * FROM wbcc_immeuble ORDER BY idImmeuble DESC ");
+        $sql = "";
+        if ($source != "") {
+            $sql = " WHERE source='$source' ";
+        }
+        if ($etat != "") {
+            $sql .= $sql !=  "" ? " AND " : " WHERE source='$etat' ";
+            $sql .= " etatImmeuble = $etat";
+        }
+        $this->db->query("SELECT * FROM wbcc_immeuble $sql ORDER BY $columnOrder $orderBy ");
         return $this->db->resultSet();
     }
 
@@ -285,11 +357,15 @@ class Immeuble extends Model
         return $this->db->single();
     }
 
-    public function  getImmeubleByCompany($id)
+    public function  getImmeubleByCompany($id, $idChefSecteur = "")
     {
+        $sql = "";
+        if ($idChefSecteur != "") {
+            $sql = " AND idChefSecteur=$idChefSecteur ";
+        }
         $this->db->query("SELECT * FROM wbcc_immeuble, wbcc_company_immeuble 
         WHERE idImmeuble = idImmeubleF
-        AND idCompanyF = $id");
+        AND idCompanyF = $id $sql  GROUP BY idImmeuble");
         return $this->db->resultSet();
     }
 
@@ -378,14 +454,13 @@ class Immeuble extends Model
 
     public function findByNumero($numero)
     {
-        $this->db->query("SELECT * FROM wbcc_immeuble WHERE numeroImmeuble = $numero");
+        $this->db->query("SELECT * FROM wbcc_immeuble WHERE numeroImmeuble = '$numero'");
         if ($this->db->single()) {
             return $this->db->single();
         } else {
             return null;
         }
     }
-
 
     public function insertCompanyImmeuble($idCompany, $idImmeuble)
     {
@@ -422,6 +497,14 @@ class Immeuble extends Model
 
         $this->db->bind("idOp", $idOp, null);
         $this->db->bind("id", $id, null);
+        $this->db->execute();
+    }
+
+
+    public function updatePhotoImmeuble($idImmeuble, $photo)
+    {
+        $this->db->query("UPDATE wbcc_immeuble SET photoImmeuble = :photo WHERE idImmeuble = $idImmeuble");
+        $this->db->bind("photo", $photo, null);
         $this->db->execute();
     }
 }

@@ -7,13 +7,25 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'extranet_wbcc_fr');
 //
-define('PORT', '');
+define('PORT', '8098');
 //Répértoire racine
 define('APPROOT', dirname(dirname(__FILE__))); // : pour acceder au dossier app
 //URL Racine
-define('URLROOT', 'http://localhost' . PORT . '/Extranet_WBCC-FR'); //pour acceder au dossier public
+define('URLROOT', 'http://localhost:' . PORT . '/Extranet_WBCC-FR'); //pour acceder au dossier public
 
-define('URLROOT_GESTION_WBCC_CB', 'http://localhost' . PORT . '/gestion_wbcc_cb'); //pour acceder au dossier public
+define('URLROOT_GESTION_WBCC_CB', 'http://localhost:' . PORT . '/gestion_wbcc_cb'); //pour acceder au dossier public
+
+// Google API configuration 
+define('GOOGLE_CLIENT_ID', '143200318289-8q32tasc8vljv36pg49kjgcc5nofu2e7.apps.googleusercontent.com'); 
+define('GOOGLE_CLIENT_SECRET', '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');
+define('GOOGLE_OAUTH_SCOPE', 'https://www.googleapis.com/auth/calendar'); 
+define('REDIRECT_URI', 'http://localhost' . PORT . '/gestion_wbcc_cb/public/json/google-calendar.php'); 
+
+// Start session 
+if(!session_id()) session_start(); 
+ 
+// Google OAuth URL 
+$googleOauthURL = 'https://accounts.google.com/o/oauth2/auth?scope=' . urlencode(GOOGLE_OAUTH_SCOPE) . '&redirect_uri=' . REDIRECT_URI . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online';
 
 //Nom du site
 define('SITENAME', 'WBCC-FR | Extranet');

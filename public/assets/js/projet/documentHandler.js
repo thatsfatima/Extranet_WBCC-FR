@@ -1,6 +1,5 @@
 // Gestionnaire de documents pour les sections
 const DocumentHandler = (function () {
-
     // Variables d'état
     let state = {
         selectedFile: null,
@@ -16,6 +15,17 @@ const DocumentHandler = (function () {
 
     // Liaison des événements
     function bindEvents() {
+
+        // Gestionnaire pour le modal
+        $('#fileSelectionModal').on('hidden.bs.modal', function () {
+            // Nettoyage lors de la fermeture du modal
+            $('#ryuFileResults').empty();
+            $('#actionBarContainer').empty();
+            if ($.fn.DataTable.isDataTable('#documentsTable')) {
+                $('#documentsTable').DataTable().destroy();
+            }
+        });
+
         // Gestionnaire pour le fichier local
         $('#localFileInput').on('change', handleLocalFileSelection);
 
@@ -30,6 +40,17 @@ const DocumentHandler = (function () {
     function openFileModal(sectionId) {
         state.activeSectionId = sectionId;
         resetSelection();
+        // Charger les fichiers RYM si l'onglet correspondant est actif
+        if ($('#ryuFileTab').hasClass('active')) {
+            loadRyuFiles();
+        }
+
+        // Ajouter un gestionnaire pour l'ouverture du modal
+        $('#fileSelectionModal').on('shown.bs.modal', function () {
+            if ($('#ryuFileTab').hasClass('active')) {
+                loadRyuFiles();
+            }
+        });
         $('#fileSelectionModal').modal('show');
     }
 
@@ -43,9 +64,19 @@ const DocumentHandler = (function () {
         $('.document-checkbox').prop('checked', false);
         $('#selectedCount').text('0 document(s) sélectionné(s)');
 
+        // Nettoyer la barre d'action avec une transition
+        $('#actionBarContainer').fadeOut('fast', function () {
+            $(this).empty().show();
+        });
+
         // Réinitialiser DataTable si elle existe
         if ($.fn.DataTable.isDataTable('#documentsTable')) {
-            $('#documentsTable').DataTable().clear().draw();
+            $('#documentsTable').fadeOut('fast', function () {
+                if ($.fn.DataTable.isDataTable('#documentsTable')) {
+                    $('#documentsTable').DataTable().destroy();
+                }
+                $(this).empty().show();
+            });
         }
 
         $('#ryuLoadingSpinner').addClass('d-none');
@@ -53,26 +84,33 @@ const DocumentHandler = (function () {
     }
 
     // Charger les fichiers RYM
+    // Charger les fichiers RYM
     function loadRyuFiles() {
-        $('#ryuLoadingSpinner').removeClass('d-none');
+        // Masquer la table et afficher le loader
+        $('#documentsTable').hide();
         $('#ryuEmptyState').addClass('d-none');
-        $('#ryuFileResults').empty();
+        $('#ryuLoadingSpinner').removeClass('d-none');
 
         $.ajax({
-            url: CONFIG.routes.sectionDocument.getAllDocuments,
+            url: CONFIG.routes.sectionDocument.getAllDocumentsByIdImmeuble,
             method: 'GET',
             success: function (response) {
+                // console.log(response)
                 $('#ryuLoadingSpinner').addClass('d-none');
 
-                if (!response.documents || response.documents.length == 0) {
+                if (!response.documents || response.documents.length === 0) {
                     $('#ryuEmptyState').removeClass('d-none');
                     return;
                 }
+
+                // Afficher la table de manière fluide
                 displayDocuments(response.documents);
+                $('#documentsTable').fadeIn('fast');
             },
             error: function () {
                 $('#ryuLoadingSpinner').addClass('d-none');
-                $('#ryuEmptyState').removeClass('d-none')
+                $('#ryuEmptyState')
+                    .removeClass('d-none')
                     .html('<div class="text-danger">Erreur lors du chargement des documents</div>');
             }
         });
@@ -135,12 +173,14 @@ const DocumentHandler = (function () {
 
     // Afficher les documents dans le tableau apres l'ouverture du modal
     function displayDocuments(documents) {
+        console.log('Documents reçus:', documents);
+
         if ($.fn.DataTable.isDataTable('#documentsTable')) {
             $('#documentsTable').DataTable().destroy();
         }
 
         const actionBar = `
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <button class="btn btn-sm btn-outline-secondary" id="selectAllDocs">
                         <i class="fas fa-check-square mr-1"></i>Tout sélectionner
@@ -155,18 +195,7 @@ const DocumentHandler = (function () {
             </div>
         `;
 
-        $('#ryuFileContent .table-responsive').before(actionBar);
-
-        // Ajoutez les gestionnaires d'événements
-        $('#selectAllDocs').on('click', function () {
-            $('.document-checkbox').prop('checked', true);
-            updateSelectedDocuments();
-        });
-
-        $('#deselectAllDocs').on('click', function () {
-            $('.document-checkbox').prop('checked', false);
-            updateSelectedDocuments();
-        });
+        $('#actionBarContainer').html(actionBar);
 
         const html = documents.map(doc => `
             <tr>
@@ -181,8 +210,16 @@ const DocumentHandler = (function () {
                 </td>
                 <td><span class="badge badge-secondary">${doc.type.toUpperCase()}</span></td>
                 <td>${new Date(doc.dateCreation).toLocaleDateString()}</td>
-                <td >
-                   ${doc.auteur ? doc.auteur : '-'}
+                <td>
+                    <div class="d-flex">
+                        ${doc.auteur ? doc.auteur : '-'}
+                        <a href="${CONFIG.URLROOT}/public/documents/${doc.url}" 
+                           class="btn btn-sm btn-outline-primary ml-2" 
+                           target="_blank" 
+                           title="Visualiser le document">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
         `).join('');
@@ -191,19 +228,31 @@ const DocumentHandler = (function () {
 
         // Initialiser DataTable
         const dataTable = $('#documentsTable').DataTable({
-
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+            },
             order: [[2, 'desc']],
             pageLength: 10,
             responsive: true,
             columns: [
-                { width: "40%" },
+                { width: "35%" },
                 { width: "15%" },
                 { width: "25%" },
-                { width: "20%" }
+                { width: "25%" }
             ]
         });
 
-        // Gestionnaire pour les checkboxes
+        // Gestionnaires d'événements
+        $('#selectAllDocs').on('click', function () {
+            $('.document-checkbox').prop('checked', true);
+            updateSelectedDocuments();
+        });
+
+        $('#deselectAllDocs').on('click', function () {
+            $('.document-checkbox').prop('checked', false);
+            updateSelectedDocuments();
+        });
+
         $('.document-checkbox').on('change', function () {
             updateSelectedDocuments();
         });
@@ -293,6 +342,7 @@ const DocumentHandler = (function () {
     //         // Réactiver le bouton
     //         $('#validateFileSelection')
     //             .prop('disabled', false)
+
     //             .html('Valider la sélection');
     //     }
     // }
@@ -412,22 +462,23 @@ const DocumentHandler = (function () {
     // Recharger les documents d'une section
     async function reloadSectionDocuments(sectionId) {
         try {
-            const response = await $.ajax({
-                url: `${CONFIG.routes.sectionDocument.getDocuments}/${sectionId}`,
-                method: 'GET'
-            });
-
-            if (response.success) {
-                // Mettre à jour l'interface utilisateur avec les nouveaux documents
-                updateSectionDocumentsUI(response.documents);
+            if (documentsTable) {
+                // Rafraîchir le DataTable
+                documentsTable.ajax.reload();
+            } else {
+                // Si la table n'existe pas, initialiser une nouvelle table
+                loadSectionDocuments(sectionId);
             }
         } catch (error) {
             console.error('Error reloading documents:', error);
+            showError('Erreur lors du rechargement des documents');
         }
     }
 
 
     // Mettre à jour l'interface utilisateur des documents
+    // <a href="${CONFIG.URLROOT}/public/documents/projet/annexe/${doc.url}" 
+
     function updateSectionDocumentsUI(documents) {
         const documentsContainer = $('#section-documents-list');
 
@@ -440,7 +491,7 @@ const DocumentHandler = (function () {
                         <small class="text-muted ml-2">${new Date(doc.dateCreation).toLocaleDateString()}</small>
                     </div>
                     <div>
-                        <a href="${CONFIG.URLROOT}/projet/annexe/${doc.url}" 
+                        <a href="${CONFIG.URLROOT}/public/documents/${row.urlDossier}/${row.urlDocument}" 
                            class="btn btn-sm btn-outline-primary" 
                            target="_blank">
                             <i class="fas fa-eye mr-1"></i>Visualiser
@@ -566,7 +617,6 @@ const DocumentHandler = (function () {
 let documentsTable;
 
 function loadSectionDocuments(sectionId) {
-    console.log("ok " + sectionId)
     // Afficher le loader
     $('#section-documents-list').html(`
         <div class="text-center py-3">
@@ -588,86 +638,57 @@ function loadSectionDocuments(sectionId) {
             </thead>
         </table>
     `);
-    // $.ajax({
-    //     url: CONFIG.routes.sectionDocument.getDocuments + '/' + sectionId,
-    //     type: 'GET',
-    //     dataType: 'json',
-    //     beforeSend: function () { },
-    //     success: function (response) {
-    //         console.log("success");
-    //         console.log(response);
-    //         // $("#titre").text("Historique : " + user.trim());
-    //         // $('#tabledata').DataTable({
-    //         //     "Processing": true, // for show progress bar
-    //         //     "serverSide": false, // for process server side
-    //         //     "filter": true, // this is for disable filter (search box)
-    //         //     "orderMulti": true, // for disable multiple column at once
-    //         //     "bDestroy": true,
-    //         //     'iDisplayLength': 100,
-    //         //     "data": response,
-    //         //     "columns": [{
-    //         //             "data": "index"
-    //         //         },
-    //         //         {
-    //         //             "data": "action"
-    //         //         },
-    //         //         {
-    //         //             "data": "dateAction"
-    //         //         }
-    //         //     ]
-    //         // });
-    //     },
-    //     error: function (response) {
-    //         console.log(response);
-    //     },
-    //     complete: function () {
-    //         $("#loadingModal").modal("hide");
-    //     },
-    // });
 
-    // return;
     // Initialiser DataTables
     documentsTable = $('#documents-table').DataTable({
         ajax: {
             url: CONFIG.routes.sectionDocument.getDocuments + '/' + sectionId,
-            dataSrc: function (response) {
-                console.log(response.success);
-                return response.success && response.documents ? response.documents : [];
-            }
+            dataSrc: ''
         },
         columns: [
             {
-                data: 'nom',
+                data: 'nomDocument',
                 render: function (data) {
                     return `<i class="fas fa-file mr-2"></i>${data}`;
                 }
             },
             {
-                data: 'url',
+                data: 'urlDocument',
                 render: function (data) {
                     const extension = data.split('.').pop().toUpperCase();
                     return `<span class="badge badge-secondary">${extension}</span>`;
                 }
             },
             {
-                data: 'dateCreation',
+                data: 'createDate',
                 render: function (data) {
                     return new Date(data).toLocaleDateString();
                 }
             },
+            // <a href="${CONFIG.URLROOT}/public/documents/projet/annexe/${row.urlDocument}" 
             {
-                data: 'url',
-                render: function (data) {
+                data: null,
+                render: function (data, type, row) {
                     return `
-                        <a href="${CONFIG.URLROOT}/projet/annexe/${data}" 
-                           class="btn btn-sm btn-outline-danger" 
+                    <div class="row">
+                        <a href="${CONFIG.URLROOT}/public/documents/${row.urlDossier}/${row.urlDocument}" 
+                           class="btn btn-sm btn-outline-primary" 
                            target="_blank">
-                            <i class="fas fa-eye mr-1"></i>Visualiser
+                            <i class="fas fa-eye mr-1"></i>
                         </a>
+                        <button class="btn btn-sm btn-outline-danger delete-document" 
+                                data-document-id="${row.idDocument}" 
+                                data-section-id="${sectionId}">
+                            <i class="fas fa-trash-alt mr-1"></i>
+                        </button>
+                        </div>
                     `;
                 }
             }
         ],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json'
+        },
         responsive: true,
         pageLength: 10,
         ordering: true,
@@ -677,25 +698,34 @@ function loadSectionDocuments(sectionId) {
         autoWidth: false
     });
 
-    // Gérer les erreurs
-    $('#documents-table').on('error.dt', function (e, settings, techNote, message) {
-        $('#section-documents-list').html(`
-            <div class="alert alert-danger">
-                <i class="fas fa-exclamation-triangle mr-2"></i>
-                Erreur lors du chargement des documents
-            </div>
-        `);
-    });
+    // Gérer la suppression des documents
+    $('#documents-table').on('click', '.delete-document', function (e) {
+        e.preventDefault();
 
-    // Gérer l'absence de données
-    $('#documents-table').on('xhr.dt', function (e, settings, json) {
-        if (!json || !json.success || json.documents.length == 0) {
-            $('#section-documents-list').html(`
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle mr-2"></i>
-                    Aucun document associé à cette section
-                </div>
-            `);
+        const documentId = $(this).data('document-id');
+        const sectionId = $(this).data('section-id');
+
+        if (confirm('Êtes-vous sûr de vouloir supprimer ce document ?')) {
+            $.ajax({
+                url: CONFIG.routes.sectionDocument.deleteDocument,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    sectionId: sectionId,
+                    documentId: documentId
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        documentsTable.ajax.reload();
+                        showNotification('success', 'Document supprimé avec succès');
+                    } else {
+                        showNotification('error', response.error || 'Erreur lors de la suppression');
+                    }
+                },
+                error: function () {
+                    showNotification('error', 'Erreur de communication avec le serveur');
+                }
+            });
         }
     });
 }
@@ -707,6 +737,40 @@ function destroyDocumentsTable() {
         documentsTable = null;
     }
 }
+
+// Gérer la suppression des documents
+$('#documents-table').on('click', '.btn-outline-danger', function (e) {
+    if (!$(this).data('url')) return; // Skip si c'est le bouton Visualiser
+
+    e.preventDefault();
+    const row = $(this).closest('tr');
+    const documentId = row.attr('data-document-id');
+
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce document ?')) {
+        $.ajax({
+            url: CONFIG.routes.sectionDocument.deleteDocument,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                sectionId: sectionId,
+                documentId: documentId
+            }),
+            success: function (response) {
+                if (response.success) {
+                    // Recharger la table
+                    documentsTable.ajax.reload();
+                    // Afficher un message de succès
+                    toastr.success('Document supprimé avec succès');
+                } else {
+                    toastr.error(response.error || 'Erreur lors de la suppression');
+                }
+            },
+            error: function () {
+                toastr.error('Erreur de communication avec le serveur');
+            }
+        });
+    }
+});
 
 // Initialisation au chargement du document
 $(document).ready(function () {

@@ -1,3 +1,15 @@
+button[aria-expanded=true] .fa-chevron-right {
+    display: none;
+}
+
+button[aria-expanded=false] .fa-chevron-down {
+    display: none;
+}
+
+.subsections.collapsed {
+    display: none;
+}
+
 .section-title-input {
     background-color: transparent;
     border: 1px solid transparent;
@@ -233,4 +245,69 @@
     overflow-x: hidden;
     border-radius: 8px;
     margin: 15px;
+}
+
+
+/* Conteneur du bouton toggle */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Conteneur du toggle */
+.toggle-container .toggle-slider {
+    position: relative;
+    cursor: pointer;
+    width: 50px;
+    /* Largeur du bouton */
+    height: 24px;
+    /* Hauteur du bouton */
+    background-color: #ccc;
+    border-radius: 50px;
+    transition: background-color 0.4s;
+}
+
+/* Le cercle à l'intérieur du slider */
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.4s;
+}
+
+/* Cacher l'input (le checkbox) */
+.toggle-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Lorsque le checkbox est coché, changer l'apparence du toggle */
+.toggle-input:checked+.toggle-slider {
+    background-color: #4CAF50;
+    /* Couleur du fond quand coché */
+}
+
+/* Déplacer le cercle à l'intérieur lorsque le checkbox est coché */
+.toggle-input:checked+.toggle-slider::before {
+    transform: translateX(26px);
+}
+
+.toggle-text {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #4CAF50;
+    font-weight: bold;
+
+}
+
+.toggle-input:checked+.toggle-slider+.toggle-text {
+    color: #4CAF50;
+    font-weight: bold;
 }

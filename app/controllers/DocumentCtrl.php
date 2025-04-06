@@ -15,7 +15,6 @@ class DocumentCtrl extends Controller
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'image/jpeg',
         'image/png',
-        'image/jpg',
         'application/zip',
         'application/x-rar-compressed',
         'application/vnd.ms-powerpoint',

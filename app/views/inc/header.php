@@ -19,7 +19,8 @@
     <link href="<?= URLROOT ?>/assets/css/style.css" rel="stylesheet">
     <link href="<?= URLROOT ?>/assets/css/style2.css" rel="stylesheet">
     <link href="<?= URLROOT ?>/assets/css/style3.css" rel="stylesheet">
-    <link href="<?= URLROOT ?>/assets/css/style4.css" rel="stylesheet">
+    <link href="<?= URLROOT ?>/assets/css/sommaire.css" rel="stylesheet">
+    <link href="<?= URLROOT ?>/assets/css/sommaireSidebar.css" rel="stylesheet">
     <link href="<?= URLROOT ?>/assets/css/projet.css" rel="stylesheet">
     <link href="<?= URLROOT ?>/assets/css/tail.css" rel="stylesheet">
     <!-- Debut date Espoir picker -->
@@ -27,12 +28,16 @@
     <link rel="stylesheet" type="text/css"
         href="<?= URLROOT ?>/assets/vendor/datepicker/documentation-assets/bootstrap-datepicker.css" />
     <!-- Fin Debut Espoir date picker -->
-
     <script src="<?= URLROOT ?>/public/assets/vendor/jquery/jquery.min.js"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh7DZ4w9bU2eefJa5j1uTs8Z0dm6xdJ3E&sensor=false&libraries=places">
     </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    <script src="https://bossanova.uk/jspreadsheet/v5/jspreadsheet.js"></script>
+    <script src="https://jsuites.net/v5/jsuites.js"></script>
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v5/jspreadsheet.css" type="text/css" />
+    <link rel="stylesheet" href="https://jsuites.net/v5/jsuites.css" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons" />
 </head>
 
 <body id="page-top">

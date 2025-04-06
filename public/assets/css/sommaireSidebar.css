@@ -22,6 +22,7 @@
     background: white;
     border: 1px solid #edf2f7;
     transition: all 0.3s ease;
+    overflow-y: auto;
 }
 
 .section-item:hover {
@@ -200,4 +201,81 @@
 
 .section-item:hover .section-actions {
     opacity: 1;
+}
+
+
+/* Styles pour le drag and drop */
+.drag-handle {
+    cursor: grab;
+    color: #718096;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.drag-handle:hover {
+    opacity: 1;
+}
+
+.section-item.dragging {
+    opacity: 0.8;
+    background: #f8fafc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-placeholder {
+    border: 2px dashed #cbd5e0;
+    background: #f7fafc;
+    margin: 4px 0;
+    border-radius: 4px;
+}
+
+.section-item.ui-sortable-helper {
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.section-item.drag-over {
+    background-color: rgba(0, 123, 255, 0.1);
+    border: 1px dashed #09e49b;
+}
+
+.root-drop-zone {
+    min-height: 50px;
+    padding: 10px;
+    border: 2px solid transparent;
+}
+
+.root-drop-zone.drag-over {
+    border: 2px dashed #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+
+.section-item {
+    position: relative;
+    cursor: move;
+    transition: all 0.2s ease;
+}
+
+.section-item.drag-over-top {
+    border-top: 2px dashed #007bff;
+}
+
+.section-item.drag-over-bottom {
+    border-bottom: 2px dashed #007bff;
+}
+
+.section-item.drag-over-inside {
+    background-color: rgba(0, 123, 255, 0.1);
+    border: 2px dashed #007bff;
+}
+
+.section-item.dragging {
+    opacity: 0.5;
+}
+
+.root-drop-zone.drag-over {
+    background-color: rgba(0, 123, 255, 0.05);
+    border: 2px dashed #007bff;
 }
